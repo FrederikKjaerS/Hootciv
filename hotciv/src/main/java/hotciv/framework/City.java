@@ -61,4 +61,6 @@ public interface City {
    * for valid return values.
    */
   String getWorkforceFocus();
+
+  void addProduction(int i);
 }
