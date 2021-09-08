@@ -117,8 +117,8 @@ public class TestAlphaCiv {
     //We initiate a new turn
     game.endOfTurn();
     game.endOfTurn();
-    assertThat(game.getRedCity().getTreasury(), is(6));
-    assertThat(game.getBlueCity().getTreasury(), is(6));
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(6));
+    assertThat(game.getCityAt(new Position(4,1)).getTreasury(), is(6));
   }
 
   @Test
@@ -147,14 +147,26 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldBeLegionAt3_2() {
-    //Tests that there is an legion at (3,2).
+    //Tests that there is a legion at (3,2).
     assertThat(game.getUnitAt(new Position(3, 2)).getTypeString(), is(GameConstants.LEGION));
   }
 
   @Test
   public void shouldBeSettlerAt4_3() {
-    //Tests that there is an legion at (3,2).
+    //Tests that there is a Settler at (4,3).
     assertThat(game.getUnitAt(new Position(4, 3)).getTypeString(), is(GameConstants.SETTLER));
+  }
+
+  @Test
+  public void shouldBeRedThatOwnsArcherAt2_0() {
+    //Red owns the archer at 2_0
+    assertThat(game.getUnitAt(new Position(2,0)).getOwner(), is(Player.RED));
+  }
+
+  @Test
+  public void shouldBeBlueThatOwnsLegionAt3_2() {
+    //Red owns the archer at 2_0
+    assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.BLUE));
   }
 
 }

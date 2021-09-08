@@ -5,9 +5,11 @@ import hotciv.framework.Unit;
 
 public class UnitImpl implements Unit {
     private final String typeString;
+    private final Player owner;
 
-    public UnitImpl(String unit) {
+    public UnitImpl(String unit, Player owner) {
         this.typeString = unit;
+        this.owner = owner;
     }
 
     @Override
@@ -17,7 +19,7 @@ public class UnitImpl implements Unit {
 
     @Override
     public Player getOwner() {
-        return null;
+        return owner;
     }
 
     @Override

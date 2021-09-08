@@ -136,7 +136,4 @@ public interface Game {
    */
   void performUnitActionAt( Position p );
 
-  City getRedCity();
-
-  City getBlueCity();
 }

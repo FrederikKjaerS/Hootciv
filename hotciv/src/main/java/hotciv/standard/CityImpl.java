@@ -7,13 +7,13 @@ public class CityImpl implements City {
     private Player owner;
     private int treasury = 0;
 
+    public CityImpl(Player owner) {
+        this.owner = owner;
+    }
+
     @Override
     public void addProduction(int i) {
         treasury += i;
-    }
-
-    public CityImpl(Player owner) {
-        this.owner = owner;
     }
 
     @Override
