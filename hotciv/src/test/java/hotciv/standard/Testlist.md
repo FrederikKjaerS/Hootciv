@@ -28,6 +28,6 @@
 * The attacking unit always wins
 * Only 1 unit allowed on a tile at a time
 * Cities do not grow but stay at population size 1
-* Unit move from (2,0) to (2,1)
-* Unit can only move 1 field per turn
+* A unit can move from (2,0) to (2,1)
+* Units can only move 1 field per turn
 * A city produces a unit when a city has accumulated enough production
