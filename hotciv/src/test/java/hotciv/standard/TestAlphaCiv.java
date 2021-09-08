@@ -41,7 +41,9 @@ import java.util.*;
 public class TestAlphaCiv {
   private Game game;
 
-  /** Fixture for alphaciv testing. */
+  /**
+   * Fixture for alphaciv testing.
+   */
   @BeforeEach
   public void setUp() {
     game = new GameImpl();
@@ -95,8 +97,8 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldBeRedCityAtPosition1_1() {
-   //Red City is placed at position (1,1).
-    Position redPosition = new Position(1,1);
+    //Red City is placed at position (1,1).
+    Position redPosition = new Position(1, 1);
     City redCity = game.getCityAt(redPosition);
     assertThat(redCity.getOwner(), is(Player.RED));
   }
@@ -104,7 +106,7 @@ public class TestAlphaCiv {
   @Test
   public void shouldBeBlueCityAtPosition4_1() {
     //Red City is placed at position (1,1).
-    Position bluePosition = new Position(4,1);
+    Position bluePosition = new Position(4, 1);
     City blueCity = game.getCityAt(bluePosition);
     assertThat(blueCity.getOwner(), is(Player.BLUE));
   }
@@ -119,39 +121,28 @@ public class TestAlphaCiv {
     assertThat(game.getBlueCity().getTreasury(), is(6));
   }
 
-
-
-
-
-
-
-
-
-
-
-  /** REMOVE ME. Not a test of HotCiv, just an example of the
-      matchers that the hamcrest library has... */
   @Test
-  public void shouldDefinetelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
-
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
-
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
+  public void shouldBeOceanAt1_0() {
+    //Tests that there is ocean at (1,0).
+    assertThat(game.getTileAt(new Position(1, 0)).getTypeString(), is(GameConstants.OCEANS));
   }
+
+  @Test
+  public void shouldBeHillsAt0_1() {
+    //Tests that there is ocean at (1,0).
+    assertThat(game.getTileAt(new Position(0, 1)).getTypeString(), is(GameConstants.HILLS));
+  }
+
+  @Test
+  public void shouldBeMountainsAt2_2() {
+    //Tests that there is ocean at (1,0).
+    assertThat(game.getTileAt(new Position(2, 2)).getTypeString(), is(GameConstants.MOUNTAINS));
+  }
+
+  @Test
+  public void shouldBeArcherAt2_0() {
+    //Tests that there is an archer at (2,0).
+    assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
+  }
+
 }

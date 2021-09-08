@@ -2,6 +2,8 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.HashMap;
+
 /**
  * Skeleton implementation of HotCiv.
  * <p>
@@ -34,6 +36,28 @@ public class GameImpl implements Game {
     private int year = -4000;
     private City redCity = new CityImpl(Player.RED);
     private City blueCity = new CityImpl(Player.BLUE);
+    private HashMap<Position,Tile> map = new HashMap<Position, Tile>();
+
+    public GameImpl() {
+        setupGameLayout();
+    }
+
+    public void setupGameLayout() {
+        //Setup Plains in all Positions
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                this.map.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+            }
+        }
+        //Setup Oceans
+        this.map.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
+        //Setup Hills
+        this.map.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
+        //Setup Mountains
+        this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+    }
+
+
 
     @Override
     public City getRedCity() {
@@ -46,11 +70,36 @@ public class GameImpl implements Game {
     }
 
     public Tile getTileAt(Position p) {
-        return null;
+        return this.map.get(p);
     }
 
     public Unit getUnitAt(Position p) {
-        return null;
+        return new Unit() {
+            @Override
+            public String getTypeString() {
+                return GameConstants.ARCHER;
+            }
+
+            @Override
+            public Player getOwner() {
+                return null;
+            }
+
+            @Override
+            public int getMoveCount() {
+                return 0;
+            }
+
+            @Override
+            public int getDefensiveStrength() {
+                return 0;
+            }
+
+            @Override
+            public int getAttackingStrength() {
+                return 0;
+            }
+        };
     }
 
     public City getCityAt(Position p) {
