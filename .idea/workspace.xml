@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="39b965d2-749b-43a6-ac74-fbae2c3754b8" name="Changes" comment="Push3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotciv/src/test/java/hotciv/standard/TestAlphaCiv.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotciv/src/test/java/hotciv/standard/TestAlphaCiv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotciv/src/test/java/hotciv/standard/Testlist.md" beforeDir="false" afterPath="$PROJECT_DIR$/hotciv/src/test/java/hotciv/standard/Testlist.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotciv/src/test/java/hotciv/standard/Testlist.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +26,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="preferences.customizations" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -47,6 +44,7 @@
       <workItem from="1630565104147" duration="2347000" />
       <workItem from="1630567552407" duration="395000" />
       <workItem from="1630567967785" duration="94000" />
+      <workItem from="1631100724315" duration="59000" />
     </task>
     <task id="LOCAL-00001" summary="First push">
       <created>1630565688870</created>
