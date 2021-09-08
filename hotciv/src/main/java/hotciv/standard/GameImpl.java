@@ -62,6 +62,7 @@ public class GameImpl implements Game {
     public void setupUnits() {
         this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER));
         this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION));
+        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER));
     }
 
     @Override
