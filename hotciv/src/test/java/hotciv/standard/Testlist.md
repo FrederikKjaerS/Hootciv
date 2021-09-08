@@ -21,7 +21,7 @@
 * Only one unit allowed at a tile
 * ~~Archer at (2,0)~~
 * The archer at (2,0) is owned by red
-* Archer at (3,2)
-* The archer at (3,2) is owned by blue
+* ~~Legion at (3,2)~~ (OPTAG DENNE)
+* The legion at (3,2) is owned by blue
 * Settler at (4,3)
 * The settler at (4,3) is owned by red

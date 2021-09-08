@@ -145,4 +145,10 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
   }
 
+  @Test
+  public void shouldBeLegionAt3_2() {
+    //Tests that there is an legion at (3,2).
+    assertThat(game.getUnitAt(new Position(3, 2)).getTypeString(), is(GameConstants.LEGION));
+  }
+
 }

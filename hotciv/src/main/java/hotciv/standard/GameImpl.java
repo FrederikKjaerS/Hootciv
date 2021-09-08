@@ -37,9 +37,11 @@ public class GameImpl implements Game {
     private City redCity = new CityImpl(Player.RED);
     private City blueCity = new CityImpl(Player.BLUE);
     private HashMap<Position,Tile> map = new HashMap<Position, Tile>();
+    private HashMap<Position,Unit> units = new HashMap<Position, Unit>();
 
     public GameImpl() {
         setupGameLayout();
+        setupUnits();
     }
 
     public void setupGameLayout() {
@@ -57,7 +59,10 @@ public class GameImpl implements Game {
         this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
     }
 
-
+    public void setupUnits() {
+        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER));
+        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION));
+    }
 
     @Override
     public City getRedCity() {
@@ -74,32 +79,7 @@ public class GameImpl implements Game {
     }
 
     public Unit getUnitAt(Position p) {
-        return new Unit() {
-            @Override
-            public String getTypeString() {
-                return GameConstants.ARCHER;
-            }
-
-            @Override
-            public Player getOwner() {
-                return null;
-            }
-
-            @Override
-            public int getMoveCount() {
-                return 0;
-            }
-
-            @Override
-            public int getDefensiveStrength() {
-                return 0;
-            }
-
-            @Override
-            public int getAttackingStrength() {
-                return 0;
-            }
-        };
+        return this.units.get(p);
     }
 
     public City getCityAt(Position p) {
