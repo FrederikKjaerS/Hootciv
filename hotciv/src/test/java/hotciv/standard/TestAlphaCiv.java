@@ -169,4 +169,53 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.BLUE));
   }
 
+  @Test
+  public void shouldMoveUnitFrom2_0To2_1() {
+    //Unit should move from 2.0 to 2.1
+    //Fist we get the unit at 2.0.
+    Unit u = game.getUnitAt(new Position(2, 0));
+    //Asserts that the unit is not null
+    assertThat(u, is(notNullValue()));
+
+    //Asserts that there is not a unit on position 2.1
+    Unit u2 = game.getUnitAt(new Position(2, 1));
+    assertThat(u2, is(nullValue()));
+
+    //Asserts that the movement is allowed
+    assertThat(game.moveUnit(new Position(2, 0), new Position(2,1)), is(true));
+
+    //Asserts that the unit is removed from position 2.0
+    u = game.getUnitAt(new Position(2, 0));
+    assertThat(u, is(nullValue()));
+
+    //Asserts that there is a unit at position 2.1
+    u2 = game.getUnitAt(new Position(2, 1));
+    assertThat(u2, is(notNullValue()));
+  }
+
+  @Test
+  public void shouldBeAttackerThatWins() {
+    //Red owns archer at (2,1) it moves to blue's legion at (3,2) and attacks.
+    game.moveUnit(new Position(2, 0),new Position(3,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(3, 1),new Position(3,2));
+    //Assert that the unit on the tile is owned by red (The winner)
+    assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.RED));
+  }
+
+  public void shouldBeAnotherPlayerThatGetsAttacked() {
+    //Red owns archer at (2,1) it moves to blue's legion at (3,2) and attacks.
+    game.moveUnit(new Position(2, 0),new Position(3,1));
+    game.endOfTurn();
+    game.endOfTurn();
+    game.moveUnit(new Position(3, 1),new Position(3,2));
+    game.endOfTurn();
+    game.endOfTurn();
+    //Red's archer tries to attack red's Settler
+    assertThat(game.moveUnit(new Position(3,2),new Position(4,2)),is(false));
+    //Assert that the unit on the tile is owned by red (The winner)
+  }
+
+
 }

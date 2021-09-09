@@ -34,9 +34,9 @@ import java.util.HashMap;
 public class GameImpl implements Game {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
-    private HashMap<Position,Tile> map = new HashMap<Position, Tile>();
-    private HashMap<Position,Unit> units = new HashMap<Position, Unit>();
-    private HashMap<Position,City> cities = new HashMap<Position, City>();
+    private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
+    private HashMap<Position, Unit> units = new HashMap<Position, Unit>();
+    private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
 
     public GameImpl() {
         setupGameLayout();
@@ -60,12 +60,12 @@ public class GameImpl implements Game {
     }
 
     public void setupUnits() {
-        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER,Player.RED));
-        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION,Player.BLUE));
-        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER,Player.RED));
+        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
     }
 
-    public void setupCities(){
+    public void setupCities() {
         this.cities.put(new Position(1, 1), new CityImpl(Player.RED));
         this.cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
     }
@@ -99,7 +99,15 @@ public class GameImpl implements Game {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        return false;
+        Unit fromUnit = getUnitAt(from);
+        if (getUnitAt(to) != null) {
+            if (fromUnit.getOwner() == getUnitAt(to).getOwner()) {
+                return false;
+            }
+        }
+        units.put(to, fromUnit);
+        units.remove(from);
+        return true;
     }
 
     public void endOfTurn() {
@@ -110,7 +118,7 @@ public class GameImpl implements Game {
             case BLUE:
                 playerInTurn = Player.RED;
                 year += 100;
-                for(City c: cities.values()) {
+                for (CityImpl c : cities.values()) {
                     c.addProduction(6);
                 }
                 break;

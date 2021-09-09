@@ -18,16 +18,17 @@
 * ~~Game should start in year 4000~~
 * ~~Blue's city is at (4,1)~~
 * Position 1,2 is NOT a city
-* Only one unit allowed at a tile
 * ~~Archer at (2,0)~~
 * ~~The archer at (2,0) is owned by red~~
 * ~~Legion at (3,2)~~
 * ~~The legion at (3,2) is owned by blue~~
 * ~~Settler at (4,3)~~
 * ~~The settler at (4,3) is owned by red~~
-* The attacking unit always wins
-* Only 1 unit allowed on a tile at a time
+* ~~The attacking unit always wins~~
+* ~~Only 1 unit allowed on a tile at a time~~
 * Cities do not grow but stay at population size 1
-* A unit can move from (2,0) to (2,1)
+* ~~A unit can move from (2,0) to (2,1)~~
 * Units can only move 1 field per turn
 * A city produces a unit when a city has accumulated enough production
+* ~~Unit attacks when moving to another player's unit~~
+* ~~Test that attacking unit is another player~~

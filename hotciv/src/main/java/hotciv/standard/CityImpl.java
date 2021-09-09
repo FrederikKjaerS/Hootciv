@@ -11,9 +11,11 @@ public class CityImpl implements City {
         this.owner = owner;
     }
 
-    @Override
-    public void addProduction(int i) {
-        treasury += i;
+    /**
+     Adds amount to the field treasury.
+    */
+    public void addProduction(int amount) {
+        treasury += amount;
     }
 
     @Override
