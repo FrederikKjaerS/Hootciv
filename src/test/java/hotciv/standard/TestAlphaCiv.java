@@ -7,8 +7,6 @@ import org.junit.jupiter.api.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.*;
-
 /** Skeleton class for AlphaCiv test cases
 
    Updated Aug 2020 for JUnit 5 includes
