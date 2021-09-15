@@ -7,6 +7,7 @@ import hotciv.framework.Player;
 public class CityImpl implements City {
     private Player owner;
     private int treasury = 0;
+    private String production;
 
     public CityImpl(Player owner) {
         this.owner = owner;
@@ -36,11 +37,15 @@ public class CityImpl implements City {
 
     @Override
     public String getProduction() {
-        return GameConstants.ARCHER;
+        return production;
     }
 
     @Override
     public String getWorkforceFocus() {
         return null;
+    }
+
+    public void setProduction(String unit){
+        this.production = unit;
     }
 }

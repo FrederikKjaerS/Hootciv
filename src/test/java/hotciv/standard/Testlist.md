@@ -8,12 +8,12 @@
 * Cities' population size is always 1
 * Player's city can produce archers
 * Player's city can produce legions
-* Player's city can produce setlers
-* Player can select unit for production
-* Player can select to produce archer
-* Player can select to produce Legion
+* Player's city can produce settlers
+* ~~Player can select unit for production~~
+* ~~Player can select to produce archer~~
+* ~~Player can select to produce Legion~~
 * ~~Red City can produce archer~~
-* Red city can produce Legion
+* ~~Red city can produce Legion
 * Units cost is deducted from cities treasury of production.
 * Produced unit is placed on its city
 * Place new unit on north tile, if units on city.

@@ -254,8 +254,14 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldBeArcherAsProductionInRedsCity() {
+    game.changeProductionInCityAt(new Position(1,1),(GameConstants.ARCHER));
     assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.ARCHER));
   }
 
+  @Test
+  public void shouldBeLegionAsProductionInRedsCity() {
+    game.changeProductionInCityAt(new Position(1,1),(GameConstants.LEGION));
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.LEGION));
+  }
 
 }
