@@ -63,8 +63,8 @@
 * Units cost is deducted from cities treasury of production.
 * ~~Produced unit is placed on its city~~
 * ~~Place new unit on north tile, if units on city.~~
-* Plave unit in right corner of city, when two units have been produced
-* Place units clockwise around city, if tiles are occupied.
+* ~~Place unit in the top right corner of city, when two units have been produced~~
+* ~~Place units clockwise around city, if tiles are occupied~~
 * ~~City only produce if enough treasury is collected.~~
 * ~~Red can NOT select production in blue city~~
 * ~~Red can't change production in blue's turn~~

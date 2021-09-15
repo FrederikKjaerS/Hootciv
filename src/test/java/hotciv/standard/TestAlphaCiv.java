@@ -322,4 +322,11 @@ public class TestAlphaCiv {
     endRound(4);
     assertThat(game.getUnitAt(new Position(0,1)).getTypeString(), is(GameConstants.ARCHER));
   }
+
+  @Test
+  public void shouldPlaceUnitClockwiseInThirdProductionIfNoMovesAreMade() {
+      game.changeProductionInCityAt(new Position(1,1), (GameConstants.ARCHER));
+      endRound(6);
+      assertThat(game.getUnitAt(new Position(0,2)).getTypeString(), is(GameConstants.ARCHER));
+  }
 }
