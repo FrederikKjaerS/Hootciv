@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.utility.Utility;
 
 import java.util.HashMap;
 
@@ -135,10 +136,15 @@ public class GameImpl implements Game {
                 for(UnitImpl u : units.values()){
                     u.resetMoveCount();
                 }
-                for (Position p : cities.keySet()) {
-                    cities.get(p).addProduction(6);
-                    if(cities.get(p).canProduce()) {
-                        this.units.put(p, new UnitImpl(cities.get(p).getProduction(), cities.get(p).getOwner()));
+                for (Position cityP : cities.keySet()) {
+                    cities.get(cityP).addProduction(6);
+                    if(cities.get(cityP).canProduce()) {
+                        for(Position p : Utility.getCenterAnd8neighborhoodOf(cityP)) {
+                            if (getUnitAt(p) == null) {
+                                this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
+                                break;
+                            }
+                        }
                     }
                 }
                 break;

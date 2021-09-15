@@ -49,12 +49,12 @@
 * ~~There is mountains (2,2)~~
 
 ### Production
-* Archer costs 10
-* Legion costs 15
-* Settler costs 30
-* City can produce archers and place on a tile
-* City can produce legions and place on a tile
-* City can produce settlers and place on a tile
+* ~~Archer costs 10~~
+* ~~Legion costs 15~~
+* ~~Settler costs 30~~
+* ~~City can produce archers and place on a tile~~
+* ~~City can produce legions and place on a tile~~
+* ~~City can produce settlers and place on a tile~~
 * ~~Player can select unit for production~~
 * ~~Player can select to produce archer~~
 * ~~Player can select to produce Legion~~
@@ -62,10 +62,11 @@
 * ~~Red city can produce Legion~~
 * Units cost is deducted from cities treasury of production.
 * ~~Produced unit is placed on its city~~
-* Place new unit on north tile, if units on city.
+* ~~Place new unit on north tile, if units on city.~~
+* Plave unit in right corner of city, when two units have been produced
 * Place units clockwise around city, if tiles are occupied.
 * ~~City only produce if enough treasury is collected.~~
-* Red can NOT select production in blue city
+* ~~Red can NOT select production in blue city~~
 * ~~Red can't change production in blue's turn~~
 * ~~Place archer on red city when treasury is 10~~
 * ~~Place legion on blue city when treasury is 15~~

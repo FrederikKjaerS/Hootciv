@@ -316,4 +316,10 @@ public class TestAlphaCiv {
     assertThat(game.getCityAt(new Position(1,1)).getProduction(), is(GameConstants.SETTLER));
   }
 
+  @Test
+  public void shouldPlaceUnitAboveCityIfTileIsOccupied() {
+    game.changeProductionInCityAt(new Position(1,1), (GameConstants.ARCHER));
+    endRound(4);
+    assertThat(game.getUnitAt(new Position(0,1)).getTypeString(), is(GameConstants.ARCHER));
+  }
 }
