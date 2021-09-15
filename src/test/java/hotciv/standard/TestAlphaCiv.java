@@ -291,4 +291,13 @@ public class TestAlphaCiv {
     endRound(2);
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.ARCHER));
   }
+
+  // treasury is 2 after archer is produced in round 2
+  @Test
+  public void shouldHave2InTreasuryAfterArcherIsProducedInSecondRound() {
+    game.changeProductionInCityAt(new Position(1,1), (GameConstants.ARCHER));
+    endRound(2);
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(2));
+  }
+
 }

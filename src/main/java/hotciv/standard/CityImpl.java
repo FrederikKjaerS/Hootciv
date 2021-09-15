@@ -7,15 +7,15 @@ import hotciv.framework.Player;
 public class CityImpl implements City {
     private Player owner;
     private int treasury = 0;
-    private String production;
+    private String production = "";
 
     public CityImpl(Player owner) {
         this.owner = owner;
     }
 
     /**
-     Adds amount to the field treasury.
-    */
+     * Adds amount to the field treasury.
+     */
     public void addProduction(int amount) {
         treasury += amount;
     }
@@ -45,7 +45,19 @@ public class CityImpl implements City {
         return null;
     }
 
-    public void setProduction(String unit){
+    public void setProduction(String unit) {
         this.production = unit;
+    }
+
+    public boolean canProduce() {
+        if (production.equals(GameConstants.ARCHER) && treasury >= 10) {
+            treasury -= 10;
+            return true;
+        }
+        if (production.equals(GameConstants.LEGION) && treasury >= 15) {
+            treasury -= 15;
+            return true;
+        }
+        return false;
     }
 }

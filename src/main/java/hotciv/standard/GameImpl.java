@@ -137,7 +137,9 @@ public class GameImpl implements Game {
                 }
                 for (Position p : cities.keySet()) {
                     cities.get(p).addProduction(6);
-                    this.units.put(p, new UnitImpl(cities.get(p).getProduction(), cities.get(p).getOwner()));
+                    if(cities.get(p).canProduce()) {
+                        this.units.put(p, new UnitImpl(cities.get(p).getProduction(), cities.get(p).getOwner()));
+                    }
                 }
                 break;
         }
