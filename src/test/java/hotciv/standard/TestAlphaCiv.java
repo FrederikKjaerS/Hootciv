@@ -47,6 +47,13 @@ public class TestAlphaCiv {
     game = new GameImpl();
   }
 
+  private void endRound(int n){
+    for (int i = 0; i < n; i++) {
+      game.endOfTurn();
+      game.endOfTurn();
+    }
+  }
+
   // FRS p. 455 states that 'Red is the first player to take a turn'.
   @Test
   public void shouldBeRedAsStartingPlayer() {
@@ -262,6 +269,13 @@ public class TestAlphaCiv {
   public void shouldBeLegionAsProductionInRedsCity() {
     game.changeProductionInCityAt(new Position(1,1),(GameConstants.LEGION));
     assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.LEGION));
+  }
+
+  @Test
+  public void shouldPlaceArcherOnRedCityWhenTreasuryIs10() {
+    game.changeProductionInCityAt(new Position(1,1),(GameConstants.ARCHER));
+    endRound(2);
+    assertThat(game.getUnitAt(new Position(1, 1 )).getTypeString(), is(GameConstants.ARCHER));
   }
 
 }

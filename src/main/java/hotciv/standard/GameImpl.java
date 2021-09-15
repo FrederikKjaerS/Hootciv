@@ -138,6 +138,7 @@ public class GameImpl implements Game {
                 for (CityImpl c : cities.values()) {
                     c.addProduction(6);
                 }
+                this.units.put(new Position(1, 1), new UnitImpl(GameConstants.ARCHER, Player.RED));
                 break;
         }
     }

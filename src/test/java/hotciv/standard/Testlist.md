@@ -6,18 +6,6 @@
 * Cities do not grow but stay at population size 1
 * ~~Cities produce 6 `production' after a round has ended~~
 * Cities' population size is always 1
-* Player's city can produce archers
-* Player's city can produce legions
-* Player's city can produce settlers
-* ~~Player can select unit for production~~
-* ~~Player can select to produce archer~~
-* ~~Player can select to produce Legion~~
-* ~~Red City can produce archer~~
-* ~~Red city can produce Legion
-* Units cost is deducted from cities treasury of production.
-* Produced unit is placed on its city
-* Place new unit on north tile, if units on city.
-* Place units clockwise around city, if tiles are occupied.
 
 ### Players
 * ~~Red is the first player in turn~~
@@ -63,7 +51,22 @@
 ### Production
 * Archer costs 10
 * Legion costs 15
-* Setler costs 30
+* Settler costs 30
+* City can produce archers and place on a tile
+* City can produce legions and place on a tile
+* City can produce settlers and place on a tile
+* ~~Player can select unit for production~~
+* ~~Player can select to produce archer~~
+* ~~Player can select to produce Legion~~
+* ~~Red City can produce archer~~
+* ~~Red city can produce Legion~~
+* Units cost is deducted from cities treasury of production.
+* Produced unit is placed on its city
+* Place new unit on north tile, if units on city.
+* Place units clockwise around city, if tiles are occupied.
+* City only produce if enough treasury is collected.
+* Red can NOT select production in blue city
+* ~~Place archer on red city when treasury is 10~~
 
 ### Game mechanics
 * units cannot move over mountain
