@@ -202,18 +202,50 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(3,2)).getOwner(), is(Player.RED));
   }
 
+  @Test
   public void shouldBeAnotherPlayerThatGetsAttacked() {
-    //Red owns archer at (2,1) it moves to blue's legion at (3,2) and attacks.
+    //Red's archer tries to attack red's Settler
     game.moveUnit(new Position(2, 0),new Position(3,1));
     game.endOfTurn();
     game.endOfTurn();
-    game.moveUnit(new Position(3, 1),new Position(3,2));
+    game.moveUnit(new Position(3, 1),new Position(4,2));
     game.endOfTurn();
     game.endOfTurn();
-    //Red's archer tries to attack red's Settler
-    assertThat(game.moveUnit(new Position(3,2),new Position(4,2)),is(false));
-    //Assert that the unit on the tile is owned by red (The winner)
+
+    assertThat(game.moveUnit(new Position(4,2),new Position(4,3)),is(false));
   }
 
+ @Test
+  public void shouldNotBeAllowedToMoveOverOneDistance(){
+    assertThat(game.moveUnit(new Position(2, 0), new Position(4, 0)), is(false));
+ }
+  @Test
 
+  public void shouldHaveOneInMoveCountForArcher(){
+    assertThat(game.getUnitAt(new Position(2,0)).getMoveCount(), is(1));
+  }
+
+  @Test
+  public void shouldHaveOnlyOneMoveEachTurnForArcher(){
+    game.moveUnit(new Position(2, 0),new Position(3,1));
+    assertThat(game.getUnitAt(new Position(3,1)).getMoveCount(), is(0));
+  }
+
+  @Test
+  public void shouldHave1InMoveCountAfterOneRound(){
+    assertThat(game.getUnitAt(new Position(2,0)).getMoveCount(), is(1));
+    game.moveUnit(new Position(2, 0),new Position(3,1));
+    assertThat(game.getUnitAt(new Position(3,1)).getMoveCount(), is(0));
+    game.endOfTurn();
+    game.endOfTurn();
+    assertThat(game.getUnitAt(new Position(3,1)).getMoveCount(), is(1));
+  }
+
+ /**
+ @Test
+  public void shouldBeMaxOneMovementPerUnitPerTurn() {
+   game.moveUnit(new Position(2, 0), new Position(3, 0));
+   assertThat(game.moveUnit(new Position(3, 0), new Position(3, 1)), is(false));
+ }
+*/
 }

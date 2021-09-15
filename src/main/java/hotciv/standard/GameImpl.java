@@ -35,7 +35,7 @@ public class GameImpl implements Game {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
     private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
-    private HashMap<Position, Unit> units = new HashMap<Position, Unit>();
+    private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
 
     public GameImpl() {
@@ -99,7 +99,14 @@ public class GameImpl implements Game {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        Unit fromUnit = getUnitAt(from);
+        UnitImpl fromUnit = units.get(from);
+
+        if(1 < to.getRow() - from.getRow() || to.getRow() - from.getRow() < -1 ) {
+            return false;
+        }
+        if(1 < to.getColumn() - from.getColumn() || to.getColumn() - from.getColumn() < -1 ) {
+            return false;
+        }
         if (getUnitAt(to) != null) {
             if (fromUnit.getOwner() == getUnitAt(to).getOwner()) {
                 return false;
@@ -107,6 +114,7 @@ public class GameImpl implements Game {
         }
         units.put(to, fromUnit);
         units.remove(from);
+        fromUnit.decreaseMoveCount();
         return true;
     }
 
@@ -118,6 +126,9 @@ public class GameImpl implements Game {
             case BLUE:
                 playerInTurn = Player.RED;
                 year += 100;
+                for(UnitImpl u : units.values()){
+                    u.resetMoveCount();
+                }
                 for (CityImpl c : cities.values()) {
                     c.addProduction(6);
                 }
