@@ -68,6 +68,7 @@
 * Red can NOT select production in blue city
 * ~~Place archer on red city when treasury is 10~~
 * ~~Place legion on blue city when treasury is 15~~
+* ~~Place archer on blue city when treasury is 10~~
 
 ### Game mechanics
 * units cannot move over mountain

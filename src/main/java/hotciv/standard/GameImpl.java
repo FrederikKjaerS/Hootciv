@@ -135,11 +135,10 @@ public class GameImpl implements Game {
                 for(UnitImpl u : units.values()){
                     u.resetMoveCount();
                 }
-                for (CityImpl c : cities.values()) {
-                    c.addProduction(6);
+                for (Position p : cities.keySet()) {
+                    cities.get(p).addProduction(6);
+                    this.units.put(p, new UnitImpl(cities.get(p).getProduction(), cities.get(p).getOwner()));
                 }
-                this.units.put(new Position(1, 1), new UnitImpl(GameConstants.ARCHER, Player.RED));
-                this.units.put(new Position(4, 1), new UnitImpl(GameConstants.LEGION, Player.BLUE));
                 break;
         }
     }

@@ -280,9 +280,15 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldPlaceLegionOnBlueCityWhenTreasuryIs15() {
-    game.changeProductionInCityAt(new Position(4,1),(GameConstants.LEGION));
+    game.changeProductionInCityAt(new Position(4,1), (GameConstants.LEGION));
     endRound(3);
-    assertThat(game.getUnitAt(new Position(4,1 )).getTypeString(), is(GameConstants.LEGION));
+    assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.LEGION));
   }
 
+  @Test
+  public void shouldPlaceArcherOnBlueCityWhenTreasuryIs10() {
+    game.changeProductionInCityAt(new Position(4,1), (GameConstants.ARCHER));
+    endRound(2);
+    assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.ARCHER));
+  }
 }
