@@ -101,10 +101,10 @@ public class GameImpl implements Game {
     public boolean moveUnit(Position from, Position to) {
         UnitImpl fromUnit = units.get(from);
 
-        if(1 < to.getRow() - from.getRow() || to.getRow() - from.getRow() < -1 ) {
+        if(Math.abs(to.getRow() - from.getRow()) > 1 ) {
             return false;
         }
-        if(1 < to.getColumn() - from.getColumn() || to.getColumn() - from.getColumn() < -1 ) {
+        if(Math.abs(to.getColumn() - from.getColumn()) > 1 ) {
             return false;
         }
         if (getUnitAt(to) != null) {
@@ -113,6 +113,9 @@ public class GameImpl implements Game {
             }
         }
         if (fromUnit.getMoveCount() < 1) {
+            return false;
+        }
+        if (fromUnit.getOwner() != playerInTurn) {
             return false;
         }
         units.put(to, fromUnit);

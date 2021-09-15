@@ -7,6 +7,14 @@
 * Cities do not grow but stay at population size 1
 * ~~Cities produce 6 `production' after a round has ended~~
 * Cities' population size is always 1
+* Player's city can produce archers
+* Player's city can produce legions
+* Player's city can produce setlers
+* Player can select unit for production
+* Units cost is deducted from cities treasury of production.
+* Produced unit is placed on its city
+* Place new unit on north tile, if units on city.
+* Place units clockwise around city, if tiles are occupied.
 
 ### Players
 * ~~Red is the first player in turn~~
@@ -20,8 +28,8 @@
 * ~~The legion at (3,2) is owned by blue~~
 * ~~Settler at (4,3)~~
 * ~~The settler at (4,3) is owned by red~~
-* Units can not move twice per turn
-* Red can not move blue's units
+* ~~Units can not move twice per turn~~
+* ~~Red can not move blue's units~~
 * ~~Units have a moveCount of 1~~
 * ~~Units should have one move in each turn~~
 * ~~Units should have no moves after one movement in a turn~~
@@ -29,10 +37,10 @@
 * ~~A unit can move from (2,0) to (2,1)~~
 * ~~Units can only move 1 field per movement~~
 * ~~Only 1 unit allowed on a tile at a time~~
-* Red can not move Legion at (3,2)
-* Red can move a unit in red's turn
-* Blue can move Legion at (3,2) to (3,3) in blue's turn <---
-* Blue can not move in red's turn
+* ~~Red can NOT move Legion at (3,2)~~
+* ~~Red can move a unit in red's turn~~
+* ~~Blue can move Legion at (3,2) to (3,3) in blue's turn~~
+* ~~Blue can NOT move in red's turn~~
 
 
 ### Attack
@@ -40,11 +48,19 @@
 * ~~Unit attacks when moving to another player's unit~~
 * ~~Test that attacking unit is another player~~
 
+### Actions
+* No units have actions
+
 ### Layout
 * ~~Red's city is at (1,1)~~
 * ~~There is ocean at (1,0)~~
 * ~~There is hills at (0,1)~~
 * ~~There is mountains (2,2)~~
+
+### Production
+* Archer costs 10
+* Legion costs 15
+* Setler costs 30
 
 ### Game mechanics
 * units cannot move over mountain

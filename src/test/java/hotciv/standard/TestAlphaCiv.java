@@ -247,4 +247,9 @@ public class TestAlphaCiv {
    assertThat(game.moveUnit(new Position(3, 0), new Position(3, 1)), is(false));
  }
 
+  @Test
+  public void shouldNotMoveBluesLegionAt3_2to3_3InRedsTurn() {
+    assertThat(game.moveUnit(new Position(3, 2), new Position(3,3)), is(false));
+  }
+
 }
