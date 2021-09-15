@@ -58,6 +58,10 @@ public class CityImpl implements City {
             treasury -= 15;
             return true;
         }
+        if (production.equals(GameConstants.SETTLER) && treasury >= 30) {
+            treasury -= 30;
+            return true;
+        }
         return false;
     }
 }

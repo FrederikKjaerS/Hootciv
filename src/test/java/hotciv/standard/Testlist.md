@@ -70,6 +70,8 @@
 * ~~Place legion on blue city when treasury is 15~~
 * ~~Place archer on blue city when treasury is 10~~
 * ~~treasury is 2 after archer is produced in round 2~~
+* ~~treasury is 0 after settler is produced in round 5~~
+
 
 ### Game mechanics
 * units cannot move over mountain

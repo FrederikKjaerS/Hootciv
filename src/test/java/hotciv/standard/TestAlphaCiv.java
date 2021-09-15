@@ -299,5 +299,11 @@ public class TestAlphaCiv {
     endRound(2);
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(2));
   }
+  @Test
+  public void shouldHave0InTreasuryAfterSettlerIsProducedIn5Round() {
+    game.changeProductionInCityAt(new Position(1,1), (GameConstants.SETTLER));
+    endRound(5);
+    assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(0));
+  }
 
 }
