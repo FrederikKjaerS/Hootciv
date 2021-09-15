@@ -280,6 +280,7 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldPlaceLegionOnBlueCityWhenTreasuryIs15() {
+    game.endOfTurn();
     game.changeProductionInCityAt(new Position(4,1), (GameConstants.LEGION));
     endRound(3);
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.LEGION));
@@ -287,6 +288,7 @@ public class TestAlphaCiv {
 
   @Test
   public void shouldPlaceArcherOnBlueCityWhenTreasuryIs10() {
+    game.endOfTurn();
     game.changeProductionInCityAt(new Position(4,1), (GameConstants.ARCHER));
     endRound(2);
     assertThat(game.getUnitAt(new Position(4,1)).getTypeString(), is(GameConstants.ARCHER));
@@ -304,6 +306,14 @@ public class TestAlphaCiv {
     game.changeProductionInCityAt(new Position(1,1), (GameConstants.SETTLER));
     endRound(5);
     assertThat(game.getCityAt(new Position(1,1)).getTreasury(), is(0));
+  }
+
+  @Test
+  public void shouldNotBeAbleToChangeProductionOutOfTurn() {
+    game.changeProductionInCityAt(new Position(1,1), (GameConstants.SETTLER));
+    game.endOfTurn();
+    game.changeProductionInCityAt(new Position(1,1), (GameConstants.ARCHER));
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(), is(GameConstants.SETTLER));
   }
 
 }

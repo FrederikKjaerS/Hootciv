@@ -61,11 +61,12 @@
 * ~~Red City can produce archer~~
 * ~~Red city can produce Legion~~
 * Units cost is deducted from cities treasury of production.
-* Produced unit is placed on its city
+* ~~Produced unit is placed on its city~~
 * Place new unit on north tile, if units on city.
 * Place units clockwise around city, if tiles are occupied.
-* City only produce if enough treasury is collected.
+* ~~City only produce if enough treasury is collected.~~
 * Red can NOT select production in blue city
+* ~~Red can't change production in blue's turn~~
 * ~~Place archer on red city when treasury is 10~~
 * ~~Place legion on blue city when treasury is 15~~
 * ~~Place archer on blue city when treasury is 10~~
