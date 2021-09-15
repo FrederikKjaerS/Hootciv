@@ -25,7 +25,7 @@
 * ~~Units have a moveCount of 1~~
 * ~~Units should have one move in each turn~~
 * ~~Units should have no moves after one movement in a turn~~
-* Units move-count should be reset each round
+* ~~Units move-count should be reset each round~~
 * ~~A unit can move from (2,0) to (2,1)~~
 * ~~Units can only move 1 field per movement~~
 * ~~Only 1 unit allowed on a tile at a time~~

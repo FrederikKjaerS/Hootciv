@@ -112,6 +112,9 @@ public class GameImpl implements Game {
                 return false;
             }
         }
+        if (fromUnit.getMoveCount() < 1) {
+            return false;
+        }
         units.put(to, fromUnit);
         units.remove(from);
         fromUnit.decreaseMoveCount();

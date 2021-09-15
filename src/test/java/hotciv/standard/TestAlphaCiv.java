@@ -226,7 +226,7 @@ public class TestAlphaCiv {
   }
 
   @Test
-  public void shouldHaveOnlyOneMoveEachTurnForArcher(){
+  public void shouldHaveOnlyOneMoveCountEachTurnForArcher(){
     game.moveUnit(new Position(2, 0),new Position(3,1));
     assertThat(game.getUnitAt(new Position(3,1)).getMoveCount(), is(0));
   }
@@ -241,11 +241,10 @@ public class TestAlphaCiv {
     assertThat(game.getUnitAt(new Position(3,1)).getMoveCount(), is(1));
   }
 
- /**
  @Test
   public void shouldBeMaxOneMovementPerUnitPerTurn() {
    game.moveUnit(new Position(2, 0), new Position(3, 0));
    assertThat(game.moveUnit(new Position(3, 0), new Position(3, 1)), is(false));
  }
-*/
+
 }
