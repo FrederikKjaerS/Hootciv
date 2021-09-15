@@ -252,4 +252,10 @@ public class TestAlphaCiv {
     assertThat(game.moveUnit(new Position(3, 2), new Position(3,3)), is(false));
   }
 
+  @Test
+  public void shouldBeArcherAsProductionInRedsCity() {
+    assertThat(game.getCityAt(new Position(1,1)).getProduction(),is(GameConstants.ARCHER));
+  }
+
+
 }

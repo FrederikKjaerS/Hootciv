@@ -2,7 +2,6 @@
 
 ### Cities
 * ~~Blue's city is at (4,1)~~
-* Position 1,2 is NOT a city
 * A city produces a unit when a city has accumulated enough production
 * Cities do not grow but stay at population size 1
 * ~~Cities produce 6 `production' after a round has ended~~
@@ -11,6 +10,10 @@
 * Player's city can produce legions
 * Player's city can produce setlers
 * Player can select unit for production
+* Player can select to produce archer
+* Player can select to produce Legion
+* ~~Red City can produce archer~~
+* Red city can produce Legion
 * Units cost is deducted from cities treasury of production.
 * Produced unit is placed on its city
 * Place new unit on north tile, if units on city.
