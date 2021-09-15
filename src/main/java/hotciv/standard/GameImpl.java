@@ -139,6 +139,7 @@ public class GameImpl implements Game {
                     c.addProduction(6);
                 }
                 this.units.put(new Position(1, 1), new UnitImpl(GameConstants.ARCHER, Player.RED));
+                this.units.put(new Position(4, 1), new UnitImpl(GameConstants.LEGION, Player.BLUE));
                 break;
         }
     }
