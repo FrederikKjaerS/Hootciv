@@ -43,7 +43,7 @@
 * ~~Red's unit attack and destroy Blue's unit~~
 * ~~Unit attacks when moving to another player's unit~~
 * ~~Test that attacking unit is another player~~
-* Unit can conquer city
+* ~~Unit can conquer city~~
 
 ### Actions
 * ~~No units have actions~~
@@ -90,3 +90,8 @@
 * ~~After one round should be year 3900 BC~~
 * ~~Game should start in year 4000~~
 * ~~The attacking unit always wins~~
+
+### Food
+* ~~The player can decide focus of the workforce~~
+* ~~Player can change workforce focus to production~~
+* ~~Player can change workforce focus to food~~

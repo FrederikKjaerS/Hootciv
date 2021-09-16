@@ -388,4 +388,28 @@ public class TestAlphaCiv {
         Position settler = new Position(4,3);
         assertThat(game.getUnitAt(settler).getDefensiveStrength(), is(3));
     }
+
+    @Test
+    public void shouldConquerBlueCityWhenArcherEnters() {
+        Position archer = new Position(2,0);
+
+        game.moveUnit(archer, new Position(3, 0));
+        endRound(1);
+        game.moveUnit(new Position(3, 0), new Position(4, 1));
+        assertThat(game.getCityAt(new Position(4,1)).getOwner(), is(Player.RED));
+    }
+
+    @Test
+    public void shouldChangeWorkForceFocusToFood(){
+        Position redCity = new Position(1,1);
+        game.changeWorkForceFocusInCityAt(redCity,GameConstants.foodFocus);
+        assertThat(game.getCityAt(redCity).getWorkforceFocus(), is(GameConstants.foodFocus));
+    }
+
+    @Test
+    public void shouldChangeWorkForceFocusToProduction(){
+        Position redCity = new Position(1,1);
+        game.changeWorkForceFocusInCityAt(redCity,GameConstants.productionFocus);
+        assertThat(game.getCityAt(redCity).getWorkforceFocus(), is(GameConstants.productionFocus));
+    }
 }

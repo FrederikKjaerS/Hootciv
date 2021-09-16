@@ -9,14 +9,12 @@ public class CityImpl implements City {
     private int treasury = 0;
     private String production = "";
     private int populationSize = 1;
+    private String workForceFocus;
 
     public CityImpl(Player owner) {
         this.owner = owner;
     }
 
-    /**
-     * Adds amount to the field treasury.
-     */
     public void addProduction(int amount) {
         treasury += amount;
     }
@@ -43,7 +41,15 @@ public class CityImpl implements City {
 
     @Override
     public String getWorkforceFocus() {
-        return null;
+        return workForceFocus;
+    }
+
+    public void setWorkForceFocus(String workForceFocus){
+        this.workForceFocus = workForceFocus;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
     }
 
     public void setProduction(String unit) {
