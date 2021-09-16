@@ -1,17 +1,26 @@
 package hotciv.standard;
 
-import hotciv.framework.Player;
-import hotciv.framework.Unit;
+import hotciv.framework.*;
 
 public class UnitImpl implements Unit {
     private String typeString;
     private Player owner;
     private int moveCount;
+    private int defense;
 
     public UnitImpl(String unit, Player owner) {
         this.typeString = unit;
         this.owner = owner;
         this.moveCount = 1;
+        switch (typeString) {
+            case GameConstants.ARCHER:
+            case GameConstants.SETTLER:
+                this.defense = 3;
+                break;
+            case GameConstants.LEGION:
+                this.defense = 2;
+                break;
+        }
     }
 
     @Override
@@ -31,7 +40,7 @@ public class UnitImpl implements Unit {
 
     @Override
     public int getDefensiveStrength() {
-        return 0;
+        return defense;
     }
 
     @Override

@@ -9,6 +9,7 @@ public class TileImpl implements Tile {
     public TileImpl(String terrain){
         this.typeString = terrain;
     }
+
     @Override
     public String getTypeString() {
         return typeString;

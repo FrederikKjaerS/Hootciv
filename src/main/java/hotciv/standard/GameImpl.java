@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.utility.Utility;
 
 import java.util.HashMap;
 
@@ -44,32 +45,6 @@ public class GameImpl implements Game {
         setupCities();
     }
 
-    public void setupGameLayout() {
-        //Setup Plains in all Positions
-        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                this.map.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
-            }
-        }
-        //Setup Oceans
-        this.map.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
-        //Setup Hills
-        this.map.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
-        //Setup Mountains
-        this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
-    }
-
-    public void setupUnits() {
-        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
-    }
-
-    public void setupCities() {
-        this.cities.put(new Position(1, 1), new CityImpl(Player.RED));
-        this.cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
-    }
-
     public Tile getTileAt(Position p) {
         return this.map.get(p);
     }
@@ -90,7 +65,6 @@ public class GameImpl implements Game {
         if (getAge() == -3000) {
             return Player.RED;
         }
-
         return null;
     }
 
@@ -100,17 +74,30 @@ public class GameImpl implements Game {
 
     public boolean moveUnit(Position from, Position to) {
         UnitImpl fromUnit = units.get(from);
+        Tile toTile = getTileAt(to);
 
-        if(1 < to.getRow() - from.getRow() || to.getRow() - from.getRow() < -1 ) {
+        if (getCityAt(to) != null) {
+            cities.get(to).setOwner(fromUnit.getOwner());
+        }
+        if(Math.abs(to.getRow() - from.getRow()) > 1 ) {
             return false;
         }
-        if(1 < to.getColumn() - from.getColumn() || to.getColumn() - from.getColumn() < -1 ) {
+        if(Math.abs(to.getColumn() - from.getColumn()) > 1 ) {
             return false;
         }
         if (getUnitAt(to) != null) {
             if (fromUnit.getOwner() == getUnitAt(to).getOwner()) {
                 return false;
             }
+        }
+        if (fromUnit.getMoveCount() < 1) {
+            return false;
+        }
+        if (fromUnit.getOwner() != playerInTurn) {
+            return false;
+        }
+        if (toTile.getTypeString().equals(GameConstants.OCEANS) || toTile.getTypeString().equals(GameConstants.MOUNTAINS)){
+            return false;
         }
         units.put(to, fromUnit);
         units.remove(from);
@@ -125,23 +112,66 @@ public class GameImpl implements Game {
                 break;
             case BLUE:
                 playerInTurn = Player.RED;
-                year += 100;
-                for(UnitImpl u : units.values()){
-                    u.resetMoveCount();
-                }
-                for (CityImpl c : cities.values()) {
-                    c.addProduction(6);
-                }
+                endOfRound();
                 break;
         }
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
+        cities.get(p).setWorkForceFocus(balance);
     }
 
     public void changeProductionInCityAt(Position p, String unitType) {
+        if(cities.get(p).getOwner() == playerInTurn) {
+            cities.get(p).setProduction(unitType);
+        }
     }
 
     public void performUnitActionAt(Position p) {
+    }
+
+    //Helping methods
+    private void setupGameLayout() {
+        //Setup Plains in all Positions
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                this.map.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+            }
+        }
+        //Setup Oceans
+        this.map.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
+        //Setup Hills
+        this.map.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
+        //Setup Mountains
+        this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+    }
+
+    private void setupUnits() {
+        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+    }
+
+    private void setupCities() {
+        this.cities.put(new Position(1, 1), new CityImpl(Player.RED));
+        this.cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
+    }
+
+    private void endOfRound() {
+        year += 100;
+        for(UnitImpl u : units.values()){
+            u.resetMoveCount();
+        }
+        for (Position cityP : cities.keySet()) {
+            cities.get(cityP).addProduction(6);
+            if(cities.get(cityP).canProduce()) {
+                for(Position p : Utility.getCenterAnd8neighborhoodOf(cityP)) {
+                    if (getUnitAt(p) == null) {
+                        this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
