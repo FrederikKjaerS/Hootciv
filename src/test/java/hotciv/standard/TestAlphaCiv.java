@@ -358,4 +358,34 @@ public class TestAlphaCiv {
         City redCity = game.getCityAt(new Position(1,1 ));
         assertThat(redCity.getSize(), is(1));
     }
+
+    @Test
+    public void  shouldNotBuildCityWhenSettlerDoesAction(){
+        Position settler = new Position(4,3);
+        game.performUnitActionAt(settler);
+        assertThat(game.getCityAt(settler), is(nullValue()));
+        assertThat(game.getUnitAt(settler).getTypeString(), is(GameConstants.SETTLER));
+    }
+
+    @Test
+    public void  shouldNotFortifyWhenArcherDoesAction(){
+        Position archer = new Position(2,0);
+        //Given that archers strength is 3
+        assertThat(game.getUnitAt(archer).getDefensiveStrength(), is(3));
+        game.performUnitActionAt(archer);
+        //Hotciv would double the units defense, but Alphaciv does not do anything.
+        assertThat(game.getUnitAt(archer).getDefensiveStrength(), is(3));
+    }
+
+    @Test
+    public void shouldHave2InDefenseForLegion(){
+        Position legion = new Position(3,2);
+        assertThat(game.getUnitAt(legion).getDefensiveStrength(), is(2));
+    }
+
+    @Test
+    public void shouldHave3InDefenseForSettler(){
+        Position settler = new Position(4,3);
+        assertThat(game.getUnitAt(settler).getDefensiveStrength(), is(3));
+    }
 }

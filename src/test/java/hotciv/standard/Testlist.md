@@ -35,17 +35,20 @@
 * ~~Units cannot move over mountain~~
 * ~~Units cannot move over ocean~~
 * ~~Red cannot move Blue's units~~
+* ~~Legion has defense of 2~~
+* ~~Settler has defense of 3~~
 
 
 ### Attack
 * ~~Red's unit attack and destroy Blue's unit~~
 * ~~Unit attacks when moving to another player's unit~~
 * ~~Test that attacking unit is another player~~
+* Unit can conquer city
 
 ### Actions
-* No units have actions
-* Settlers do not become a city after the action "Build a city"
-* Archer do NOT double up its defensive strength when fortify
+* ~~No units have actions~~
+* ~~Settlers do not become a city after the action "Build a city"~~
+* ~~Archer do NOT double up its defensive strength when fortify~~
 
 ### Layout
 * ~~Red's city is at (1,1)~~
