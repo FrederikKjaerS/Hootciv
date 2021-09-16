@@ -8,6 +8,7 @@ public class CityImpl implements City {
     private Player owner;
     private int treasury = 0;
     private String production = "";
+    private int populationSize = 1;
 
     public CityImpl(Player owner) {
         this.owner = owner;
@@ -27,7 +28,7 @@ public class CityImpl implements City {
 
     @Override
     public int getSize() {
-        return 0;
+        return populationSize;
     }
 
     @Override

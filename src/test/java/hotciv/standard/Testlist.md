@@ -2,10 +2,10 @@
 
 ### Cities
 * ~~Blue's city is at (4,1)~~
-* A city produces a unit when a city has accumulated enough production
-* Cities do not grow but stay at population size 1
+* ~~A city produces a unit when a city has accumulated enough production~~
+* ~~Cities do not grow but stay at population size 1~~
+* ~~Cities have a population size on 1~~
 * ~~Cities produce 6 `production' after a round has ended~~
-* Cities' population size is always 1
 
 ### Players
 * ~~Red is the first player in turn~~
@@ -32,6 +32,9 @@
 * ~~Red can move a unit in red's turn~~
 * ~~Blue can move Legion at (3,2) to (3,3) in blue's turn~~
 * ~~Blue can NOT move in red's turn~~
+* ~~Units cannot move over mountain~~
+* ~~Units cannot move over ocean~~
+* ~~Red cannot move Blue's units~~
 
 
 ### Attack
@@ -41,6 +44,8 @@
 
 ### Actions
 * No units have actions
+* Settlers do not become a city after the action "Build a city"
+* Archer do NOT double up its defensive strength when fortify
 
 ### Layout
 * ~~Red's city is at (1,1)~~
@@ -60,7 +65,7 @@
 * ~~Player can select to produce Legion~~
 * ~~Red City can produce archer~~
 * ~~Red city can produce Legion~~
-* Units cost is deducted from cities treasury of production.
+* ~~Units cost is deducted from cities treasury of production.~~
 * ~~Produced unit is placed on its city~~
 * ~~Place new unit on north tile, if units on city.~~
 * ~~Place unit in the top right corner of city, when two units have been produced~~
@@ -73,14 +78,12 @@
 * ~~Place archer on blue city when treasury is 10~~
 * ~~treasury is 2 after archer is produced in round 2~~
 * ~~treasury is 0 after settler is produced in round 5~~
+* ~~Treasury is 0 in first round~~
 
 
 ### Game mechanics
-* units cannot move over mountain
-* Red cannot move Blue's units
 * ~~Red wins in year 3000 BC~~
-* There are exactly two players, Red and Blue
+* ~~There are exactly two players, Red and Blue~~
 * ~~After one round should be year 3900 BC~~
 * ~~Game should start in year 4000~~
 * ~~The attacking unit always wins~~
-

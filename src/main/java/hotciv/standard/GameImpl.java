@@ -45,7 +45,7 @@ public class GameImpl implements Game {
         setupCities();
     }
 
-    public void setupGameLayout() {
+    private void setupGameLayout() {
         //Setup Plains in all Positions
         for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
             for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
@@ -60,13 +60,13 @@ public class GameImpl implements Game {
         this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
     }
 
-    public void setupUnits() {
+    private void setupUnits() {
         this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
         this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
         this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
     }
 
-    public void setupCities() {
+    private void setupCities() {
         this.cities.put(new Position(1, 1), new CityImpl(Player.RED));
         this.cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
     }
@@ -101,6 +101,7 @@ public class GameImpl implements Game {
 
     public boolean moveUnit(Position from, Position to) {
         UnitImpl fromUnit = units.get(from);
+        Tile toTile = getTileAt(to);
 
         if(Math.abs(to.getRow() - from.getRow()) > 1 ) {
             return false;
@@ -119,6 +120,9 @@ public class GameImpl implements Game {
         if (fromUnit.getOwner() != playerInTurn) {
             return false;
         }
+        if (toTile.getTypeString().equals(GameConstants.OCEANS) || toTile.getTypeString().equals(GameConstants.MOUNTAINS)){
+            return false;
+        }
         units.put(to, fromUnit);
         units.remove(from);
         fromUnit.decreaseMoveCount();
@@ -132,22 +136,26 @@ public class GameImpl implements Game {
                 break;
             case BLUE:
                 playerInTurn = Player.RED;
-                year += 100;
-                for(UnitImpl u : units.values()){
-                    u.resetMoveCount();
-                }
-                for (Position cityP : cities.keySet()) {
-                    cities.get(cityP).addProduction(6);
-                    if(cities.get(cityP).canProduce()) {
-                        for(Position p : Utility.getCenterAnd8neighborhoodOf(cityP)) {
-                            if (getUnitAt(p) == null) {
-                                this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
-                                break;
-                            }
-                        }
+                endOfRound();
+                break;
+        }
+    }
+
+    private void endOfRound() {
+        year += 100;
+        for(UnitImpl u : units.values()){
+            u.resetMoveCount();
+        }
+        for (Position cityP : cities.keySet()) {
+            cities.get(cityP).addProduction(6);
+            if(cities.get(cityP).canProduce()) {
+                for(Position p : Utility.getCenterAnd8neighborhoodOf(cityP)) {
+                    if (getUnitAt(p) == null) {
+                        this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
+                        break;
                     }
                 }
-                break;
+            }
         }
     }
 
