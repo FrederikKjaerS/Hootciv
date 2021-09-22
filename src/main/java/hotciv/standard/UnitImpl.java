@@ -14,11 +14,12 @@ public class UnitImpl implements Unit {
         this.moveCount = 1;
         switch (typeString) {
             case GameConstants.ARCHER:
+                this.defense = GameConstants.archerDefense;
             case GameConstants.SETTLER:
-                this.defense = 3;
+                this.defense = GameConstants.settlerDefense;
                 break;
             case GameConstants.LEGION:
-                this.defense = 2;
+                this.defense = GameConstants.legionDefense;
                 break;
         }
     }
