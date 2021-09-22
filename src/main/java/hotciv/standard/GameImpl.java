@@ -1,9 +1,10 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.utility.Utility;
+import hotciv.utility.NeighborTiles;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Skeleton implementation of HotCiv.
@@ -40,11 +41,19 @@ public class GameImpl implements Game {
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private WinnerStrategy winnerStrategy;
     private AgingStrategy agingStrategy;
+    private SettlerActionStrategy settlerActionStrategy;
+    private ArcherActionStrategy archerActionStrategy;
+    private WorldLayoutStrategy worldLayoutStrategy;
 
-    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy) {
+    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
+                    SettlerActionStrategy settlerActionStrategy, ArcherActionStrategy archerActionStrategy,
+                    WorldLayoutStrategy worldLayoutStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
-        setupGameLayout();
+        this.settlerActionStrategy = settlerActionStrategy;
+        this.archerActionStrategy = archerActionStrategy;
+        this.worldLayoutStrategy = worldLayoutStrategy;
+        defineWorld();
         setupUnits();
         setupCities();
     }
@@ -129,6 +138,12 @@ public class GameImpl implements Game {
     }
 
     public void performUnitActionAt(Position p) {
+        if(units.get(p).getTypeString() == GameConstants.SETTLER) {
+            settlerActionStrategy.performAction(p);
+        }
+        if(units.get(p).getTypeString() == GameConstants.ARCHER) {
+            archerActionStrategy.performAction(p);
+        }
     }
 
     //Helping methods
@@ -145,6 +160,29 @@ public class GameImpl implements Game {
         this.map.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
         //Setup Mountains
         this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+    }
+
+    private void defineWorld() {
+        // Basically we use a 'data driven' approach - code the
+        // layout in a simple semi-visual representation, and
+        // convert it to the actual Game representation.
+        // Conversion...
+        String[] layout = worldLayoutStrategy.setupWorldLayout(this);
+        String line;
+        for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
+            line = layout[r];
+            for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
+                char tileChar = line.charAt(c);
+                String type = "error";
+                if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
+                if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
+                if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
+                if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
+                if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
+                Position p = new Position(r,c);
+                this.map.put( p, new TileImpl(type));
+            }
+        }
     }
 
     private void setupUnits() {
@@ -166,7 +204,7 @@ public class GameImpl implements Game {
         for (Position cityP : cities.keySet()) {
             cities.get(cityP).addProduction(6);
             if(cities.get(cityP).canProduce()) {
-                for(Position p : Utility.getCenterAnd8neighborhoodOf(cityP)) {
+                for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
                     if (getUnitAt(p) == null) {
                         this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
                         break;

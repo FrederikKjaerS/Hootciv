@@ -4,7 +4,7 @@ import hotciv.framework.Player;
 import hotciv.framework.WinnerStrategy;
 import hotciv.standard.*;
 
-public class redWinnerStrategy implements WinnerStrategy {
+public class RedWinnerStrategy implements WinnerStrategy {
     @Override
     public Player getWinner(GameImpl game) {
         if (game.getAge() == -3000) {
