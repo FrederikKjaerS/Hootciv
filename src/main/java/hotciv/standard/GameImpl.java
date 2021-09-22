@@ -167,7 +167,7 @@ public class GameImpl implements Game {
         // layout in a simple semi-visual representation, and
         // convert it to the actual Game representation.
         // Conversion...
-        String[] layout = worldLayoutStrategy.setupWorldLayout(this);
+        String[] layout = worldLayoutStrategy.setupTileLayout();
         String line;
         for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
             line = layout[r];
@@ -186,14 +186,11 @@ public class GameImpl implements Game {
     }
 
     private void setupUnits() {
-        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+        this.units = worldLayoutStrategy.setupUnitLayout();
     }
 
     private void setupCities() {
-        this.cities.put(new Position(1, 1), new CityImpl(Player.RED));
-        this.cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
+        this.cities = worldLayoutStrategy.setupCityLayout();
     }
 
     private void endOfRound() {

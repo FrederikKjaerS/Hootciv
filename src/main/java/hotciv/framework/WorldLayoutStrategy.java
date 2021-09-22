@@ -1,7 +1,12 @@
 package hotciv.framework;
 
-import hotciv.standard.GameImpl;
+import hotciv.standard.*;
+
+import java.util.HashMap;
+
 
 public interface WorldLayoutStrategy<setupWorldLayout> {
-    String[] setupWorldLayout(GameImpl game);
+    String[] setupTileLayout();
+    HashMap<Position, UnitImpl> setupUnitLayout();
+    HashMap<Position, CityImpl> setupCityLayout();
 }
