@@ -146,6 +146,7 @@ public class GameImpl implements Game {
         }
     }
 
+
     private void defineWorld() {
         // Basically we use a 'data driven' approach - code the
         // layout in a simple semi-visual representation, and
@@ -178,7 +179,7 @@ public class GameImpl implements Game {
     }
 
     private void endOfRound() {
-        year += agingStrategy.incrementAge();
+        year += agingStrategy.incrementAge(this);
         for(UnitImpl u : units.values()){
             u.resetMoveCount();
         }

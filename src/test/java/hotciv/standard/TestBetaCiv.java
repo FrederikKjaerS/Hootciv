@@ -52,4 +52,73 @@ public class TestBetaCiv {
         assertThat(game.getWinner(), is(Player.BLUE));
     }
     */
+
+    @Test
+    public void shouldBeYear3900BCAfterOneRound() {
+        endRound(1);
+        assertThat(game.getAge(),is(-3900));
+    }
+
+    @Test
+    public void shouldBeYear3800BCAfterTwoRound() {
+        endRound(2);
+        assertThat(game.getAge(),is(-3800));
+    }
+
+    @Test
+    public void shouldBeYear1BCAfterAge100BC() {
+        endRound(40);
+        assertThat(game.getAge(), is(-1));
+    }
+
+    @Test
+    public void shouldBeYear1AfterAge1BC() {
+        endRound(41);
+        assertThat(game.getAge(), is(1));
+    }
+
+    @Test
+    public void shouldBeYear50AfterAge1() {
+        endRound(42);
+        assertThat(game.getAge(), is(50));
+    }
+
+    @Test
+    public void shouldBeYear150AfterAge100() {
+        endRound(44);
+        assertThat(game.getAge(), is(150));
+    }
+
+    @Test
+    public void shouldBeAge1775After1750() {
+        endRound(77);
+        assertThat(game.getAge(), is(1775));
+    }
+
+    @Test
+    public void shouldBeAge1850After1825() {
+        endRound(80);
+        assertThat(game.getAge(), is(1850));
+    }
+
+    @Test
+    public void shouldBeAge1905After1900() {
+        endRound(83);
+        assertThat(game.getAge(), is(1905));
+    }
+
+    @Test
+    public void shouldBeAge1965After1960() {
+        endRound(95);
+        assertThat(game.getAge(), is(1965));
+    }
+
+    @Test
+    public void shouldBeAge1971After1970() {
+        endRound(97);
+        assertThat(game.getAge(), is(1971));
+    }
+
 }
+
+

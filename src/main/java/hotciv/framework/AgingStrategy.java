@@ -1,5 +1,5 @@
 package hotciv.framework;
 
 public interface AgingStrategy {
-    int incrementAge();
+    int incrementAge(Game game);
 }
