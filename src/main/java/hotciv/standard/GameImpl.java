@@ -38,8 +38,12 @@ public class GameImpl implements Game {
     private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
     private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+    private WinnerStrategy winnerStrategy;
+    private AgingStrategy agingStrategy;
 
-    public GameImpl() {
+    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy) {
+        this.winnerStrategy = winnerStrategy;
+        this.agingStrategy = agingStrategy;
         setupGameLayout();
         setupUnits();
         setupCities();
@@ -62,10 +66,7 @@ public class GameImpl implements Game {
     }
 
     public Player getWinner() {
-        if (getAge() == -3000) {
-            return Player.RED;
-        }
-        return null;
+        return winnerStrategy.getWinner(this);
     }
 
     public int getAge() {
@@ -158,7 +159,7 @@ public class GameImpl implements Game {
     }
 
     private void endOfRound() {
-        year += 100;
+        year += agingStrategy.incrementAge();
         for(UnitImpl u : units.values()){
             u.resetMoveCount();
         }

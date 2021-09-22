@@ -2,6 +2,8 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.variants.alphaCiv.hundredYearStrategy;
+import hotciv.variants.alphaCiv.redWinnerStrategy;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -44,7 +46,7 @@ public class TestAlphaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl();
+        game = new GameImpl(new redWinnerStrategy(), new hundredYearStrategy());
     }
 
     private void endRound(int n) {
