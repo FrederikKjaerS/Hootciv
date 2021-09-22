@@ -1,7 +1,8 @@
-package hotciv.standard;
+package hotciv.standard.alphaCiv;
 
 import hotciv.framework.*;
 
+import hotciv.standard.GameImpl;
 import hotciv.variants.alphaCiv.*;
 import org.junit.jupiter.api.*;
 

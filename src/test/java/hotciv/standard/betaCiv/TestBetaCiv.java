@@ -1,6 +1,7 @@
-package hotciv.standard;
+package hotciv.standard.betaCiv;
 
 import hotciv.framework.*;
+import hotciv.standard.GameImpl;
 import hotciv.variants.alphaCiv.*;
 import hotciv.variants.betaCiv.AlgoAgingStrategy;
 import hotciv.variants.betaCiv.ConquerAllWinnerStrategy;
