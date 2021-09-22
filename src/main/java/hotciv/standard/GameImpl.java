@@ -146,22 +146,6 @@ public class GameImpl implements Game {
         }
     }
 
-    //Helping methods
-    private void setupGameLayout() {
-        //Setup Plains in all Positions
-        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                this.map.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
-            }
-        }
-        //Setup Oceans
-        this.map.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
-        //Setup Hills
-        this.map.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
-        //Setup Mountains
-        this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
-    }
-
     private void defineWorld() {
         // Basically we use a 'data driven' approach - code the
         // layout in a simple semi-visual representation, and
