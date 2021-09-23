@@ -181,7 +181,9 @@ public class GameImpl implements Game, ExtendedGame {
     private void endOfRound() {
         year += agingStrategy.incrementAge(year);
         for(UnitImpl u : units.values()){
-            u.resetMoveCount();
+            if(!u.isStationary()) {
+                u.resetMoveCount();
+            }
         }
         for (Position cityP : cities.keySet()) {
             cities.get(cityP).addProduction(6);

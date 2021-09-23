@@ -63,10 +63,41 @@ public class TestGammaCiv {
     }
 
     @Test
-    public void shouldBeDefense6AfterRedArcherActionAt4_3() {
+    public void shouldBeDefense6AfterRedArcherActionAt2_0() {
         game.performUnitActionAt(redArhcer);
         assertThat(game.getUnitAt(redArhcer).getDefensiveStrength(), is(6));
     }
+    @Test
+    public void shouldHaveMoveCount0AfterRedArcherActionAt2_0() {
+        game.performUnitActionAt(redArhcer);
+        assertThat(game.getUnitAt(redArhcer).getMoveCount(), is(0));
+    }
+
+    @Test
+    public void shouldHaveMoveCount0AfterRedArcherActionAt2_0AndOneRound() {
+        game.performUnitActionAt(redArhcer);
+        endRound(1);
+        assertThat(game.getUnitAt(redArhcer).getMoveCount(), is(0));
+    }
+
+    @Test
+    public void shouldHaveMoveCount1AfterRedArcherAt2_0Action2Times() {
+        game.performUnitActionAt(redArhcer);
+        endRound(1);
+        game.performUnitActionAt(redArhcer);
+        assertThat(game.getUnitAt(redArhcer).getMoveCount(), is(1));
+    }
+
+    @Test
+    public void shouldBeDefense3AfterRedArcherAt2_0Action2Times() {
+        game.performUnitActionAt(redArhcer);
+        endRound(1);
+        game.performUnitActionAt(redArhcer);
+        assertThat(game.getUnitAt(redArhcer).getDefensiveStrength(), is(3));
+    }
+
+
+
 }
 
 

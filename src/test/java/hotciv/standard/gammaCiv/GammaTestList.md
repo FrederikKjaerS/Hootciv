@@ -7,7 +7,8 @@
 * ~~After settler's action the new city at (4,3) has population size one~~
 
 ### Archer action
-* Red archer at (2,0) has 6 defense after action.
-* Red archer at (2,0) has moveCount = 0 after action.
-* Red archer at (2,0) has moveCount = 1 after action and one round.
-* Red archer at (2,0) that have fortified has 3 defense after move. 
+* ~~Red archer at (2,0) has 6 defense after action.~~
+* ~~Red archer at (2,0) has moveCount = 0 after action.~~
+* ~~Red archer at (2,0) has moveCount = 0 after action and one round.~~
+* ~~Red archer at (2,0) has moveCount = 1 after action two times.~~
+* ~~Red archer at (2,0) that have fortified twice has 3 in defense.~~
