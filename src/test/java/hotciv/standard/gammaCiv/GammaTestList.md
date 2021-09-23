@@ -1,8 +1,8 @@
 # Testlist
 
 ### Settler action
-* ~~Settler in (4,3) is removed after action~~ ???
-* City is created in settlers position (4,3) after action
+* ~~Settler in (4,3) is removed after action~~ 
+* ~~City is created in settlers position (4,3) after action~~
 * Red owns new city after red's settler's (4,3) action
 * After settler's action the new city at (4,3) has population size one
 

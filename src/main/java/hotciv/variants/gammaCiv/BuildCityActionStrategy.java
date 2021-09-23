@@ -1,17 +1,17 @@
 package hotciv.variants.gammaCiv;
 
-import hotciv.framework.Position;
-import hotciv.framework.SettlerActionStrategy;
+import hotciv.framework.*;
+import hotciv.standard.CityImpl;
 import hotciv.standard.UnitImpl;
+import hotciv.variants.SettlerActionStrategy;
 
 import java.util.HashMap;
 
 public class BuildCityActionStrategy implements SettlerActionStrategy {
 
     @Override
-    public HashMap<Position, UnitImpl> performAction(Position p, HashMap<Position, UnitImpl> units) {
-        HashMap<Position, UnitImpl> newUnits = units;
-        newUnits.remove(p);
-        return newUnits;
+    public void performAction(ExtendedGame game, Position p) {
+        game.insertCity(p, game.getUnitAt(p).getOwner());
+        game.removeUnit(p);
     }
 }

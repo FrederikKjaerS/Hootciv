@@ -1,5 +1,6 @@
-package hotciv.framework;
+package hotciv.variants;
 
+import hotciv.framework.Player;
 import hotciv.standard.*;
 
 public interface WinnerStrategy {

@@ -1,6 +1,6 @@
 package hotciv.variants.alphaCiv;
 
-import hotciv.framework.ArcherActionStrategy;
+import hotciv.variants.ArcherActionStrategy;
 import hotciv.framework.Position;
 
 public class NoArcherActionStrategy implements ArcherActionStrategy {

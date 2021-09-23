@@ -1,5 +1,6 @@
-package hotciv.framework;
+package hotciv.variants;
 
+import hotciv.framework.Position;
 import hotciv.standard.*;
 
 import java.util.HashMap;

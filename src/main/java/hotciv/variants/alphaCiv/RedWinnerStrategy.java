@@ -1,7 +1,7 @@
 package hotciv.variants.alphaCiv;
 
 import hotciv.framework.Player;
-import hotciv.framework.WinnerStrategy;
+import hotciv.variants.WinnerStrategy;
 import hotciv.standard.*;
 
 public class RedWinnerStrategy implements WinnerStrategy {

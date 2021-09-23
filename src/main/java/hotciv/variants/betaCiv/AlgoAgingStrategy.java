@@ -1,6 +1,7 @@
 package hotciv.variants.betaCiv;
 
 import hotciv.framework.*;
+import hotciv.variants.AgingStrategy;
 
 public class AlgoAgingStrategy implements AgingStrategy {
     @Override

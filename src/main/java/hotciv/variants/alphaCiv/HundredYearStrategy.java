@@ -1,6 +1,6 @@
 package hotciv.variants.alphaCiv;
 
-import hotciv.framework.AgingStrategy;
+import hotciv.variants.AgingStrategy;
 import hotciv.framework.Game;
 
 public class HundredYearStrategy implements AgingStrategy {

@@ -2,9 +2,11 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
+import hotciv.variants.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Skeleton implementation of HotCiv.
@@ -33,7 +35,7 @@ import java.util.Map;
  * limitations under the License.
  */
 
-public class GameImpl implements Game {
+public class GameImpl implements Game, ExtendedGame {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
     private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
@@ -139,7 +141,7 @@ public class GameImpl implements Game {
 
     public void performUnitActionAt(Position p) {
         if (units.get(p).getTypeString().equals(GameConstants.SETTLER)) {
-            this.units.putAll(settlerActionStrategy.performAction(p, units));
+            settlerActionStrategy.performAction(this, p);
         } else if (units.get(p).getTypeString().equals(GameConstants.ARCHER)) {
             archerActionStrategy.performAction(p);
         }
@@ -147,10 +149,6 @@ public class GameImpl implements Game {
 
 
     private void defineWorld() {
-        // Basically we use a 'data driven' approach - code the
-        // layout in a simple semi-visual representation, and
-        // convert it to the actual Game representation.
-        // Conversion...
         String[] layout = worldLayoutStrategy.setupTileLayout();
         String line;
         for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
@@ -194,4 +192,27 @@ public class GameImpl implements Game {
             }
         }
     }
+
+    @Override
+    public HashMap<Position,UnitImpl> getUnits() {
+        return units;
+    }
+
+    @Override
+    public HashMap<Position, CityImpl> getCities() {
+        return cities;
+    }
+
+    @Override
+    public void removeUnit(Position p) {
+        units.remove(p);
+    }
+
+    @Override
+    public void insertCity(Position p, Player owner) {
+        CityImpl city = new CityImpl(owner);
+        cities.put(p, city);
+    }
+
+
 }

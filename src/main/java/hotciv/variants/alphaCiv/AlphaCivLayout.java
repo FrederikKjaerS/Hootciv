@@ -3,13 +3,11 @@ package hotciv.variants.alphaCiv;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.framework.WorldLayoutStrategy;
+import hotciv.variants.WorldLayoutStrategy;
 import hotciv.standard.CityImpl;
-import hotciv.standard.GameImpl;
 import hotciv.standard.UnitImpl;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class AlphaCivLayout implements WorldLayoutStrategy {
 

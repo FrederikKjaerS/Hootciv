@@ -42,7 +42,6 @@ public class TestBetaCiv {
         assertThat(game.getWinner(), is(Player.RED));
     }
 
-    /**
     @Test
     public void shouldBeBlueWinnerWhenItConquersRedCity() {
         game.endOfTurn();
@@ -52,7 +51,6 @@ public class TestBetaCiv {
         game.moveUnit(new Position(2,1), redCity);
         assertThat(game.getWinner(), is(Player.BLUE));
     }
-    */
 
     @Test
     public void shouldBeYear3900BCAfterOneRound() {
@@ -119,6 +117,8 @@ public class TestBetaCiv {
         endRound(97);
         assertThat(game.getAge(), is(1971));
     }
+
+
 
 }
 

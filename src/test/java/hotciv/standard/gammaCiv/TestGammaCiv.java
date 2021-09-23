@@ -1,4 +1,4 @@
-package hotciv.standard.betaCiv;
+package hotciv.standard.gammaCiv;
 
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
@@ -37,6 +37,12 @@ public class TestGammaCiv {
     public void shouldRemoveSettlerIn4_3AfterAction() {
         game.performUnitActionAt(redSettler);
         assertThat(game.getUnitAt(redSettler), is(nullValue()));
+    }
+
+    @Test
+    public void shouldBuildCityInSettlersPlace4_3AfterAction() {
+        game.performUnitActionAt(redSettler);
+        assertThat(game.getCityAt(redSettler), is(notNullValue()));
     }
 
 }
