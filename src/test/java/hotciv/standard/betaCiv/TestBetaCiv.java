@@ -2,9 +2,11 @@ package hotciv.standard.betaCiv;
 
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
-import hotciv.variants.alphaCiv.*;
-import hotciv.variants.betaCiv.AlgoAgingStrategy;
-import hotciv.variants.betaCiv.ConquerAllWinnerStrategy;
+import hotciv.variants.actionStrategy.NoArcherActionStrategy;
+import hotciv.variants.actionStrategy.NoSettlerActionStrategy;
+import hotciv.variants.agingStrategy.AlgoAgingStrategy;
+import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
+import hotciv.variants.worldStrategy.AlphaCivLayout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

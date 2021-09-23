@@ -2,11 +2,14 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
-import hotciv.variants.*;
+import hotciv.variants.actionStrategy.ArcherActionStrategy;
+import hotciv.variants.actionStrategy.SettlerActionStrategy;
+import hotciv.variants.agingStrategy.AgingStrategy;
+import hotciv.variants.winnerStrategy.WinnerStrategy;
+import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Skeleton implementation of HotCiv.
@@ -143,7 +146,7 @@ public class GameImpl implements Game, ExtendedGame {
         if (units.get(p).getTypeString().equals(GameConstants.SETTLER)) {
             settlerActionStrategy.performAction(this, p);
         } else if (units.get(p).getTypeString().equals(GameConstants.ARCHER)) {
-            archerActionStrategy.performAction(p);
+            archerActionStrategy.performAction(this, p);
         }
     }
 
@@ -176,7 +179,7 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void endOfRound() {
-        year += agingStrategy.incrementAge(this);
+        year += agingStrategy.incrementAge(year);
         for(UnitImpl u : units.values()){
             u.resetMoveCount();
         }
@@ -194,16 +197,6 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     @Override
-    public HashMap<Position,UnitImpl> getUnits() {
-        return units;
-    }
-
-    @Override
-    public HashMap<Position, CityImpl> getCities() {
-        return cities;
-    }
-
-    @Override
     public void removeUnit(Position p) {
         units.remove(p);
     }
@@ -212,6 +205,11 @@ public class GameImpl implements Game, ExtendedGame {
     public void insertCity(Position p, Player owner) {
         CityImpl city = new CityImpl(owner);
         cities.put(p, city);
+    }
+
+    @Override
+    public Map<Position, CityImpl> getCities() {
+        return cities;
     }
 
 

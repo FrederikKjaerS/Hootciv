@@ -1,11 +1,7 @@
-package hotciv.variants.alphaCiv;
+package hotciv.variants.actionStrategy;
 
 import hotciv.framework.ExtendedGame;
 import hotciv.framework.Position;
-import hotciv.variants.SettlerActionStrategy;
-import hotciv.standard.UnitImpl;
-
-import java.util.HashMap;
 
 public class NoSettlerActionStrategy implements SettlerActionStrategy {
 

@@ -1,4 +1,4 @@
-package hotciv.variants;
+package hotciv.variants.actionStrategy;
 
 import hotciv.framework.ExtendedGame;
 import hotciv.framework.Position;

@@ -3,7 +3,11 @@ package hotciv.standard.alphaCiv;
 import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
-import hotciv.variants.alphaCiv.*;
+import hotciv.variants.actionStrategy.NoArcherActionStrategy;
+import hotciv.variants.actionStrategy.NoSettlerActionStrategy;
+import hotciv.variants.agingStrategy.HundredYearStrategy;
+import hotciv.variants.winnerStrategy.RedWinnerStrategy;
+import hotciv.variants.worldStrategy.AlphaCivLayout;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;

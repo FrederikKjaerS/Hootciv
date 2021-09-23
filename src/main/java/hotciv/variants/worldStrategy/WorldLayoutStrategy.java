@@ -1,4 +1,4 @@
-package hotciv.variants;
+package hotciv.variants.worldStrategy;
 
 import hotciv.framework.Position;
 import hotciv.standard.*;

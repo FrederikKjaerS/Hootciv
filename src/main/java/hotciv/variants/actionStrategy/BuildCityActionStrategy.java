@@ -1,11 +1,6 @@
-package hotciv.variants.gammaCiv;
+package hotciv.variants.actionStrategy;
 
 import hotciv.framework.*;
-import hotciv.standard.CityImpl;
-import hotciv.standard.UnitImpl;
-import hotciv.variants.SettlerActionStrategy;
-
-import java.util.HashMap;
 
 public class BuildCityActionStrategy implements SettlerActionStrategy {
 

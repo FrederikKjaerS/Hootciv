@@ -56,4 +56,8 @@ public class UnitImpl implements Unit {
     public void resetMoveCount(){
         moveCount = 1;
     }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
 }

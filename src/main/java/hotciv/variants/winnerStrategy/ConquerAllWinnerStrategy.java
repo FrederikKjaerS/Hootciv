@@ -1,12 +1,8 @@
-package hotciv.variants.betaCiv;
+package hotciv.variants.winnerStrategy;
 
 import hotciv.framework.City;
 import hotciv.framework.Player;
-import hotciv.variants.WinnerStrategy;
 import hotciv.standard.GameImpl;
-
-import java.util.Collection;
-import java.util.List;
 
 public class ConquerAllWinnerStrategy implements WinnerStrategy {
     @Override

@@ -2,10 +2,12 @@ package hotciv.standard.gammaCiv;
 
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
-import hotciv.variants.alphaCiv.*;
-import hotciv.variants.betaCiv.AlgoAgingStrategy;
-import hotciv.variants.betaCiv.ConquerAllWinnerStrategy;
-import hotciv.variants.gammaCiv.BuildCityActionStrategy;
+import hotciv.variants.actionStrategy.FortifyActionStrategy;
+import hotciv.variants.actionStrategy.NoArcherActionStrategy;
+import hotciv.variants.agingStrategy.AlgoAgingStrategy;
+import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
+import hotciv.variants.actionStrategy.BuildCityActionStrategy;
+import hotciv.variants.worldStrategy.AlphaCivLayout;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +25,7 @@ public class TestGammaCiv {
     @BeforeEach
     public void setUp() {
         game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(), new BuildCityActionStrategy(),
-                new NoArcherActionStrategy(), new AlphaCivLayout());
+                new FortifyActionStrategy(), new AlphaCivLayout());
     }
 
     private void endRound(int n) {
@@ -45,6 +47,26 @@ public class TestGammaCiv {
         assertThat(game.getCityAt(redSettler), is(notNullValue()));
     }
 
+    // Red owns new city after red's settler's (4,3) action
+    @Test
+    public void shouldBeRedWhoOwnsNewCityIn4_3() {
+        game.performUnitActionAt(redSettler);
+        Position newCity = new Position(4, 3);
+        assertThat(game.getCityAt(newCity).getOwner(), is(Player.RED));
+    }
+
+    @Test
+    public void shouldBePopulationSize1InNewCity() {
+        game.performUnitActionAt(redSettler);
+        Position newCity = new Position(4, 3);
+        assertThat(game.getCityAt(newCity).getSize(), is(1));
+    }
+
+    @Test
+    public void shouldBeDefense6AfterRedArcherActionAt4_3() {
+        game.performUnitActionAt(redArhcer);
+        assertThat(game.getUnitAt(redArhcer).getDefensiveStrength(), is(6));
+    }
 }
 
 

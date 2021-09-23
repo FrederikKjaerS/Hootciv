@@ -1,9 +1,8 @@
-package hotciv.variants.alphaCiv;
+package hotciv.variants.worldStrategy;
 
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.variants.WorldLayoutStrategy;
 import hotciv.standard.CityImpl;
 import hotciv.standard.UnitImpl;
 
