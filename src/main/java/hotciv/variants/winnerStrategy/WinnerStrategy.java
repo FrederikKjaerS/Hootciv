@@ -1,8 +1,8 @@
 package hotciv.variants.winnerStrategy;
 
+import hotciv.framework.ExtendedGame;
 import hotciv.framework.Player;
-import hotciv.standard.*;
 
 public interface WinnerStrategy {
-    Player getWinner(GameImpl game);
+    Player getWinner(ExtendedGame game);
 }

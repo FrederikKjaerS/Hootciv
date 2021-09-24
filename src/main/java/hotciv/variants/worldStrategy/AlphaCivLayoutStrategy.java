@@ -7,8 +7,9 @@ import hotciv.standard.CityImpl;
 import hotciv.standard.UnitImpl;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class AlphaCivLayout implements WorldLayoutStrategy {
+public class AlphaCivLayoutStrategy implements WorldLayoutStrategy {
 
     @Override
     public String[] setupTileLayout() {
@@ -35,7 +36,7 @@ public class AlphaCivLayout implements WorldLayoutStrategy {
     }
 
     @Override
-    public HashMap<Position, UnitImpl> setupUnitLayout() {
+    public Map<Position, UnitImpl> setupUnitLayout() {
         HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
         units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
         units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
@@ -44,7 +45,7 @@ public class AlphaCivLayout implements WorldLayoutStrategy {
     }
 
     @Override
-    public HashMap<Position, CityImpl> setupCityLayout() {
+    public Map<Position, CityImpl> setupCityLayout() {
         HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
         cities.put(new Position(1, 1), new CityImpl(Player.RED));
         cities.put(new Position(4, 1), new CityImpl(Player.BLUE));

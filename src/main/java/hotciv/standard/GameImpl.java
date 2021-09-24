@@ -171,11 +171,11 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void setupUnits() {
-        this.units = worldLayoutStrategy.setupUnitLayout();
+        this.units = (HashMap<Position, UnitImpl>) worldLayoutStrategy.setupUnitLayout();
     }
 
     private void setupCities() {
-        this.cities = worldLayoutStrategy.setupCityLayout();
+        this.cities = (HashMap<Position, CityImpl>) worldLayoutStrategy.setupCityLayout();
     }
 
     private void endOfRound() {

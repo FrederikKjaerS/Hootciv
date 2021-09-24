@@ -1,11 +1,11 @@
 package hotciv.variants.winnerStrategy;
 
+import hotciv.framework.ExtendedGame;
 import hotciv.framework.Player;
-import hotciv.standard.*;
 
 public class RedWinnerStrategy implements WinnerStrategy {
     @Override
-    public Player getWinner(GameImpl game) {
+    public Player getWinner(ExtendedGame game) {
         if (game.getAge() == -3000) {
             return Player.RED;
         }

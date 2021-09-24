@@ -6,7 +6,7 @@ import hotciv.variants.actionStrategy.NoArcherActionStrategy;
 import hotciv.variants.actionStrategy.NoSettlerActionStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
-import hotciv.variants.worldStrategy.AlphaCivLayout;
+import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ public class TestBetaCiv {
     @BeforeEach
     public void setUp() {
         game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(), new NoSettlerActionStrategy(),
-                new NoArcherActionStrategy(), new AlphaCivLayout());
+                new NoArcherActionStrategy(), new AlphaCivLayoutStrategy());
     }
 
     private void endRound(int n) {
