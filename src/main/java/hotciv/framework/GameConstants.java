@@ -45,4 +45,14 @@ public class GameConstants {
   // Valid production balance types
   public static final String productionFocus = "hammer";
   public static final String foodFocus = "apple";
+  // Valid combat stats
+  public static final int archerDefense = 3;
+  public static final int legionDefense = 2;
+  public static final int settlerDefense = 3;
+  public static final int archerAttack = 2;
+  public static final int legionAttack = 4;
+  public static final int settlerAttack = 0;
+  public static final int archerCost = 10;
+  public static final int legionCost = 15;
+  public static final int settlerCost = 30;
 }

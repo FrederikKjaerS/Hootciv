@@ -1,7 +1,13 @@
-package hotciv.standard;
+package hotciv.standard.alphaCiv;
 
 import hotciv.framework.*;
 
+import hotciv.standard.GameImpl;
+import hotciv.variants.actionStrategy.NoArcherActionStrategy;
+import hotciv.variants.actionStrategy.NoSettlerActionStrategy;
+import hotciv.variants.agingStrategy.HundredYearStrategy;
+import hotciv.variants.winnerStrategy.RedWinnerStrategy;
+import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -44,7 +50,8 @@ public class TestAlphaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl();
+        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(), new NoSettlerActionStrategy(),
+                new NoArcherActionStrategy(), new AlphaCivLayoutStrategy());
     }
 
     private void endRound(int n) {

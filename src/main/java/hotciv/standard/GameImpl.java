@@ -1,9 +1,15 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.utility.Utility;
+import hotciv.utility.NeighborTiles;
+import hotciv.variants.actionStrategy.ArcherActionStrategy;
+import hotciv.variants.actionStrategy.SettlerActionStrategy;
+import hotciv.variants.agingStrategy.AgingStrategy;
+import hotciv.variants.winnerStrategy.WinnerStrategy;
+import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Skeleton implementation of HotCiv.
@@ -32,15 +38,27 @@ import java.util.HashMap;
  * limitations under the License.
  */
 
-public class GameImpl implements Game {
+public class GameImpl implements Game, ExtendedGame {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
     private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
     private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+    private WinnerStrategy winnerStrategy;
+    private AgingStrategy agingStrategy;
+    private SettlerActionStrategy settlerActionStrategy;
+    private ArcherActionStrategy archerActionStrategy;
+    private WorldLayoutStrategy worldLayoutStrategy;
 
-    public GameImpl() {
-        setupGameLayout();
+    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
+                    SettlerActionStrategy settlerActionStrategy, ArcherActionStrategy archerActionStrategy,
+                    WorldLayoutStrategy worldLayoutStrategy) {
+        this.winnerStrategy = winnerStrategy;
+        this.agingStrategy = agingStrategy;
+        this.settlerActionStrategy = settlerActionStrategy;
+        this.archerActionStrategy = archerActionStrategy;
+        this.worldLayoutStrategy = worldLayoutStrategy;
+        defineWorld();
         setupUnits();
         setupCities();
     }
@@ -62,10 +80,7 @@ public class GameImpl implements Game {
     }
 
     public Player getWinner() {
-        if (getAge() == -3000) {
-            return Player.RED;
-        }
-        return null;
+        return winnerStrategy.getWinner(this);
     }
 
     public int getAge() {
@@ -128,44 +143,52 @@ public class GameImpl implements Game {
     }
 
     public void performUnitActionAt(Position p) {
+        if (units.get(p).getTypeString().equals(GameConstants.SETTLER)) {
+            settlerActionStrategy.performAction(this, p);
+        } else if (units.get(p).getTypeString().equals(GameConstants.ARCHER)) {
+            archerActionStrategy.performAction(this, p);
+        }
     }
 
-    //Helping methods
-    private void setupGameLayout() {
-        //Setup Plains in all Positions
-        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                this.map.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+
+    private void defineWorld() {
+        String[] layout = worldLayoutStrategy.setupTileLayout();
+        String line;
+        for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
+            line = layout[r];
+            for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
+                char tileChar = line.charAt(c);
+                String type = "error";
+                if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
+                if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
+                if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
+                if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
+                if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
+                Position p = new Position(r,c);
+                this.map.put( p, new TileImpl(type));
             }
         }
-        //Setup Oceans
-        this.map.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
-        //Setup Hills
-        this.map.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
-        //Setup Mountains
-        this.map.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
     }
 
     private void setupUnits() {
-        this.units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        this.units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-        this.units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+        this.units = (HashMap<Position, UnitImpl>) worldLayoutStrategy.setupUnitLayout();
     }
 
     private void setupCities() {
-        this.cities.put(new Position(1, 1), new CityImpl(Player.RED));
-        this.cities.put(new Position(4, 1), new CityImpl(Player.BLUE));
+        this.cities = (HashMap<Position, CityImpl>) worldLayoutStrategy.setupCityLayout();
     }
 
     private void endOfRound() {
-        year += 100;
+        year += agingStrategy.incrementAge(year);
         for(UnitImpl u : units.values()){
-            u.resetMoveCount();
+            if(!u.isStationary()) {
+                u.resetMoveCount();
+            }
         }
         for (Position cityP : cities.keySet()) {
             cities.get(cityP).addProduction(6);
             if(cities.get(cityP).canProduce()) {
-                for(Position p : Utility.getCenterAnd8neighborhoodOf(cityP)) {
+                for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
                     if (getUnitAt(p) == null) {
                         this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
                         break;
@@ -174,4 +197,22 @@ public class GameImpl implements Game {
             }
         }
     }
+
+    @Override
+    public void removeUnit(Position p) {
+        units.remove(p);
+    }
+
+    @Override
+    public void insertCity(Position p, Player owner) {
+        CityImpl city = new CityImpl(owner);
+        cities.put(p, city);
+    }
+
+    @Override
+    public Map<Position, CityImpl> getCities() {
+        return cities;
+    }
+
+
 }

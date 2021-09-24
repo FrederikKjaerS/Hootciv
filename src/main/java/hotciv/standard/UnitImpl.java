@@ -7,18 +7,21 @@ public class UnitImpl implements Unit {
     private Player owner;
     private int moveCount;
     private int defense;
+    private boolean isStationary = false;
 
     public UnitImpl(String unit, Player owner) {
+        this.isStationary = false;
         this.typeString = unit;
         this.owner = owner;
         this.moveCount = 1;
         switch (typeString) {
             case GameConstants.ARCHER:
+                this.defense = GameConstants.archerDefense;
             case GameConstants.SETTLER:
-                this.defense = 3;
+                this.defense = GameConstants.settlerDefense;
                 break;
             case GameConstants.LEGION:
-                this.defense = 2;
+                this.defense = GameConstants.legionDefense;
                 break;
         }
     }
@@ -54,5 +57,17 @@ public class UnitImpl implements Unit {
 
     public void resetMoveCount(){
         moveCount = 1;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public boolean isStationary() {
+        return isStationary;
+    }
+
+    public void setStationary(boolean stationary) {
+        isStationary = stationary;
     }
 }

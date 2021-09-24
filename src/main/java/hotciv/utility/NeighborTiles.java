@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Henrik Baerbak Christensen, CS @ AU
  */
-public class Utility {
+public class NeighborTiles {
     public static Iterator<Position> getCenterAnd8neighborhoodIterator(Position center) {
         List<Position> list = new ArrayList<>();
         // Define the 'delta' to add to the row for the 8 positions
