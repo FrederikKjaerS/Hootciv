@@ -3,8 +3,7 @@ package hotciv.standard.alphaCiv;
 import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
-import hotciv.variants.actionStrategy.NoArcherActionStrategy;
-import hotciv.variants.actionStrategy.NoSettlerActionStrategy;
+import hotciv.variants.actionStrategy.AlphaActionStrategy;
 import hotciv.variants.agingStrategy.HundredYearStrategy;
 import hotciv.variants.winnerStrategy.RedWinnerStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
@@ -50,8 +49,8 @@ public class TestAlphaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(), new NoSettlerActionStrategy(),
-                new NoArcherActionStrategy(), new AlphaCivLayoutStrategy());
+        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(),
+                new AlphaActionStrategy(), new AlphaCivLayoutStrategy());
     }
 
     private void endRound(int n) {

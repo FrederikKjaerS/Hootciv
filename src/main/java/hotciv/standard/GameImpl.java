@@ -2,8 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
-import hotciv.variants.actionStrategy.ArcherActionStrategy;
-import hotciv.variants.actionStrategy.SettlerActionStrategy;
+import hotciv.variants.actionStrategy.AlphaActionStrategy;
+import hotciv.variants.actionStrategy.GammaActionStrategy;
+import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
@@ -46,17 +47,15 @@ public class GameImpl implements Game, ExtendedGame {
     private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private WinnerStrategy winnerStrategy;
     private AgingStrategy agingStrategy;
-    private SettlerActionStrategy settlerActionStrategy;
-    private ArcherActionStrategy archerActionStrategy;
+    private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
 
     public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
-                    SettlerActionStrategy settlerActionStrategy, ArcherActionStrategy archerActionStrategy,
+                     UnitActionStrategy unitActionStrategy,
                     WorldLayoutStrategy worldLayoutStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
-        this.settlerActionStrategy = settlerActionStrategy;
-        this.archerActionStrategy = archerActionStrategy;
+        this.unitActionStrategy = unitActionStrategy;
         this.worldLayoutStrategy = worldLayoutStrategy;
         defineWorld();
         setupUnits();
@@ -143,11 +142,7 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     public void performUnitActionAt(Position p) {
-        if (units.get(p).getTypeString().equals(GameConstants.SETTLER)) {
-            settlerActionStrategy.performAction(this, p);
-        } else if (units.get(p).getTypeString().equals(GameConstants.ARCHER)) {
-            archerActionStrategy.performAction(this, p);
-        }
+        unitActionStrategy.performAction(this, p);
     }
 
 
