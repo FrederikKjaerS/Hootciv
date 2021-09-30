@@ -86,16 +86,16 @@ public class GameImpl implements Game, ExtendedGame {
 
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
-        makeActualMove(from, to);
+        makeActualMoveForUnit(from, to);
         handleCityConquering(to);
-        getUnitAt(to).decreaseMoveCount();
         return true;
     }
 
-    private void makeActualMove(Position from, Position to) {
+    private void makeActualMoveForUnit(Position from, Position to) {
         UnitImpl fromUnit = getUnitAt(from);
         units.put(to, fromUnit);
         units.remove(from);
+        getUnitAt(to).decreaseMoveCount();
     }
 
     private boolean isMoveValid(Position from, Position to) {
