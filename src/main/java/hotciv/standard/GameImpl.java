@@ -187,7 +187,8 @@ public class GameImpl implements Game, ExtendedGame {
             cities.get(cityP).addProduction(6);
             if(cities.get(cityP).canProduce()) {
                 for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
-                    if (getUnitAt(p) == null) {
+                    if (getUnitAt(p) == null && ! (getTileAt(p).getTypeString().equals(GameConstants.OCEANS)
+                            || getTileAt(p).getTypeString().equals(GameConstants.MOUNTAINS))) {
                         this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
                         break;
                     }
