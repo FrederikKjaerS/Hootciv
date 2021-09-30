@@ -87,36 +87,39 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        UnitImpl fromUnit = units.get(from);
+        UnitImpl fromUnit = (UnitImpl) getUnitAt(from);
         Tile toTile = getTileAt(to);
 
-        if (getCityAt(to) != null) {
-            cities.get(to).setOwner(fromUnit.getOwner());
-        }
-        if(Math.abs(to.getRow() - from.getRow()) > 1 ) {
-            return false;
-        }
-        if(Math.abs(to.getColumn() - from.getColumn()) > 1 ) {
-            return false;
-        }
-        if (getUnitAt(to) != null) {
-            if (fromUnit.getOwner() == getUnitAt(to).getOwner()) {
-                return false;
-            }
-        }
-        if (fromUnit.getMoveCount() < 1) {
-            return false;
-        }
-        if (fromUnit.getOwner() != playerInTurn) {
-            return false;
-        }
-        if (toTile.getTypeString().equals(GameConstants.OCEANS) || toTile.getTypeString().equals(GameConstants.MOUNTAINS)){
-            return false;
-        }
+        handleCityConquering(to);
+
+        boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1 
+                && Math.abs(to.getColumn() - from.getColumn()) <= 1;
+        if (! isMoveInValidRange) return false;
+
+        boolean isMovingToOwnUnit = getUnitAt(to) != null && fromUnit.getOwner() == getUnitAt(to).getOwner();
+        if (isMovingToOwnUnit) return false;
+
+        boolean hasPositiveMoveCount = fromUnit.getMoveCount() > 0;
+        if (! hasPositiveMoveCount) return false;
+
+        boolean isPlayerInTurn = fromUnit.getOwner() == playerInTurn;
+        if (! isPlayerInTurn) return false;
+
+        boolean isPassableTerrain = ! (toTile.getTypeString().equals(GameConstants.OCEANS)
+                || toTile.getTypeString().equals(GameConstants.MOUNTAINS));
+        if (! isPassableTerrain) return false;
+
         units.put(to, fromUnit);
         units.remove(from);
         fromUnit.decreaseMoveCount();
         return true;
+    }
+
+    private void handleCityConquering(Position to) {
+        boolean isMovingToCity = getCityAt(to) != null;
+        if (isMovingToCity) {
+            cities.get(to).setOwner(playerInTurn);
+        }
     }
 
     public void endOfTurn() {
