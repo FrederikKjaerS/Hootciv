@@ -99,7 +99,7 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private boolean isMoveValid(Position from, Position to) {
-        UnitImpl fromUnit = (UnitImpl) getUnitAt(from);
+        UnitImpl fromUnit = getUnitAt(from);
         Tile toTile = getTileAt(to);
 
         boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1
