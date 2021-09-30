@@ -2,8 +2,6 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
-import hotciv.variants.actionStrategy.AlphaActionStrategy;
-import hotciv.variants.actionStrategy.GammaActionStrategy;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
@@ -66,7 +64,7 @@ public class GameImpl implements Game, ExtendedGame {
         return this.map.get(p);
     }
 
-    public Unit getUnitAt(Position p) {
+    public UnitImpl getUnitAt(Position p) {
         return this.units.get(p);
     }
 
@@ -87,12 +85,24 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     public boolean moveUnit(Position from, Position to) {
+        if (! isMoveValid(from, to)) return false;
+        makeActualMove(from, to);
+        handleCityConquering(to);
+        getUnitAt(to).decreaseMoveCount();
+        return true;
+    }
+
+    private void makeActualMove(Position from, Position to) {
+        UnitImpl fromUnit = getUnitAt(from);
+        units.put(to, fromUnit);
+        units.remove(from);
+    }
+
+    private boolean isMoveValid(Position from, Position to) {
         UnitImpl fromUnit = (UnitImpl) getUnitAt(from);
         Tile toTile = getTileAt(to);
 
-        handleCityConquering(to);
-
-        boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1 
+        boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1
                 && Math.abs(to.getColumn() - from.getColumn()) <= 1;
         if (! isMoveInValidRange) return false;
 
@@ -109,9 +119,6 @@ public class GameImpl implements Game, ExtendedGame {
                 || toTile.getTypeString().equals(GameConstants.MOUNTAINS));
         if (! isPassableTerrain) return false;
 
-        units.put(to, fromUnit);
-        units.remove(from);
-        fromUnit.decreaseMoveCount();
         return true;
     }
 
