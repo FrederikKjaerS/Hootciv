@@ -57,16 +57,16 @@ public class CityImpl implements City {
     }
 
     public boolean canProduce() {
-        if (production.equals(GameConstants.ARCHER) && treasury >= 10) {
-            treasury -= 10;
+        if (production.equals(GameConstants.ARCHER) && treasury >= GameConstants.archerCost) {
+            treasury -= GameConstants.archerCost;
             return true;
         }
-        if (production.equals(GameConstants.LEGION) && treasury >= 15) {
-            treasury -= 15;
+        if (production.equals(GameConstants.LEGION) && treasury >= GameConstants.legionCost) {
+            treasury -= GameConstants.legionCost;
             return true;
         }
-        if (production.equals(GameConstants.SETTLER) && treasury >= 30) {
-            treasury -= 30;
+        if (production.equals(GameConstants.SETTLER) && treasury >= GameConstants.settlerCost) {
+            treasury -= GameConstants.settlerCost;
             return true;
         }
         return false;
