@@ -184,14 +184,21 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void endOfRound() {
+        //Helper method
         year += agingStrategy.incrementAge(year);
+
+        //Resets moveCount
         for(UnitImpl u : units.values()){
             if(!u.isStationary()) {
                 u.resetMoveCount();
             }
         }
+
+        //Adds production
         for (Position cityP : cities.keySet()) {
-            cities.get(cityP).addProduction(6);
+            cities.get(cityP).addProduction(6); //Magic constant!
+
+            //Producing Units
             if(cities.get(cityP).canProduce()) {
                 for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
                     if (getUnitAt(p) == null && ! (getTileAt(p).getTypeString().equals(GameConstants.OCEANS)
