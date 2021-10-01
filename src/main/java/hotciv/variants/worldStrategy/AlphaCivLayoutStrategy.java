@@ -3,7 +3,9 @@ package hotciv.variants.worldStrategy;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
+import hotciv.framework.Tile;
 import hotciv.standard.CityImpl;
+import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 
 import java.util.HashMap;
@@ -12,28 +14,24 @@ import java.util.Map;
 public class AlphaCivLayoutStrategy implements WorldLayoutStrategy {
 
     @Override
-    public String[] setupTileLayout() {
-        String[] layout =
-                new String[] {
-                        "ohoooooooooooooo",
-                        ".ooooooooooooooo",
-                        "ooMooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                        "oooooooooooooooo",
-                };
-        return layout;
+    public Map<Position,Tile> setupTileLayout() {
+
+        Map<Position, Tile> theWorld = new HashMap<Position,Tile>();
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                theWorld.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+            }
+        }
+        //Setup Oceans
+        theWorld.put(new Position(1, 0), new TileImpl(GameConstants.OCEANS));
+        //Setup Hills
+        theWorld.put(new Position(0, 1), new TileImpl(GameConstants.HILLS));
+        //Setup Mountains
+        theWorld.put(new Position(2, 2), new TileImpl(GameConstants.MOUNTAINS));
+
+        return theWorld;
     }
+
 
     @Override
     public Map<Position, UnitImpl> setupUnitLayout() {

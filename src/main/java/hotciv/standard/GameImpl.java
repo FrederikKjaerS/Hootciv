@@ -40,9 +40,9 @@ import java.util.Map;
 public class GameImpl implements Game, ExtendedGame {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
-    private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
-    private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-    private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+    private Map<Position, Tile> map = new HashMap<Position, Tile>();
+    private Map<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+    private Map<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private WinnerStrategy winnerStrategy;
     private AgingStrategy agingStrategy;
     private UnitActionStrategy unitActionStrategy;
@@ -162,22 +162,7 @@ public class GameImpl implements Game, ExtendedGame {
 
 
     private void defineWorld() {
-        String[] layout = worldLayoutStrategy.setupTileLayout();
-        String line;
-        for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
-            line = layout[r];
-            for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
-                char tileChar = line.charAt(c);
-                String type = "error";
-                if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
-                if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
-                if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
-                if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
-                if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
-                Position p = new Position(r,c);
-                this.map.put( p, new TileImpl(type));
-            }
-        }
+        this.map = worldLayoutStrategy.setupTileLayout();
     }
 
     private void setupUnits() {
