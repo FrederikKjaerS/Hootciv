@@ -2,10 +2,9 @@ package hotciv.standard.gammaCiv;
 
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
-import hotciv.variants.actionStrategy.FortifyActionStrategy;
+import hotciv.variants.actionStrategy.GammaActionStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
-import hotciv.variants.actionStrategy.BuildCityActionStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +22,8 @@ public class TestGammaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(), new BuildCityActionStrategy(),
-                new FortifyActionStrategy(), new AlphaCivLayoutStrategy());
+        game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(),
+                new GammaActionStrategy(), new AlphaCivLayoutStrategy());
     }
 
     private void endRound(int n) {

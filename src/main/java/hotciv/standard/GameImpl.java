@@ -2,8 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
-import hotciv.variants.actionStrategy.ArcherActionStrategy;
-import hotciv.variants.actionStrategy.SettlerActionStrategy;
+import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
@@ -41,22 +40,20 @@ import java.util.Map;
 public class GameImpl implements Game, ExtendedGame {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
-    private HashMap<Position, Tile> map = new HashMap<Position, Tile>();
-    private HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-    private HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+    private Map<Position, Tile> map = new HashMap<Position, Tile>();
+    private Map<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+    private Map<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private WinnerStrategy winnerStrategy;
     private AgingStrategy agingStrategy;
-    private SettlerActionStrategy settlerActionStrategy;
-    private ArcherActionStrategy archerActionStrategy;
+    private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
 
     public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
-                    SettlerActionStrategy settlerActionStrategy, ArcherActionStrategy archerActionStrategy,
+                     UnitActionStrategy unitActionStrategy,
                     WorldLayoutStrategy worldLayoutStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
-        this.settlerActionStrategy = settlerActionStrategy;
-        this.archerActionStrategy = archerActionStrategy;
+        this.unitActionStrategy = unitActionStrategy;
         this.worldLayoutStrategy = worldLayoutStrategy;
         defineWorld();
         setupUnits();
@@ -67,11 +64,11 @@ public class GameImpl implements Game, ExtendedGame {
         return this.map.get(p);
     }
 
-    public Unit getUnitAt(Position p) {
+    public UnitImpl getUnitAt(Position p) {
         return this.units.get(p);
     }
 
-    public City getCityAt(Position p) {
+    public CityImpl getCityAt(Position p) {
         return cities.get(p);
     }
 
@@ -88,36 +85,53 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     public boolean moveUnit(Position from, Position to) {
-        UnitImpl fromUnit = units.get(from);
-        Tile toTile = getTileAt(to);
+        if (! isMoveValid(from, to)) return false;
+        makeActualMoveForUnit(from, to);
+        handleCityConquering(to);
+        return true;
+    }
 
-        if (getCityAt(to) != null) {
-            cities.get(to).setOwner(fromUnit.getOwner());
-        }
-        if(Math.abs(to.getRow() - from.getRow()) > 1 ) {
-            return false;
-        }
-        if(Math.abs(to.getColumn() - from.getColumn()) > 1 ) {
-            return false;
-        }
-        if (getUnitAt(to) != null) {
-            if (fromUnit.getOwner() == getUnitAt(to).getOwner()) {
-                return false;
-            }
-        }
-        if (fromUnit.getMoveCount() < 1) {
-            return false;
-        }
-        if (fromUnit.getOwner() != playerInTurn) {
-            return false;
-        }
-        if (toTile.getTypeString().equals(GameConstants.OCEANS) || toTile.getTypeString().equals(GameConstants.MOUNTAINS)){
-            return false;
-        }
+    private void makeActualMoveForUnit(Position from, Position to) {
+        UnitImpl fromUnit = getUnitAt(from);
         units.put(to, fromUnit);
         units.remove(from);
-        fromUnit.decreaseMoveCount();
+        getUnitAt(to).decreaseMoveCount();
+    }
+
+    private boolean isMoveValid(Position from, Position to) {
+        UnitImpl fromUnit = getUnitAt(from);
+        Tile toTile = getTileAt(to);
+
+        boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1
+                && Math.abs(to.getColumn() - from.getColumn()) <= 1;
+        if (! isMoveInValidRange) return false;
+
+        boolean isMovingToOwnUnit = getUnitAt(to) != null && fromUnit.getOwner() == getUnitAt(to).getOwner();
+        if (isMovingToOwnUnit) return false;
+
+        boolean hasPositiveMoveCount = fromUnit.getMoveCount() > 0;
+        if (! hasPositiveMoveCount) return false;
+
+        boolean isPlayerInTurn = fromUnit.getOwner() == playerInTurn;
+        if (! isPlayerInTurn) return false;
+
+        if (! isPassableTerrain(toTile)) return false;
+
         return true;
+    }
+
+    private boolean isPassableTerrain(Tile toTile) {
+        boolean isPassableTerrain = ! (toTile.getTypeString().equals(GameConstants.OCEANS)
+                || toTile.getTypeString().equals(GameConstants.MOUNTAINS));
+        if (! isPassableTerrain) return false;
+        return true;
+    }
+
+    private void handleCityConquering(Position to) {
+        boolean isMovingToCity = getCityAt(to) != null;
+        if (isMovingToCity) {
+            getCityAt(to).setOwner(playerInTurn);
+        }
     }
 
     public void endOfTurn() {
@@ -133,41 +147,22 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
-        cities.get(p).setWorkForceFocus(balance);
+        getCityAt(p).setWorkForceFocus(balance);
     }
 
     public void changeProductionInCityAt(Position p, String unitType) {
-        if(cities.get(p).getOwner() == playerInTurn) {
-            cities.get(p).setProduction(unitType);
+        if(getCityAt(p).getOwner() == playerInTurn) {
+            getCityAt(p).setProduction(unitType);
         }
     }
 
     public void performUnitActionAt(Position p) {
-        if (units.get(p).getTypeString().equals(GameConstants.SETTLER)) {
-            settlerActionStrategy.performAction(this, p);
-        } else if (units.get(p).getTypeString().equals(GameConstants.ARCHER)) {
-            archerActionStrategy.performAction(this, p);
-        }
+        unitActionStrategy.performAction(this, p);
     }
 
 
     private void defineWorld() {
-        String[] layout = worldLayoutStrategy.setupTileLayout();
-        String line;
-        for ( int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
-            line = layout[r];
-            for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
-                char tileChar = line.charAt(c);
-                String type = "error";
-                if ( tileChar == '.' ) { type = GameConstants.OCEANS; }
-                if ( tileChar == 'o' ) { type = GameConstants.PLAINS; }
-                if ( tileChar == 'M' ) { type = GameConstants.MOUNTAINS; }
-                if ( tileChar == 'f' ) { type = GameConstants.FOREST; }
-                if ( tileChar == 'h' ) { type = GameConstants.HILLS; }
-                Position p = new Position(r,c);
-                this.map.put( p, new TileImpl(type));
-            }
-        }
+        this.map = worldLayoutStrategy.setupTileLayout();
     }
 
     private void setupUnits() {
@@ -179,24 +174,52 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void endOfRound() {
-        year += agingStrategy.incrementAge(year);
-        for(UnitImpl u : units.values()){
-            if(!u.isStationary()) {
-                u.resetMoveCount();
-            }
-        }
-        for (Position cityP : cities.keySet()) {
-            cities.get(cityP).addProduction(6);
-            if(cities.get(cityP).canProduce()) {
-                for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
-                    if (getUnitAt(p) == null) {
-                        this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
-                        break;
-                    }
-                }
+        incrementYear();
+        incrementProduction();
+        resetUnitsMoveCount();
+        produceUnits();
+    }
+
+    private void resetUnitsMoveCount() {
+        for(UnitImpl unit : units.values()){
+            if(!unit.isStationary()) {
+                unit.resetMoveCount();
             }
         }
     }
+
+    private void produceUnits() {
+        for (Position cityP : getCities().keySet()) {
+            boolean canCityProduce = getCityAt(cityP).canProduce();
+            if(! canCityProduce) continue;
+            for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
+                boolean isUnitOnTile = getUnitAt(p) != null;
+                if ( isUnitOnTile ) continue;
+                if(! isPassableTerrain(getTileAt(p))) continue;
+                createNewUnit(cityP, p);
+                break;
+            }
+        }
+    }
+
+
+    private void createNewUnit(Position cityP, Position p) {
+        String unitType = getCities().get(cityP).getProduction();
+        Player owner = getCities().get(cityP).getOwner();
+        UnitImpl newUnit = new UnitImpl(unitType, owner);
+        this.units.put(p, newUnit);
+    }
+
+    private void incrementProduction() {
+        for (Position cityP : getCities().keySet()) {
+            getCities().get(cityP).addProduction(6); //Magic constant!
+        }
+    }
+
+    private void incrementYear() {
+        this.year += agingStrategy.incrementAge(this.year);
+    }
+
 
     @Override
     public void removeUnit(Position p) {

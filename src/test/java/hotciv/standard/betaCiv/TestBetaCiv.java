@@ -2,8 +2,8 @@ package hotciv.standard.betaCiv;
 
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
-import hotciv.variants.actionStrategy.NoArcherActionStrategy;
-import hotciv.variants.actionStrategy.NoSettlerActionStrategy;
+import hotciv.variants.actionStrategy.AlphaActionStrategy;
+import hotciv.variants.actionStrategy.GammaActionStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
@@ -25,8 +25,8 @@ public class TestBetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(), new NoSettlerActionStrategy(),
-                new NoArcherActionStrategy(), new AlphaCivLayoutStrategy());
+        game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(),
+                new AlphaActionStrategy(), new AlphaCivLayoutStrategy());
     }
 
     private void endRound(int n) {
