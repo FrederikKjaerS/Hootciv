@@ -190,7 +190,7 @@ public class GameImpl implements Game, ExtendedGame {
 
     private void produceUnits() {
         for (Position cityP : getCities().keySet()) {
-            boolean canCityProduce = getCities().get(cityP).canProduce();
+            boolean canCityProduce = getCityAt(cityP).canProduce();
             if(! canCityProduce) continue;
             for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
                 boolean isUnitOnTile = getUnitAt(p) != null;
