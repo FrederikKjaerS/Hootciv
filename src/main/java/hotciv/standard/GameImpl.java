@@ -115,10 +115,15 @@ public class GameImpl implements Game, ExtendedGame {
         boolean isPlayerInTurn = fromUnit.getOwner() == playerInTurn;
         if (! isPlayerInTurn) return false;
 
+        if (! isPassableTerrain(toTile)) return false;
+
+        return true;
+    }
+
+    private boolean isPassableTerrain(Tile toTile) {
         boolean isPassableTerrain = ! (toTile.getTypeString().equals(GameConstants.OCEANS)
                 || toTile.getTypeString().equals(GameConstants.MOUNTAINS));
         if (! isPassableTerrain) return false;
-
         return true;
     }
 
@@ -184,32 +189,52 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void endOfRound() {
-        //Helper method
-        year += agingStrategy.incrementAge(year);
+        incrementYear();
+        incrementProduction();
+        resetUnitsMoveCount();
+        produceUnits();
+    }
 
-        //Resets moveCount
-        for(UnitImpl u : units.values()){
-            if(!u.isStationary()) {
-                u.resetMoveCount();
-            }
-        }
-
-        //Adds production
-        for (Position cityP : cities.keySet()) {
-            cities.get(cityP).addProduction(6); //Magic constant!
-
-            //Producing Units
-            if(cities.get(cityP).canProduce()) {
-                for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
-                    if (getUnitAt(p) == null && ! (getTileAt(p).getTypeString().equals(GameConstants.OCEANS)
-                            || getTileAt(p).getTypeString().equals(GameConstants.MOUNTAINS))) {
-                        this.units.put(p, new UnitImpl(cities.get(cityP).getProduction(), cities.get(cityP).getOwner()));
-                        break;
-                    }
-                }
+    private void resetUnitsMoveCount() {
+        for(UnitImpl unit : units.values()){
+            if(!unit.isStationary()) {
+                unit.resetMoveCount();
             }
         }
     }
+
+    private void produceUnits() {
+        for (Position cityP : getCities().keySet()) {
+            boolean canCityProduce = getCities().get(cityP).canProduce();
+            if(! canCityProduce) continue;
+            for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
+                boolean isUnitOnTile = getUnitAt(p) != null;
+                if ( isUnitOnTile ) continue;
+                if(! isPassableTerrain(getTileAt(p))) continue;
+                createNewUnit(cityP, p);
+                break;
+            }
+        }
+    }
+
+
+    private void createNewUnit(Position cityP, Position p) {
+        String unitType = getCities().get(cityP).getProduction();
+        Player owner = getCities().get(cityP).getOwner();
+        UnitImpl newUnit = new UnitImpl(unitType, owner);
+        this.units.put(p, newUnit);
+    }
+
+    private void incrementProduction() {
+        for (Position cityP : getCities().keySet()) {
+            getCities().get(cityP).addProduction(6); //Magic constant!
+        }
+    }
+
+    private void incrementYear() {
+        this.year += agingStrategy.incrementAge(this.year);
+    }
+
 
     @Override
     public void removeUnit(Position p) {
