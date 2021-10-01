@@ -68,7 +68,7 @@ public class GameImpl implements Game, ExtendedGame {
         return this.units.get(p);
     }
 
-    public City getCityAt(Position p) {
+    public CityImpl getCityAt(Position p) {
         return cities.get(p);
     }
 
@@ -130,7 +130,7 @@ public class GameImpl implements Game, ExtendedGame {
     private void handleCityConquering(Position to) {
         boolean isMovingToCity = getCityAt(to) != null;
         if (isMovingToCity) {
-            cities.get(to).setOwner(playerInTurn);
+            getCityAt(to).setOwner(playerInTurn);
         }
     }
 
@@ -147,12 +147,12 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
-        cities.get(p).setWorkForceFocus(balance);
+        getCityAt(p).setWorkForceFocus(balance);
     }
 
     public void changeProductionInCityAt(Position p, String unitType) {
-        if(cities.get(p).getOwner() == playerInTurn) {
-            cities.get(p).setProduction(unitType);
+        if(getCityAt(p).getOwner() == playerInTurn) {
+            getCityAt(p).setProduction(unitType);
         }
     }
 
