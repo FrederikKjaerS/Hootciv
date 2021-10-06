@@ -4,8 +4,10 @@ public class FixedDieStrategy implements DieDecisionStrategy{
 
     private int eyes;
 
-    public FixedDieStrategy() {
-        this.eyes = 1;
+    public FixedDieStrategy(int i) {
+        if(i > 0 && i <=6) {
+            eyes = i;
+        }
     }
 
     @Override
@@ -13,9 +15,5 @@ public class FixedDieStrategy implements DieDecisionStrategy{
         return eyes;
     }
 
-    public void setEyes(int i) {
-        if(i > 0 && i <=6) {
-            eyes = i;
-        }
-    }
+
 }

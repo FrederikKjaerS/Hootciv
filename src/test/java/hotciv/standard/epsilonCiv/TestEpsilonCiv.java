@@ -1,23 +1,16 @@
 package hotciv.standard.epsilonCiv;
 
 import hotciv.framework.Game;
-import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.GameImpl;
 import hotciv.variants.actionStrategy.AlphaActionStrategy;
-import hotciv.variants.actionStrategy.GammaActionStrategy;
-import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.agingStrategy.HundredYearStrategy;
-import hotciv.variants.attackStrategy.AlgoAttackingStrategy;
-import hotciv.variants.attackStrategy.AttackerWinsStrategy;
+import hotciv.variants.attackStrategy.AlgoAttackStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.FixedDieStrategy;
-import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.winnerStrategy.RedWinnerStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestEpsilonCiv {
@@ -31,7 +24,7 @@ public class TestEpsilonCiv {
     @BeforeEach
     public void setUp() {
         game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(),
-                new AlphaActionStrategy(), new AlphaCivLayoutStrategy(), new AlgoAttackingStrategy(new FixedDieStrategy()));
+                new AlphaActionStrategy(), new AlphaCivLayoutStrategy(), new AlgoAttackStrategy(new FixedDieStrategy(2)));
     }
 
     private void endRound(int n) {
@@ -41,11 +34,6 @@ public class TestEpsilonCiv {
         }
     }
 
-    @Test
-    public void shouldRemoveSettlerIn4_3AfterAction() {
-        game.performUnitActionAt(redSettler);
-        assertThat(game.getUnitAt(redSettler), is(nullValue()));
-    }
 }
 
 

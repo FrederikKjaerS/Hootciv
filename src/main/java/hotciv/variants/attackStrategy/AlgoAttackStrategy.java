@@ -5,15 +5,13 @@ import hotciv.framework.Position;
 import hotciv.utility.Utility2;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.DieDecisionStrategy;
 
-public class AlgoAttackingStrategy implements AttackStrategy {
-    private DieDecisionStrategy fromsDie;
-    private DieDecisionStrategy tosDie;
+public class AlgoAttackStrategy implements AttackStrategy {
+    private DieDecisionStrategy die;
     private int fromAttack;
     private int toDefense;
 
-    public AlgoAttackingStrategy(DieDecisionStrategy dieDecisionStrategy) {
-        this.fromsDie = dieDecisionStrategy;
-        this.tosDie = dieDecisionStrategy;
+    public AlgoAttackStrategy(DieDecisionStrategy dieDecisionStrategy) {
+        this.die = dieDecisionStrategy;
     }
 
     @Override
