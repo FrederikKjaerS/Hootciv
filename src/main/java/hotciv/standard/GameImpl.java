@@ -4,6 +4,7 @@ import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
+import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
@@ -47,12 +48,14 @@ public class GameImpl implements Game, ExtendedGame {
     private AgingStrategy agingStrategy;
     private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
+    private AttackStrategy attackStrategy;
 
     public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
                      UnitActionStrategy unitActionStrategy,
                     WorldLayoutStrategy worldLayoutStrategy, AttackStrategy attackStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
+        this.attackStrategy = attackStrategy;
         this.unitActionStrategy = unitActionStrategy;
         this.worldLayoutStrategy = worldLayoutStrategy;
         defineWorld();
@@ -86,6 +89,9 @@ public class GameImpl implements Game, ExtendedGame {
 
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
+        if ( getUnitAt(to) != null ){
+            if(! attackStrategy.unitWins(this, from, to)) return false;
+        }
         makeActualMoveForUnit(from, to);
         handleCityConquering(to);
         return true;

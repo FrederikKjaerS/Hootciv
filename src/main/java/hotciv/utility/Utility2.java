@@ -46,7 +46,7 @@ public class Utility2 {
      */
     public static int getFriendlySupport(Game game, Position position,
                                          Player player) {
-        Iterator<Position> neighborhood = NeighborTiles.getCenterAnd8neighborhoodIterator(position);
+        Iterator<Position> neighborhood = NeighborTiles.get8neighborhoodIterator(position);
         Position p;
         int support = 0;
         while ( neighborhood.hasNext() ) {
