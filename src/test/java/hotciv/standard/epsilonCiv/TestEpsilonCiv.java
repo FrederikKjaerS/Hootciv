@@ -1,15 +1,8 @@
 package hotciv.standard.epsilonCiv;
 
-import hotciv.framework.Game;
-import hotciv.framework.Position;
-import hotciv.standard.GameImpl;
-import hotciv.variants.actionStrategy.AlphaActionStrategy;
-import hotciv.variants.agingStrategy.HundredYearStrategy;
-import hotciv.variants.attackStrategy.AlgoAttackStrategy;
-import hotciv.variants.attackStrategy.dieDecisionStrategy.FixedDieStrategy;
-import hotciv.variants.winnerStrategy.RedWinnerStrategy;
-import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
+import hotciv.framework.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -23,8 +16,7 @@ public class TestEpsilonCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(),
-                new AlphaActionStrategy(), new AlphaCivLayoutStrategy(), new AlgoAttackStrategy(new FixedDieStrategy(2)));
+        game = new GameStubForAttackTesting();
     }
 
     private void endRound(int n) {
@@ -32,6 +24,10 @@ public class TestEpsilonCiv {
             game.endOfTurn();
             game.endOfTurn();
         }
+    }
+
+    @Test
+    public void ifds(){
     }
 
 }

@@ -16,24 +16,25 @@ public class AlgoAttackStrategy implements AttackStrategy {
 
     @Override
     public boolean unitWins(ExtendedGame game, Position from, Position to) {
-        updateStats(game,from,to);
-        fromAttack = getStatsAfterRoll(this.fromAttack);
-        toDefense = getStatsAfterRoll(this.toDefense);
+        fromAttack = getNewAttackStats(game,from);
+        toDefense = getNewDefenseStats(game,to);
         return fromAttack > toDefense;
     }
 
-    public int getStatsAfterRoll(int stats){
-        return stats * die.getEyes();
+    private int roll(){
+        return die.getEyes();
     }
 
-    public void updateStats(ExtendedGame game, Position from, Position to) {
-        int fromTerrainFactor = Utility2.getTerrainFactor(game, from);
-        int fromFriendlySupport = Utility2.getFriendlySupport(game,from, game.getUnitAt(from).getOwner());
+    public int getNewAttackStats(ExtendedGame game, Position p) {
+        int terrainFactor = Utility2.getTerrainFactor(game, p);
+        int friendlySupport = Utility2.getFriendlySupport(game,p, game.getUnitAt(p).getOwner());
 
-        int toTerrainFactor = Utility2.getTerrainFactor(game, to);
-        int toFriendlySupport = Utility2.getFriendlySupport(game,from, game.getUnitAt(to).getOwner());
+        return (game.getUnitAt(p).getAttackingStrength() + terrainFactor + friendlySupport) * roll();
+    }
+    public int getNewDefenseStats(ExtendedGame game, Position p) {
+        int terrainFactor = Utility2.getTerrainFactor(game, p);
+        int friendlySupport = Utility2.getFriendlySupport(game,p, game.getUnitAt(p).getOwner());
 
-        fromAttack = game.getUnitAt(from).getAttackingStrength() + fromTerrainFactor + fromFriendlySupport;
-        toDefense = game.getUnitAt(to).getDefensiveStrength() + toTerrainFactor + toFriendlySupport;
+        return (game.getUnitAt(p).getDefensiveStrength() + terrainFactor + friendlySupport) * roll();
     }
 }
