@@ -5,5 +5,4 @@ import hotciv.framework.Position;
 
 public interface AttackStrategy {
     boolean unitWins(ExtendedGame game, Position from, Position to);
-    void updateStats(ExtendedGame game, Position from, Position to);
 }

@@ -10,8 +10,4 @@ public class AttackerWinsStrategy implements AttackStrategy{
                 return true;
         }
 
-        @Override
-        public void updateStats(ExtendedGame game, Position from, Position to) {
-
-        }
 }

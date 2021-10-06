@@ -19,13 +19,15 @@ public class AlgoAttackingStrategy implements AttackStrategy {
     @Override
     public boolean unitWins(ExtendedGame game, Position from, Position to) {
         updateStats(game,from,to);
-        if( fromAttack * fromsDie.getEyes() > toDefense * tosDie.getEyes()) {
-            return true;
-        }
-        return false;
+        fromAttack = getStatsAfterRoll(this.fromAttack);
+        toDefense = getStatsAfterRoll(this.toDefense);
+        return fromAttack > toDefense;
     }
 
-    @Override
+    public int getStatsAfterRoll(int stats){
+        return stats * die.getEyes();
+    }
+
     public void updateStats(ExtendedGame game, Position from, Position to) {
         int fromTerrainFactor = Utility2.getTerrainFactor(game, from);
         int fromFriendlySupport = Utility2.getFriendlySupport(game,from, game.getUnitAt(from).getOwner());
