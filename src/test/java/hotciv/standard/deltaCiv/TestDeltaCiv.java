@@ -4,6 +4,7 @@ import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.variants.actionStrategy.AlphaActionStrategy;
 import hotciv.variants.agingStrategy.HundredYearStrategy;
+import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.winnerStrategy.RedWinnerStrategy;
 import hotciv.variants.worldStrategy.DeltaCivLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ public class TestDeltaCiv {
     @BeforeEach
     public void setUp() {
         game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(), new AlphaActionStrategy()
-                , new DeltaCivLayoutStrategy());
+                , new DeltaCivLayoutStrategy(), new AttackerWinsStrategy());
     }
 
     private void endRound(int n) {

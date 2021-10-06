@@ -50,7 +50,7 @@ public class GameImpl implements Game, ExtendedGame {
 
     public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
                      UnitActionStrategy unitActionStrategy,
-                    WorldLayoutStrategy worldLayoutStrategy) {
+                    WorldLayoutStrategy worldLayoutStrategy, AttackStrategy attackStrategy) {
         this.winnerStrategy = winnerStrategy;
         this.agingStrategy = agingStrategy;
         this.unitActionStrategy = unitActionStrategy;
