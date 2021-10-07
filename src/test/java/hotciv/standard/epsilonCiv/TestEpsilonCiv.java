@@ -38,6 +38,11 @@ public class TestEpsilonCiv {
             @Override
             public Map<Position,Tile> setupTileLayout() {
                 Map<Position, Tile> theWorld = new HashMap<Position,Tile>();
+                for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+                    for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                        theWorld.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+                    }
+                }
                 return theWorld;
             }
 
@@ -60,8 +65,8 @@ public class TestEpsilonCiv {
 
     private void endRound(int n) {
         for (int i = 0; i < n; i++) {
-            gameStub.endOfTurn();
-            gameStub.endOfTurn();
+            game.endOfTurn();
+            game.endOfTurn();
         }
     }
 
@@ -116,6 +121,17 @@ public class TestEpsilonCiv {
     public void shouldBeNoWinnerAfterBlueArcherAt4_4WinsOverRedArcherAt3_3() {
         game.moveUnit(new Position(4,4), new Position(3,3));
         assertThat(game.getWinner(), is(nullValue()));
+    }
+
+    @Test
+    public void shouldBeWinnerAfterBlueArcherWins3Times() {
+        game.endOfTurn();
+        game.moveUnit(new Position(4,4), new Position(3,3));
+        endRound(1);
+        game.moveUnit(new Position(3,3), new Position(2,3));
+        endRound(1);
+        game.moveUnit(new Position(2,3), new Position(3,2));
+        assertThat(game.getWinner(), is(Player.BLUE));
     }
 
 }

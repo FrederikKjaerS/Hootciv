@@ -16,14 +16,6 @@ public class ThreeWinStrategy implements WinnerStrategy {
         wins.put(Player.BLUE, 0);
     }
 
-    public int getWins(Player p){
-        //wins.get(p);
-        return 0;
-    }
-
-    public void incrementWin(Player p){
-        wins.put(p, wins.get(p) + 1);
-    }
 
     @Override
     public Player getWinner(ExtendedGame game) {
@@ -34,5 +26,10 @@ public class ThreeWinStrategy implements WinnerStrategy {
             return Player.BLUE;
         }
         return null;
+    }
+
+    @Override
+    public void incrementWin(Player p) {
+        wins.put(p, wins.get(p) + 1);
     }
 }

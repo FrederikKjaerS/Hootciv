@@ -90,8 +90,13 @@ public class GameImpl implements Game, ExtendedGame {
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
         if ( getUnitAt(to) != null ){
+            boolean attackerWinsBattle = attackStrategy.unitWins(this, from, to);
 
-            if(! attackStrategy.unitWins(this, from, to)) return false;
+            if(! attackerWinsBattle) {
+                return false;
+            } else {
+                winnerStrategy.incrementWin(getUnitAt(from).getOwner());
+            }
         }
         makeActualMoveForUnit(from, to);
         handleCityConquering(to);
