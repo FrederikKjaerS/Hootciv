@@ -1,6 +1,6 @@
 package hotciv.variants.attackStrategy;
 
-import hotciv.framework.ExtendedGame;
+import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.utility.Utility2;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.DieDecisionStrategy;
@@ -15,7 +15,7 @@ public class AlgoAttackStrategy implements AttackStrategy {
     }
 
     @Override
-    public boolean unitWins(ExtendedGame game, Position from, Position to) {
+    public boolean unitWins(Game game, Position from, Position to) {
         fromAttack = getNewAttackStats(game,from);
         toDefense = getNewDefenseStats(game,to);
         return fromAttack > toDefense;
@@ -25,16 +25,16 @@ public class AlgoAttackStrategy implements AttackStrategy {
         return die.getEyes();
     }
 
-    public int getNewAttackStats(ExtendedGame game, Position p) {
+    public int getNewAttackStats(Game game, Position p) {
         int terrainFactor = Utility2.getTerrainFactor(game, p);
         int friendlySupport = Utility2.getFriendlySupport(game,p, game.getUnitAt(p).getOwner());
 
-        return (game.getUnitAt(p).getAttackingStrength() + terrainFactor + friendlySupport) * roll();
+        return (game.getUnitAt(p).getAttackingStrength() + friendlySupport) * terrainFactor * roll();
     }
-    public int getNewDefenseStats(ExtendedGame game, Position p) {
+    public int getNewDefenseStats(Game game, Position p) {
         int terrainFactor = Utility2.getTerrainFactor(game, p);
         int friendlySupport = Utility2.getFriendlySupport(game,p, game.getUnitAt(p).getOwner());
 
-        return (game.getUnitAt(p).getDefensiveStrength() + terrainFactor + friendlySupport) * roll();
+        return (game.getUnitAt(p).getDefensiveStrength() + friendlySupport) * terrainFactor * roll();
     }
 }

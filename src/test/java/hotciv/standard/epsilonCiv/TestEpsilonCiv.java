@@ -1,15 +1,16 @@
 package hotciv.standard.epsilonCiv;
 
 import hotciv.framework.*;
+import hotciv.variants.attackStrategy.AlgoAttackStrategy;
+import hotciv.variants.attackStrategy.dieDecisionStrategy.FixedDieStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 public class TestEpsilonCiv {
     private Game game;
-    private Position redArhcer = new Position(2, 0);
-    private Position redSettler = new Position(4, 3);
 
     /**
      * Fixture for alphaciv testing.
@@ -27,7 +28,27 @@ public class TestEpsilonCiv {
     }
 
     @Test
-    public void ifds(){
+    public void shouldGet16InAttackWhenDieIs2ForArcherAt3_3(){
+        AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(2));
+        assertThat(as.getNewAttackStats(game, new Position(3,3)), is(16));
+    }
+
+    @Test
+    public void shouldGet18InDefenseWhenDieIs6ForArcherAt4_4(){
+        AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(6));
+        assertThat(as.getNewDefenseStats(game, new Position(4,4)), is(18));
+    }
+
+    @Test
+    public void shouldGet60InDefenseWhenDieIs5ForArcherAt2_3(){
+        AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(5));
+        assertThat(as.getNewAttackStats(game, new Position(2,3)), is(60));
+    }
+
+    @Test
+    public void shouldBeArcherAt4_4WhoWinsInCombatAgainst3_3() {
+        AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(4));
+        assertThat(as.unitWins(game, new Position(3, 3), new Position(4, 4)), is(true));
     }
 
 }
@@ -46,15 +67,15 @@ class StubUnit implements Unit {
     public String getTypeString() { return type; }
     public Player getOwner() { return owner; }
     public int getMoveCount() { return 0; }
-    public int getDefensiveStrength() { return 0; }
-    public int getAttackingStrength() { return 0; }
+    public int getDefensiveStrength() { return 3; }
+    public int getAttackingStrength() { return 2; }
 }
 
 
 /** A test stub for testing the battle calculation methods in
  * Utility. The terrains are
  * 0,0 - forest;
- * 1,0 - hill;
+ * 1,0, 3,3 - hill;
  * 0,1 - plain;
  * 1,1 - city.
  *
@@ -66,7 +87,7 @@ class GameStubForAttackTesting implements Game {
         if ( p.getRow() == 0 && p.getColumn() == 0 ) {
             return new hotciv.standard.epsilonCiv.StubTile(GameConstants.FOREST, 0, 0);
         }
-        if ( p.getRow() == 1 && p.getColumn() == 0 ) {
+        if ( p.getRow() == 1 && p.getColumn() == 0 || p.getRow() == 3 && p.getColumn() == 3) {
             return new hotciv.standard.epsilonCiv.StubTile(GameConstants.HILLS, 1, 0);
         }
         return new hotciv.standard.epsilonCiv.StubTile(GameConstants.PLAINS, 0, 1);
@@ -83,7 +104,7 @@ class GameStubForAttackTesting implements Game {
         return null;
     }
     public City getCityAt(Position p) {
-        if ( p.getRow() == 1 && p.getColumn() == 1 ) {
+        if ( p.getRow() == 1 && p.getColumn() == 1 || p.getRow() == 2 && p.getColumn() == 3 ) {
             return new City() {
                 public Player getOwner() { return Player.RED; }
                 public int getSize() { return 1; }
