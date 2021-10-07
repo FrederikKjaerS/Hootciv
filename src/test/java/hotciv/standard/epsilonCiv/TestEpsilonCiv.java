@@ -1,54 +1,121 @@
 package hotciv.standard.epsilonCiv;
 
 import hotciv.framework.*;
+import hotciv.standard.CityImpl;
+import hotciv.standard.GameImpl;
+import hotciv.standard.TileImpl;
+import hotciv.standard.UnitImpl;
+import hotciv.variants.actionStrategy.AlphaActionStrategy;
+import hotciv.variants.agingStrategy.HundredYearStrategy;
 import hotciv.variants.attackStrategy.AlgoAttackStrategy;
+import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.FixedDieStrategy;
+import hotciv.variants.winnerStrategy.ThreeWinStrategy;
+import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
 public class TestEpsilonCiv {
-    private Game game;
+    private ExtendedGame game;
+    private GameStubForAttackTesting gameStub;
+    private ThreeWinStrategy winnerStrategy;
 
     /**
      * Fixture for alphaciv testing.
      */
     @BeforeEach
     public void setUp() {
-        game = new GameStubForAttackTesting();
+        winnerStrategy = new ThreeWinStrategy();
+        gameStub = new GameStubForAttackTesting();
+        game = new GameImpl(winnerStrategy, new HundredYearStrategy(),
+                new AlphaActionStrategy(), new WorldLayoutStrategy() {
+            @Override
+            public Map<Position,Tile> setupTileLayout() {
+                Map<Position, Tile> theWorld = new HashMap<Position,Tile>();
+                return theWorld;
+            }
+
+            @Override
+            public Map<Position, UnitImpl> setupUnitLayout() {
+                HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+                units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE));
+                units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED));
+                units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
+                units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
+                return units;
+            }
+
+            @Override
+            public Map<Position, CityImpl> setupCityLayout() {
+                HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+                return cities;
+            }}, new AttackerWinsStrategy());
     }
 
     private void endRound(int n) {
         for (int i = 0; i < n; i++) {
-            game.endOfTurn();
-            game.endOfTurn();
+            gameStub.endOfTurn();
+            gameStub.endOfTurn();
         }
     }
 
     @Test
     public void shouldGet16InAttackWhenDieIs2ForArcherAt3_3(){
         AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(2));
-        assertThat(as.getNewAttackStats(game, new Position(3,3)), is(16));
+        assertThat(as.getNewAttackStats(gameStub, new Position(3,3)), is(16));
     }
 
     @Test
     public void shouldGet18InDefenseWhenDieIs6ForArcherAt4_4(){
         AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(6));
-        assertThat(as.getNewDefenseStats(game, new Position(4,4)), is(18));
+        assertThat(as.getNewDefenseStats(gameStub, new Position(4,4)), is(18));
     }
 
     @Test
     public void shouldGet60InDefenseWhenDieIs5ForArcherAt2_3(){
         AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(5));
-        assertThat(as.getNewAttackStats(game, new Position(2,3)), is(60));
+        assertThat(as.getNewAttackStats(gameStub, new Position(2,3)), is(60));
     }
 
     @Test
     public void shouldBeArcherAt4_4WhoWinsInCombatAgainst3_3() {
         AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(4));
-        assertThat(as.unitWins(game, new Position(3, 3), new Position(4, 4)), is(true));
+        assertThat(as.unitWins(gameStub, new Position(3, 3), new Position(4, 4)), is(true));
+    }
+
+    @Test
+    public void shouldHaveNoWinnerWhenNoPlayerHasWonABattle() {
+        assertThat(winnerStrategy.getWinner(gameStub), is(nullValue()));
+    }
+
+    //UnitTesting
+    @Test
+    public void shouldBeRedWinnerWhenRedPlayerHasWon3Battles() {
+        winnerStrategy.incrementWin(Player.RED);
+        winnerStrategy.incrementWin(Player.RED);
+        winnerStrategy.incrementWin(Player.RED);
+        assertThat(winnerStrategy.getWinner(gameStub), is(Player.RED));
+    }
+
+    //UnitTesting
+    @Test
+    public void shouldBeBlueWinnerWhenBluePlayerHasWon3Battles() {
+        winnerStrategy.incrementWin(Player.BLUE);
+        winnerStrategy.incrementWin(Player.BLUE);
+        winnerStrategy.incrementWin(Player.BLUE);
+        assertThat(winnerStrategy.getWinner(gameStub), is(Player.BLUE));
+    }
+
+    @Test
+    public void shouldBeNoWinnerAfterBlueArcherAt4_4WinsOverRedArcherAt3_3() {
+        game.moveUnit(new Position(4,4), new Position(3,3));
+        assertThat(game.getWinner(), is(nullValue()));
     }
 
 }
@@ -81,7 +148,7 @@ class StubUnit implements Unit {
  *
  * Red has units on 2,3; 3,2; 3,3; blue one on 4,4
  */
-class GameStubForAttackTesting implements Game {
+class GameStubForAttackTesting implements Game, ExtendedGame {
     
     public Tile getTileAt(Position p) {
         if ( p.getRow() == 0 && p.getColumn() == 0 ) {
@@ -131,6 +198,21 @@ class GameStubForAttackTesting implements Game {
     public int getAge() { return 0; }
     public boolean moveUnit(Position from, Position to) {return false;}
     public void performUnitActionAt( Position p ) {}
+
+    @Override
+    public void removeUnit(Position p) {
+
+    }
+
+    @Override
+    public void insertCity(Position p, Player owner) {
+
+    }
+
+    @Override
+    public Map<Position, CityImpl> getCities() {
+        return null;
+    }
 }
 
 
