@@ -5,4 +5,6 @@ import hotciv.framework.Player;
 
 public interface WinnerStrategy {
     Player getWinner(ExtendedGame game);
+
+    void incrementWin(ExtendedGame game, Player p);
 }

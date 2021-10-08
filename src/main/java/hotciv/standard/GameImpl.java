@@ -1,9 +1,11 @@
 package hotciv.standard;
 
+import hotciv.factories.HotCivFactory;
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
+import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
@@ -47,14 +49,16 @@ public class GameImpl implements Game, ExtendedGame {
     private AgingStrategy agingStrategy;
     private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
+    private AttackStrategy attackStrategy;
+    private int round;
 
-    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
-                     UnitActionStrategy unitActionStrategy,
-                    WorldLayoutStrategy worldLayoutStrategy) {
-        this.winnerStrategy = winnerStrategy;
-        this.agingStrategy = agingStrategy;
-        this.unitActionStrategy = unitActionStrategy;
-        this.worldLayoutStrategy = worldLayoutStrategy;
+    public GameImpl(HotCivFactory hotCivFactory) {
+        this.winnerStrategy = hotCivFactory.createWinnerStrategy();
+        this.agingStrategy = hotCivFactory.createAgingStrategy();
+        this.attackStrategy = hotCivFactory.createAttackStrategy();
+        this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
+        this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
+        this.round = 1;
         defineWorld();
         setupUnits();
         setupCities();
@@ -86,6 +90,15 @@ public class GameImpl implements Game, ExtendedGame {
 
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
+        if ( getUnitAt(to) != null ){
+            boolean attackerWinsBattle = attackStrategy.attackerWins(this, from, to);
+
+            if(! attackerWinsBattle) {
+                return false;
+            } else {
+                winnerStrategy.incrementWin(this, getUnitAt(from).getOwner());
+            }
+        }
         makeActualMoveForUnit(from, to);
         handleCityConquering(to);
         return true;
@@ -178,6 +191,7 @@ public class GameImpl implements Game, ExtendedGame {
         incrementProduction();
         resetUnitsMoveCount();
         produceUnits();
+        round++;
     }
 
     private void resetUnitsMoveCount() {
@@ -237,5 +251,8 @@ public class GameImpl implements Game, ExtendedGame {
         return cities;
     }
 
-
+    @Override
+    public int getRounds() {
+        return round;
+    }
 }

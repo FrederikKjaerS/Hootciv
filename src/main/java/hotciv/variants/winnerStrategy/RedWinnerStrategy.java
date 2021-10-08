@@ -11,4 +11,8 @@ public class RedWinnerStrategy implements WinnerStrategy {
         }
         return null;
     }
+
+    @Override
+    public void incrementWin(ExtendedGame game, Player p) {
+    }
 }

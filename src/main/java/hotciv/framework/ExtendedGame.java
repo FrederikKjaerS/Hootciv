@@ -12,6 +12,7 @@ public interface ExtendedGame extends Game {
     void removeUnit(Position p);
     void insertCity(Position p, Player owner);
     Map<Position, CityImpl> getCities();
+    int getRounds();
 }
 
 

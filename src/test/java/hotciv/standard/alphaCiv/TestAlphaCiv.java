@@ -1,10 +1,13 @@
 package hotciv.standard.alphaCiv;
 
+import hotciv.factories.AlphaCivFactory;
 import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
 import hotciv.variants.actionStrategy.AlphaActionStrategy;
 import hotciv.variants.agingStrategy.HundredYearStrategy;
+import hotciv.variants.attackStrategy.AttackStrategy;
+import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.winnerStrategy.RedWinnerStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
 import org.junit.jupiter.api.*;
@@ -49,8 +52,7 @@ public class TestAlphaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(),
-                new AlphaActionStrategy(), new AlphaCivLayoutStrategy());
+        game = new GameImpl(new AlphaCivFactory());
     }
 
     private void endRound(int n) {
