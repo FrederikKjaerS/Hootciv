@@ -1,5 +1,6 @@
 package hotciv.standard.deltaCiv;
 
+import hotciv.factories.DeltaCivFactory;
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.variants.actionStrategy.AlphaActionStrategy;
@@ -24,8 +25,7 @@ public class TestDeltaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(), new AlphaActionStrategy()
-                , new DeltaCivLayoutStrategy(), new AttackerWinsStrategy());
+        game = new GameImpl(new DeltaCivFactory());
     }
 
     private void endRound(int n) {

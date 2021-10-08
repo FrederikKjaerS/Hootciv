@@ -1,5 +1,6 @@
 package hotciv.standard.zetaCiv;
 
+import hotciv.factories.ZetaCivFactory;
 import hotciv.framework.*;
 import hotciv.standard.CityImpl;
 import hotciv.standard.GameImpl;
@@ -21,7 +22,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestZetaCiv {
     private ExtendedGame game;
-    private Alternating20RoundWinnerStrategy winnerStrategy;
 
     @BeforeEach
     public void setUp() {

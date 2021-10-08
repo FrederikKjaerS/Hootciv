@@ -1,5 +1,6 @@
 package hotciv.standard.gammaCiv;
 
+import hotciv.factories.GammaCivFactory;
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.variants.actionStrategy.GammaActionStrategy;
@@ -23,8 +24,7 @@ public class TestGammaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(),
-                new GammaActionStrategy(), new AlphaCivLayoutStrategy(), new AttackerWinsStrategy());
+        game = new GameImpl(new GammaCivFactory());
     }
 
     private void endRound(int n) {
