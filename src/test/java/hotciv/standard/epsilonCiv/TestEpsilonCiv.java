@@ -88,7 +88,7 @@ public class TestEpsilonCiv {
     @Test
     public void shouldBeArcherAt4_4WhoWinsInCombatAgainst3_3() {
         AlgoAttackStrategy as = new AlgoAttackStrategy(new FixedDieStrategy(4));
-        assertThat(as.unitWins(gameStub, new Position(3, 3), new Position(4, 4)), is(true));
+        assertThat(as.attackerWins(gameStub, new Position(3, 3), new Position(4, 4)), is(true));
     }
 
     @Test
@@ -96,21 +96,19 @@ public class TestEpsilonCiv {
         assertThat(winnerStrategy.getWinner(gameStub), is(nullValue()));
     }
 
-    //UnitTesting
     @Test
     public void shouldBeRedWinnerWhenRedPlayerHasWon3Battles() {
-        winnerStrategy.incrementWin(Player.RED);
-        winnerStrategy.incrementWin(Player.RED);
-        winnerStrategy.incrementWin(Player.RED);
+        winnerStrategy.incrementWin(gameStub, Player.RED);
+        winnerStrategy.incrementWin(gameStub, Player.RED);
+        winnerStrategy.incrementWin(gameStub, Player.RED);
         assertThat(winnerStrategy.getWinner(gameStub), is(Player.RED));
     }
 
-    //UnitTesting
     @Test
     public void shouldBeBlueWinnerWhenBluePlayerHasWon3Battles() {
-        winnerStrategy.incrementWin(Player.BLUE);
-        winnerStrategy.incrementWin(Player.BLUE);
-        winnerStrategy.incrementWin(Player.BLUE);
+        winnerStrategy.incrementWin(gameStub, Player.BLUE);
+        winnerStrategy.incrementWin(gameStub, Player.BLUE);
+        winnerStrategy.incrementWin(gameStub, Player.BLUE);
         assertThat(winnerStrategy.getWinner(gameStub), is(Player.BLUE));
     }
 

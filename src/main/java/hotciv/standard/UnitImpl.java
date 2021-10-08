@@ -7,6 +7,7 @@ public class UnitImpl implements Unit {
     private Player owner;
     private int moveCount;
     private int defense;
+    private int attack;
     private boolean isStationary = false;
 
     public UnitImpl(String unit, Player owner) {
@@ -17,8 +18,10 @@ public class UnitImpl implements Unit {
         switch (typeString) {
             case GameConstants.ARCHER:
                 this.defense = GameConstants.archerDefense;
+                this.attack = GameConstants.archerAttack;
             case GameConstants.SETTLER:
                 this.defense = GameConstants.settlerDefense;
+                this.attack = GameConstants.settlerAttack;
                 break;
             case GameConstants.LEGION:
                 this.defense = GameConstants.legionDefense;
@@ -49,7 +52,7 @@ public class UnitImpl implements Unit {
 
     @Override
     public int getAttackingStrength() {
-        return 0;
+        return attack;
     }
 
     public void decreaseMoveCount(){

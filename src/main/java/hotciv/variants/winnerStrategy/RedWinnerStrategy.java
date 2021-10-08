@@ -13,6 +13,6 @@ public class RedWinnerStrategy implements WinnerStrategy {
     }
 
     @Override
-    public void incrementWin(Player p) {
+    public void incrementWin(ExtendedGame game, Player p) {
     }
 }

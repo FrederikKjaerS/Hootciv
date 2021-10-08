@@ -15,7 +15,7 @@ public class AlgoAttackStrategy implements AttackStrategy {
     }
 
     @Override
-    public boolean unitWins(Game game, Position from, Position to) {
+    public boolean attackerWins(Game game, Position from, Position to) {
         fromAttack = getNewAttackStats(game,from);
         toDefense = getNewDefenseStats(game,to);
         return fromAttack > toDefense;

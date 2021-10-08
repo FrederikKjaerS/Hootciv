@@ -6,7 +6,7 @@ import hotciv.framework.Position;
 public class AttackerWinsStrategy implements AttackStrategy{
 
         @Override
-        public boolean unitWins(Game game, Position from, Position to) {
+        public boolean attackerWins(Game game, Position from, Position to) {
                 return true;
         }
 

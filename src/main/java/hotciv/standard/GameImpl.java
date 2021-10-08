@@ -49,6 +49,7 @@ public class GameImpl implements Game, ExtendedGame {
     private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
     private AttackStrategy attackStrategy;
+    private int round;
 
     public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
                      UnitActionStrategy unitActionStrategy,
@@ -58,6 +59,7 @@ public class GameImpl implements Game, ExtendedGame {
         this.attackStrategy = attackStrategy;
         this.unitActionStrategy = unitActionStrategy;
         this.worldLayoutStrategy = worldLayoutStrategy;
+        this.round = 1;
         defineWorld();
         setupUnits();
         setupCities();
@@ -90,12 +92,12 @@ public class GameImpl implements Game, ExtendedGame {
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
         if ( getUnitAt(to) != null ){
-            boolean attackerWinsBattle = attackStrategy.unitWins(this, from, to);
+            boolean attackerWinsBattle = attackStrategy.attackerWins(this, from, to);
 
             if(! attackerWinsBattle) {
                 return false;
             } else {
-                winnerStrategy.incrementWin(getUnitAt(from).getOwner());
+                winnerStrategy.incrementWin(this, getUnitAt(from).getOwner());
             }
         }
         makeActualMoveForUnit(from, to);
