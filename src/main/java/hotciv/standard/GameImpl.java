@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.factories.HotCivFactory;
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
@@ -51,14 +52,12 @@ public class GameImpl implements Game, ExtendedGame {
     private AttackStrategy attackStrategy;
     private int round;
 
-    public GameImpl(WinnerStrategy winnerStrategy, AgingStrategy agingStrategy,
-                     UnitActionStrategy unitActionStrategy,
-                    WorldLayoutStrategy worldLayoutStrategy, AttackStrategy attackStrategy) {
-        this.winnerStrategy = winnerStrategy;
-        this.agingStrategy = agingStrategy;
-        this.attackStrategy = attackStrategy;
-        this.unitActionStrategy = unitActionStrategy;
-        this.worldLayoutStrategy = worldLayoutStrategy;
+    public GameImpl(HotCivFactory hotCivFactory) {
+        this.winnerStrategy = hotCivFactory.createWinnerStrategy();
+        this.agingStrategy = hotCivFactory.createAgingStrategy();
+        this.attackStrategy = hotCivFactory.createAttackStrategy();
+        this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
+        this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
         this.round = 1;
         defineWorld();
         setupUnits();

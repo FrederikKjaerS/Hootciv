@@ -1,5 +1,6 @@
 package hotciv.standard.alphaCiv;
 
+import hotciv.factories.AlphaCivFactory;
 import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
@@ -51,9 +52,7 @@ public class TestAlphaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new RedWinnerStrategy(), new HundredYearStrategy(),
-                new AlphaActionStrategy(), new AlphaCivLayoutStrategy(), new AttackerWinsStrategy() {
-        });
+        game = new GameImpl(new AlphaCivFactory());
     }
 
     private void endRound(int n) {

@@ -1,4 +1,4 @@
-package hotciv.variants;
+package hotciv.factories;
 
 public interface HotCivFactory {
 }

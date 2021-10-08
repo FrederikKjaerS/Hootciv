@@ -1,5 +1,6 @@
 package hotciv.standard.betaCiv;
 
+import hotciv.factories.BetaCivFactory;
 import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.variants.actionStrategy.AlphaActionStrategy;
@@ -26,8 +27,7 @@ public class TestBetaCiv {
      */
     @BeforeEach
     public void setUp() {
-        game = new GameImpl(new ConquerAllWinnerStrategy(), new AlgoAgingStrategy(),
-                new AlphaActionStrategy(), new AlphaCivLayoutStrategy(), new AttackerWinsStrategy());
+        game = new GameImpl(new BetaCivFactory());
     }
 
     private void endRound(int n) {

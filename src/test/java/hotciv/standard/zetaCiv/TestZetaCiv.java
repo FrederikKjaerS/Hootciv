@@ -5,8 +5,7 @@ import hotciv.standard.CityImpl;
 import hotciv.standard.GameImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
-import hotciv.variants.actionStrategy.AlphaActionStrategy;
-import hotciv.variants.agingStrategy.HundredYearStrategy;
+import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.winnerStrategy.Alternating20RoundWinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
@@ -26,37 +25,16 @@ public class TestZetaCiv {
 
     @BeforeEach
     public void setUp() {
-        winnerStrategy = new Alternating20RoundWinnerStrategy();
-        game = new GameImpl(winnerStrategy, new HundredYearStrategy(),
-                new AlphaActionStrategy(), new WorldLayoutStrategy() {
+        game = new GameImpl(new ZetaCivFactory() {
             @Override
-            public Map<Position,Tile> setupTileLayout() {
-                Map<Position, Tile> theWorld = new HashMap<>();
-                for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-                    for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
-                        theWorld.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
-                    }
-                }
-                return theWorld;
+            public WorldLayoutStrategy createWorldLayoutStrategy() {
+                return new StubLayoutForZeta();
             }
-
             @Override
-            public Map<Position, UnitImpl> setupUnitLayout() {
-                HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-                units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE));
-                units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED));
-                units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
-                units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
-                return units;
+            public AttackStrategy createAttackStrategy() {
+                return new AttackerWinsStrategy();
             }
-
-            @Override
-            public Map<Position, CityImpl> setupCityLayout() {
-                HashMap<Position, CityImpl> cities = new HashMap<>();
-                cities.put(new Position(4, 5), new CityImpl(Player.RED));
-                cities.put(new Position(2, 4), new CityImpl(Player.BLUE));
-                return cities;
-            }}, new AttackerWinsStrategy());
+        });
     }
 
     private void endRound(int n) {
@@ -107,4 +85,36 @@ public class TestZetaCiv {
         assertThat(game.getWinner(), is(nullValue()));
     }
 }
+
+class StubLayoutForZeta implements WorldLayoutStrategy{
+    @Override
+    public Map<Position,Tile> setupTileLayout() {
+        Map<Position, Tile> theWorld = new HashMap<>();
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (int j = 0; j < GameConstants.WORLDSIZE; j++) {
+                theWorld.put(new Position(i, j), new TileImpl(GameConstants.PLAINS));
+            }
+        }
+        return theWorld;
+    }
+
+    @Override
+    public Map<Position, UnitImpl> setupUnitLayout() {
+        HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+        units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE));
+        units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        return units;
+    }
+
+    @Override
+    public Map<Position, CityImpl> setupCityLayout() {
+        HashMap<Position, CityImpl> cities = new HashMap<>();
+        cities.put(new Position(4, 5), new CityImpl(Player.RED));
+        cities.put(new Position(2, 4), new CityImpl(Player.BLUE));
+        return cities;
+        }
+    }
+
 
