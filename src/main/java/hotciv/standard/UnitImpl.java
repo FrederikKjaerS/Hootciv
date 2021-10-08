@@ -22,6 +22,7 @@ public class UnitImpl implements Unit {
                 break;
             case GameConstants.LEGION:
                 this.defense = GameConstants.legionDefense;
+                this.attack = GameConstants.legionAttack;
                 break;
         }
     }

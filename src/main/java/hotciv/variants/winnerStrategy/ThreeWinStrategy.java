@@ -1,7 +1,6 @@
 package hotciv.variants.winnerStrategy;
 
 import hotciv.framework.ExtendedGame;
-import hotciv.framework.Game;
 import hotciv.framework.Player;
 
 import java.util.HashMap;

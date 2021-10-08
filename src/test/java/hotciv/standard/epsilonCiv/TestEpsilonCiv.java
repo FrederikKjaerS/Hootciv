@@ -26,9 +26,6 @@ public class TestEpsilonCiv {
     private GameStubForAttackTesting gameStub;
     private ThreeWinStrategy winnerStrategy;
 
-    /**
-     * Fixture for alphaciv testing.
-     */
     @BeforeEach
     public void setUp() {
         winnerStrategy = new ThreeWinStrategy();
@@ -228,6 +225,11 @@ class GameStubForAttackTesting implements Game, ExtendedGame {
     @Override
     public Map<Position, CityImpl> getCities() {
         return null;
+    }
+
+    @Override
+    public int getRounds() {
+        return 0;
     }
 }
 

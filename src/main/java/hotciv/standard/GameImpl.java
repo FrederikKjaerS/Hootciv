@@ -190,6 +190,7 @@ public class GameImpl implements Game, ExtendedGame {
         incrementProduction();
         resetUnitsMoveCount();
         produceUnits();
+        round++;
     }
 
     private void resetUnitsMoveCount() {
@@ -249,5 +250,8 @@ public class GameImpl implements Game, ExtendedGame {
         return cities;
     }
 
-
+    @Override
+    public int getRounds() {
+        return round;
+    }
 }
