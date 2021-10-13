@@ -36,12 +36,14 @@ public class GameConstants {
   public static final String ARCHER    = "archer";
   public static final String LEGION    = "legion";
   public static final String SETTLER   = "settler";
+  public static final String SANDWORM   = "sandworm";
   // Valid terrain types
   public static final String PLAINS    = "plains";
   public static final String OCEANS    = "ocean";
   public static final String FOREST    = "forest";
   public static final String HILLS     = "hills";
   public static final String MOUNTAINS = "mountain";
+  public static final String DESERT = "desert";
   // Valid production balance types
   public static final String productionFocus = "hammer";
   public static final String foodFocus = "apple";
@@ -49,10 +51,14 @@ public class GameConstants {
   public static final int archerDefense = 3;
   public static final int legionDefense = 2;
   public static final int settlerDefense = 3;
+  public static final int sandwormDefense = 10;
   public static final int archerAttack = 2;
   public static final int legionAttack = 4;
   public static final int settlerAttack = 0;
+  public static final int sandwormAttack = 0;
   public static final int archerCost = 10;
   public static final int legionCost = 15;
   public static final int settlerCost = 30;
+  public static final int sandwormCost = 30;
+
 }
