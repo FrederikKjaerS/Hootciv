@@ -1,6 +1,7 @@
 package hotciv.variants.worldStrategy;
 
 import hotciv.framework.GameConstants;
+import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
 import hotciv.standard.CityImpl;
@@ -65,11 +66,19 @@ public class ThetaCivLayoutStrategy implements WorldLayoutStrategy {
 
     @Override
     public Map<Position, UnitImpl> setupUnitLayout() {
-        return null;
+        HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+        units.put(new Position(3, 8), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(4, 4), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+        units.put(new Position(5, 5), new UnitImpl(GameConstants.SETTLER, Player.RED));
+        units.put(new Position(9, 6), new UnitImpl(GameConstants.SANDWORM, Player.BLUE));
+        return units;
     }
 
     @Override
     public Map<Position, CityImpl> setupCityLayout() {
-        return null;
+        HashMap<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
+        cities.put(new Position(8, 12), new CityImpl(Player.RED));
+        cities.put(new Position(4, 5), new CityImpl(Player.BLUE));
+        return cities;
     }
 }
