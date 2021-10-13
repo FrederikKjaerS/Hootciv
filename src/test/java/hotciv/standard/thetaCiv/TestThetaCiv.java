@@ -14,8 +14,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestThetaCiv {
-    private Game game;
+    private GameImpl game;
     private Position sandworm = new Position(9,6);
+    private Position redCity = new Position(8,12);
 
     @BeforeEach
     public void setUp() {
@@ -85,6 +86,21 @@ public class TestThetaCiv {
         game.endOfTurn();
         assertThat(game.moveUnit(sandworm, new Position(9,7)), is(false));
     }
+
+    @Test
+    public void redCityCantProduceSandwormInFirstRound() {
+        game.changeProductionInCityAt(redCity, GameConstants.SANDWORM);
+        assertThat(game.getUnitAt(redCity), is(nullValue()));
+    }
+
+    @Test
+    public void redCityCanProduceSandwormIn5Round() {
+        game.changeProductionInCityAt(redCity, GameConstants.SANDWORM);
+        endRound(5);
+        assertThat(game.getUnitAt(redCity).getTypeString(), is(GameConstants.SANDWORM));
+    }
+
+
 
 
 

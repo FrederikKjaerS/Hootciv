@@ -6,7 +6,7 @@ import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
-import hotciv.variants.movingStrategy.MovingStrategy;
+import hotciv.variants.UnitAndTileStrategy.UnitAndTileStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
@@ -51,7 +51,7 @@ public class GameImpl implements Game, ExtendedGame {
     private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
     private AttackStrategy attackStrategy;
-    private MovingStrategy movingStrategy;
+    private UnitAndTileStrategy unitAndTileStrategy;
     private int round;
 
     public GameImpl(HotCivFactory hotCivFactory) {
@@ -60,7 +60,7 @@ public class GameImpl implements Game, ExtendedGame {
         this.attackStrategy = hotCivFactory.createAttackStrategy();
         this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
         this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
-        this.movingStrategy = hotCivFactory.createMovingStrategy();
+        this.unitAndTileStrategy = hotCivFactory.createMovingStrategy();
         this.round = 1;
         defineWorld();
         setupUnits();
@@ -131,20 +131,13 @@ public class GameImpl implements Game, ExtendedGame {
         boolean isPlayerInTurn = fromUnit.getOwner() == playerInTurn;
         if (! isPlayerInTurn) return false;
 
-        if (! isPassableTerrain(toTile)) return false;
-
-        if(!movingStrategy.canMoveToTile(fromUnit, toTile.getTypeString())){
-            return false;
-        }
+        if (! isPassableTerrain(getUnitAt(from), toTile)) return false;
 
         return true;
     }
 
-    private boolean isPassableTerrain(Tile toTile) {
-        boolean isPassableTerrain = ! (toTile.getTypeString().equals(GameConstants.OCEANS)
-                || toTile.getTypeString().equals(GameConstants.MOUNTAINS));
-        if (! isPassableTerrain) return false;
-        return true;
+    private boolean isPassableTerrain(Unit u, Tile toTile) {
+        return unitAndTileStrategy.canMoveToTile(u, toTile.getTypeString());
     }
 
     private void handleCityConquering(Position to) {
@@ -216,7 +209,7 @@ public class GameImpl implements Game, ExtendedGame {
             for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
                 boolean isUnitOnTile = getUnitAt(p) != null;
                 if ( isUnitOnTile ) continue;
-                if(! isPassableTerrain(getTileAt(p))) continue;
+                if(! isPassableTerrain(null, getTileAt(p))) continue;
                 createNewUnit(cityP, p);
                 break;
             }

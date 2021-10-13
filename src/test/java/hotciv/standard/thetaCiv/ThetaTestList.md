@@ -1,9 +1,9 @@
 # Testlist
 
 ### Sandworm
-* Sandworms can only move in desert tiles.
-* Sandworms can not cross any other tiles than dersert.
-* A sandworm costs 30 in production
+* ~~Sandworms can only move in desert tiles~~
+* ~~Sandworms can not cross any other tiles than dessert.~~
+* ~~A sandworm can be produced when city has 30 treasury~~
 * A sandworm costs has an attack strength on 0.
 * A sandworm costs has a defense strength on 10.
 * Cities can produce sandworms.
