@@ -37,6 +37,12 @@ public class GameConstants {
   public static final String LEGION    = "legion";
   public static final String SETTLER   = "settler";
   public static final String SANDWORM   = "sandworm";
+  // Valid maxMove stats
+  public static final int archerMaxMove = 1;
+  public static final int legionMaxMove = 1;
+  public static final int settlerMaxMove = 1;
+  public static final int sandwormMaxMove = 2;
+
   // Valid terrain types
   public static final String PLAINS    = "plains";
   public static final String OCEANS    = "ocean";

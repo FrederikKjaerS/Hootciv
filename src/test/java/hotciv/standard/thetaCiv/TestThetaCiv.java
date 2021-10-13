@@ -139,6 +139,15 @@ public class TestThetaCiv {
         assertThat(game.getUnitAt(new Position(5,1)).getTypeString(), is(GameConstants.ARCHER));
     }
 
+    @Test
+    public void shouldMoveSandworm2TimesInSameRound() {
+        game.endOfTurn();
+        game.moveUnit(sandworm, new Position(8,6));
+        game.moveUnit(new Position(8,6), new Position(7,6));
+        assertThat(game.getUnitAt(new Position(7,6)).getTypeString(), is(GameConstants.SANDWORM));
+
+    }
+
 
 
 

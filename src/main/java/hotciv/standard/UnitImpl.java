@@ -14,11 +14,19 @@ public class UnitImpl implements Unit {
         this.isStationary = false;
         this.typeString = unit;
         this.owner = owner;
-        this.moveCount = 1;
+        if(unit.equals(GameConstants.ARCHER)||
+                unit.equals(GameConstants.LEGION)||
+                unit.equals(GameConstants.SETTLER)){
+            moveCount = 1;
+        }
+        if(unit.equals(GameConstants.SANDWORM)){
+            moveCount = 2;
+        }
         switch (typeString) {
             case GameConstants.ARCHER:
                 this.defense = GameConstants.archerDefense;
                 this.attack = GameConstants.archerAttack;
+                break;
             case GameConstants.SETTLER:
                 this.defense = GameConstants.settlerDefense;
                 this.attack = GameConstants.settlerAttack;
@@ -60,7 +68,14 @@ public class UnitImpl implements Unit {
     }
 
     public void resetMoveCount(){
-        moveCount = 1;
+        if(typeString.equals(GameConstants.ARCHER)||
+                typeString.equals(GameConstants.LEGION)||
+                typeString.equals(GameConstants.SETTLER)){
+            moveCount = GameConstants.archerMaxMove;
+        }
+        if(typeString.equals(GameConstants.SANDWORM)){
+            moveCount = GameConstants.sandwormMaxMove;
+        }
     }
 
     public void setDefense(int defense) {
