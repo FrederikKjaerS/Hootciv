@@ -17,6 +17,7 @@ public class TestThetaCiv {
     private GameImpl game;
     private Position sandworm = new Position(9,6);
     private Position redCity = new Position(8,12);
+    private Position blueCity = new Position(4,5);
 
     @BeforeEach
     public void setUp() {
@@ -88,16 +89,54 @@ public class TestThetaCiv {
     }
 
     @Test
-    public void redCityCantProduceSandwormInFirstRound() {
+    public void shouldNotProduceSandwormInFirstRoundForRedCityAt8_12() {
         game.changeProductionInCityAt(redCity, GameConstants.SANDWORM);
         assertThat(game.getUnitAt(redCity), is(nullValue()));
     }
 
     @Test
-    public void redCityCanProduceSandwormIn5Round() {
+    public void shouldProduceSandwormIn5RoundForRedCityAt8_12() {
         game.changeProductionInCityAt(redCity, GameConstants.SANDWORM);
         endRound(5);
         assertThat(game.getUnitAt(redCity).getTypeString(), is(GameConstants.SANDWORM));
+    }
+
+    @Test
+    public void shouldProduceSandwormIn5RoundForBlueCityAt4_5() {
+        game.endOfTurn();
+        game.changeProductionInCityAt(blueCity, GameConstants.SANDWORM);
+        endRound(5);
+        assertThat(game.getUnitAt(blueCity).getTypeString(), is(GameConstants.SANDWORM));
+    }
+
+    @Test
+    public void shouldNotProduceSandwormIn5RoundForRedCityAt5_1() {
+        game.moveUnit(new Position(5,5),new Position(5,4));
+        endRound(1);
+        game.moveUnit(new Position(5,4),new Position(5,3));
+        endRound(1);
+        game.moveUnit(new Position(5,3),new Position(5,2));
+        endRound(1);
+        game.moveUnit(new Position(5,2),new Position(5,1));
+        game.performUnitActionAt(new Position(5,1));
+        game.changeProductionInCityAt(new Position(5,1), GameConstants.SANDWORM);
+        endRound(5);
+        assertThat(game.getUnitAt(new Position(5,1)), is(nullValue()));
+    }
+
+    @Test
+    public void shouldNotProduceArcherIn2RoundForRedCityAt5_1() {
+        game.moveUnit(new Position(5,5),new Position(5,4));
+        endRound(1);
+        game.moveUnit(new Position(5,4),new Position(5,3));
+        endRound(1);
+        game.moveUnit(new Position(5,3),new Position(5,2));
+        endRound(1);
+        game.moveUnit(new Position(5,2),new Position(5,1));
+        game.performUnitActionAt(new Position(5,1));
+        game.changeProductionInCityAt(new Position(5,1), GameConstants.ARCHER);
+        endRound(2);
+        assertThat(game.getUnitAt(new Position(5,1)).getTypeString(), is(GameConstants.ARCHER));
     }
 
 

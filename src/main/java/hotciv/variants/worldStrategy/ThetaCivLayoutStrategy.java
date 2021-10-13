@@ -66,7 +66,7 @@ public class ThetaCivLayoutStrategy implements WorldLayoutStrategy {
 
     @Override
     public Map<Position, UnitImpl> setupUnitLayout() {
-        HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+        HashMap<Position, UnitImpl> units = new HashMap<>();
         units.put(new Position(3, 8), new UnitImpl(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 4), new UnitImpl(GameConstants.LEGION, Player.BLUE));
         units.put(new Position(5, 5), new UnitImpl(GameConstants.SETTLER, Player.RED));

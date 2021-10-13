@@ -165,7 +165,7 @@ public class GameImpl implements Game, ExtendedGame {
 
     public void changeProductionInCityAt(Position p, String unitType) {
         if(getCityAt(p).getOwner() == playerInTurn) {
-            getCityAt(p).setProduction(unitType);
+            unitAndTileStrategy.setProduction(this, p, unitType);
         }
     }
 

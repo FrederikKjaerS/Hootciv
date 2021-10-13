@@ -6,11 +6,12 @@
 * ~~A sandworm can be produced when city has 30 treasury~~
 * A sandworm costs has an attack strength on 0.
 * A sandworm costs has a defense strength on 10.
-* Cities can produce sandworms.
-* Cities can change production type to sandworms
-* A sandworm can be made in a city on a dessert tile.
-* A sandworm can be made in a city adjacent a dessert tile.
-* A sandworm can NOT be made in a city not adjacent or on a dessert tile.
+* ~~Cities can produce sandworms.~~
+* ~~Cities can change production type to sandworms~~
+* ~~Cities cant change production type to sandworms if no dessert tile is neighbor~~
+* ~~A sandworm can be made in a city on a dessert tile.~~
+* ~~A sandworm can be made in a city adjacent a dessert tile.~~
+* ~~A sandworm can NOT be made in a city not adjacent or on a dessert tile.~~
 * Sandworms can do action "Devour", which kills all non-freindly units in the 8-neighbourhood tiles.
 
 
