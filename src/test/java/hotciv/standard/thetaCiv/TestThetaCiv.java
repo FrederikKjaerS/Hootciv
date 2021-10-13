@@ -54,6 +54,27 @@ public class TestThetaCiv {
         assertThat(game.getTileAt(new Position(1,3)).getTypeString(), is(GameConstants.HILLS));
     }
 
+    @Test
+    public void shouldBeArcherAt3_8() {
+        assertThat(game.getUnitAt(new Position(3,8)).getTypeString(), is(GameConstants.ARCHER));
+    }
+
+    @Test
+    public void shouldBeSandwormAt9_6() {
+        assertThat(game.getUnitAt(new Position(9,6)).getTypeString(), is(GameConstants.SANDWORM));
+    }
+
+    @Test
+    public void shouldBeBlueCityAt4_5() {
+        assertThat(game.getCityAt(new Position(4,5)).getOwner(), is(Player.BLUE));
+    }
+
+    @Test
+    public void shouldBeRedCityAt8_12() {
+        assertThat(game.getCityAt(new Position(8,12)).getOwner(), is(Player.RED));
+    }
+
+
 }
 
 

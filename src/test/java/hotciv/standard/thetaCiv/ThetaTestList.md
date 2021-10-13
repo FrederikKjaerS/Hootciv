@@ -22,9 +22,9 @@
 * ~~There is a desert tile at (0,5).~~
 
 ### Unit placement
-* There is an archer at (3,8).
-* There is a sandworm at (9,6).
+* ~~There is an archer at (3,8).~~
+* ~~There is a sandworm at (9,6).~
 
 ### City placement
-* There is blue city at (4,5).
-* There is a red city at (8,12).
+* ~~There is blue city at (4,5).~~
+* ~~There is a red city at (8,12).~~
