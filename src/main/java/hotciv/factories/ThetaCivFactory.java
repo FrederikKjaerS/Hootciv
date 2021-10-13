@@ -6,6 +6,8 @@ import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
+import hotciv.variants.movingStrategy.MovingStrategy;
+import hotciv.variants.movingStrategy.SandWormMovingStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
@@ -36,5 +38,10 @@ public class ThetaCivFactory implements HotCivFactory {
     @Override
     public WorldLayoutStrategy createWorldLayoutStrategy() {
         return new ThetaCivLayoutStrategy();
+    }
+
+    @Override
+    public MovingStrategy createMovingStrategy() {
+        return new SandWormMovingStrategy();
     }
 }

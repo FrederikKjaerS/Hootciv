@@ -6,6 +6,7 @@ import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
+import hotciv.variants.movingStrategy.MovingStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
@@ -50,6 +51,7 @@ public class GameImpl implements Game, ExtendedGame {
     private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
     private AttackStrategy attackStrategy;
+    private MovingStrategy movingStrategy;
     private int round;
 
     public GameImpl(HotCivFactory hotCivFactory) {
@@ -58,6 +60,7 @@ public class GameImpl implements Game, ExtendedGame {
         this.attackStrategy = hotCivFactory.createAttackStrategy();
         this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
         this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
+        this.movingStrategy = hotCivFactory.createMovingStrategy();
         this.round = 1;
         defineWorld();
         setupUnits();
@@ -129,6 +132,10 @@ public class GameImpl implements Game, ExtendedGame {
         if (! isPlayerInTurn) return false;
 
         if (! isPassableTerrain(toTile)) return false;
+
+        if(!movingStrategy.canMoveToTile(fromUnit, toTile.getTypeString())){
+            return false;
+        }
 
         return true;
     }

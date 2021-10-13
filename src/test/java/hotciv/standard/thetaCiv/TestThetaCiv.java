@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestThetaCiv {
     private Game game;
-
+    private Position sandworm = new Position(9,6);
 
     @BeforeEach
     public void setUp() {
@@ -73,6 +73,19 @@ public class TestThetaCiv {
     public void shouldBeRedCityAt8_12() {
         assertThat(game.getCityAt(new Position(8,12)).getOwner(), is(Player.RED));
     }
+
+    @Test
+    public void shouldMoveSandWormToOtherDessertTile() {
+        game.endOfTurn();
+        assertThat(game.moveUnit(sandworm, new Position(9,5)), is(true));
+    }
+
+    @Test
+    public void shouldNotMoveSandWormToPlainTile() {
+        game.endOfTurn();
+        assertThat(game.moveUnit(sandworm, new Position(9,7)), is(false));
+    }
+
 
 
 }

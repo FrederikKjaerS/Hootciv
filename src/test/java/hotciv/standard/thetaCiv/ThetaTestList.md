@@ -23,7 +23,7 @@
 
 ### Unit placement
 * ~~There is an archer at (3,8).~~
-* ~~There is a sandworm at (9,6).~
+* ~~There is a sandworm at (9,6).~~
 
 ### City placement
 * ~~There is blue city at (4,5).~~

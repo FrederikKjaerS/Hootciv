@@ -6,6 +6,8 @@ import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
+import hotciv.variants.movingStrategy.MovingStrategy;
+import hotciv.variants.movingStrategy.NormalMovingStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
@@ -35,6 +37,11 @@ public class BetaCivFactory implements HotCivFactory{
     @Override
     public WorldLayoutStrategy createWorldLayoutStrategy() {
         return new AlphaCivLayoutStrategy();
+    }
+
+    @Override
+    public MovingStrategy createMovingStrategy() {
+        return new NormalMovingStrategy();
     }
 }
 

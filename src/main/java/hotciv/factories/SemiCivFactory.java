@@ -7,6 +7,8 @@ import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AlgoAttackStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.SixSidedDieStrategy;
+import hotciv.variants.movingStrategy.MovingStrategy;
+import hotciv.variants.movingStrategy.NormalMovingStrategy;
 import hotciv.variants.winnerStrategy.ThreeWinStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.DeltaCivLayoutStrategy;
@@ -36,5 +38,10 @@ public class SemiCivFactory implements HotCivFactory{
     @Override
     public WorldLayoutStrategy createWorldLayoutStrategy() {
         return new DeltaCivLayoutStrategy();
+    }
+
+    @Override
+    public MovingStrategy createMovingStrategy() {
+        return new NormalMovingStrategy();
     }
 }
