@@ -7,13 +7,10 @@ import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
-import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
-import ThetaCiv.ThetaUnitAndTileStrategy;
-import hotciv.variants.unitProperties.DefaultUnitProperties;
+import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
-import ThetaCiv.ThetaCivLayoutStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
 public class ThetaCivFactory implements HotCivFactory {
@@ -43,7 +40,7 @@ public class ThetaCivFactory implements HotCivFactory {
     }
 
     @Override
-    public UnitAndTileStrategy createMovingStrategy() {
+    public ProductionStrategy createMovingStrategy() {
         return new ThetaUnitAndTileStrategy();
     }
 

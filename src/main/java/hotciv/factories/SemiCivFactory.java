@@ -7,7 +7,7 @@ import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AlgoAttackStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.SixSidedDieStrategy;
-import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
+import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
 import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
 import hotciv.variants.unitProperties.DefaultUnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
@@ -43,7 +43,7 @@ public class SemiCivFactory implements HotCivFactory{
     }
 
     @Override
-    public UnitAndTileStrategy createMovingStrategy() {
+    public ProductionStrategy createMovingStrategy() {
         return new NormalUnitAndTileStrategy();
     }
 

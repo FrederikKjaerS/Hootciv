@@ -7,9 +7,6 @@ import hotciv.framework.Tile;
 import hotciv.standard.CityImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
-import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
-import hotciv.variants.unitProperties.DefaultUnitProperties;
-import hotciv.variants.unitProperties.UnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 
 import java.util.HashMap;

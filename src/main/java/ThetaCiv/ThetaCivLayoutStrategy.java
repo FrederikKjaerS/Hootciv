@@ -78,7 +78,7 @@ public class ThetaCivLayoutStrategy implements WorldLayoutStrategy {
         units.put(new Position(5, 5), new UnitImpl(GameConstants.SETTLER, Player.RED,
                 strategy.getProperties(GameConstants.SETTLER)));
         units.put(new Position(9, 6), new UnitImpl(ThetaCivGameConstants.SANDWORM, Player.BLUE,
-                strategy.getProperties(GameConstants.SANDWORM)));
+                strategy.getProperties(ThetaCivGameConstants.SANDWORM)));
         return units;
     }
 

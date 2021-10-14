@@ -70,4 +70,8 @@ public class UnitImpl implements Unit {
     public void setStationary(boolean stationary) {
         isStationary = stationary;
     }
+
+    public ArrayList<TileImpl> getValidTiles() {
+        return this.validTiles;
+    }
 }

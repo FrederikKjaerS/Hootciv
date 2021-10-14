@@ -62,7 +62,7 @@ public class TestThetaCiv {
 
     @Test
     public void shouldBeSandwormAt9_6() {
-        assertThat(game.getUnitAt(new Position(9,6)).getTypeString(), is(GameConstants.SANDWORM));
+        assertThat(game.getUnitAt(new Position(9,6)).getTypeString(), is(ThetaCivGameConstants.SANDWORM));
     }
 
     @Test
@@ -89,23 +89,23 @@ public class TestThetaCiv {
 
     @Test
     public void shouldNotProduceSandwormInFirstRoundForRedCityAt8_12() {
-        game.changeProductionInCityAt(redCity, GameConstants.SANDWORM);
+        game.changeProductionInCityAt(redCity, ThetaCivGameConstants.SANDWORM);
         assertThat(game.getUnitAt(redCity), is(nullValue()));
     }
 
     @Test
     public void shouldProduceSandwormIn5RoundForRedCityAt8_12() {
-        game.changeProductionInCityAt(redCity, GameConstants.SANDWORM);
+        game.changeProductionInCityAt(redCity, ThetaCivGameConstants.SANDWORM);
         endRound(5);
-        assertThat(game.getUnitAt(redCity).getTypeString(), is(GameConstants.SANDWORM));
+        assertThat(game.getUnitAt(redCity).getTypeString(), is(ThetaCivGameConstants.SANDWORM));
     }
 
     @Test
     public void shouldProduceSandwormIn5RoundForBlueCityAt4_5() {
         game.endOfTurn();
-        game.changeProductionInCityAt(blueCity, GameConstants.SANDWORM);
+        game.changeProductionInCityAt(blueCity, ThetaCivGameConstants.SANDWORM);
         endRound(5);
-        assertThat(game.getUnitAt(blueCity).getTypeString(), is(GameConstants.SANDWORM));
+        assertThat(game.getUnitAt(new Position(3,5)).getTypeString(), is(ThetaCivGameConstants.SANDWORM));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class TestThetaCiv {
         endRound(1);
         game.moveUnit(new Position(5,2),new Position(5,1));
         game.performUnitActionAt(new Position(5,1));
-        game.changeProductionInCityAt(new Position(5,1), GameConstants.SANDWORM);
+        game.changeProductionInCityAt(new Position(5,1), ThetaCivGameConstants.SANDWORM);
         endRound(5);
         assertThat(game.getUnitAt(new Position(5,1)), is(nullValue()));
     }
@@ -143,7 +143,7 @@ public class TestThetaCiv {
         game.endOfTurn();
         game.moveUnit(sandworm, new Position(8,6));
         assertThat(game.moveUnit(new Position(8,6), new Position(7,6)), is(true));
-        assertThat(game.getUnitAt(new Position(7,6)).getTypeString(), is(GameConstants.SANDWORM));
+        assertThat(game.getUnitAt(new Position(7,6)).getTypeString(), is(ThetaCivGameConstants.SANDWORM));
 
     }
 

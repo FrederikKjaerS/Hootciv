@@ -3,7 +3,6 @@ package hotciv.variants.worldStrategy;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
 import hotciv.standard.*;
-import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 
 import java.util.Map;

@@ -70,7 +70,7 @@ public class CityImpl implements City {
             treasury -= GameConstants.settlerCost;
             return true;
         }
-        if (production.equals(GameConstants.SANDWORM) && treasury >= ThetaCivGameConstants.sandwormCost) {
+        if (production.equals(ThetaCivGameConstants.SANDWORM) && treasury >= ThetaCivGameConstants.sandwormCost) {
             treasury -= ThetaCivGameConstants.sandwormCost;
             return true;
         }

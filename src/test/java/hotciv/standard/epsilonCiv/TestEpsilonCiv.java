@@ -10,8 +10,6 @@ import hotciv.variants.attackStrategy.AlgoAttackStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.FixedDieStrategy;
-import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
-import hotciv.variants.unitProperties.DefaultUnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.ThreeWinStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
