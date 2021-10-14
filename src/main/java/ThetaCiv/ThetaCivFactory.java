@@ -1,54 +1,50 @@
-package hotciv.factories;
+package ThetaCiv;
 
-import hotciv.variants.actionStrategy.AlphaActionStrategy;
+import hotciv.factories.HotCivFactory;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
-import hotciv.variants.agingStrategy.HundredYearStrategy;
-import hotciv.variants.attackStrategy.AlgoAttackStrategy;
+import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
-import hotciv.variants.attackStrategy.dieDecisionStrategy.SixSidedDieStrategy;
+import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
-import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
-import hotciv.variants.unitProperties.DefaultUnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
-import hotciv.variants.winnerStrategy.Alternating20RoundWinnerStrategy;
+import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
-import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
-public class ZetaCivFactory implements HotCivFactory{
+public class ThetaCivFactory implements HotCivFactory {
     @Override
     public UnitActionStrategy createUnitActionStrategy() {
-        return new AlphaActionStrategy();
+        return new ThetaActionStrategy();
     }
 
     @Override
     public AgingStrategy createAgingStrategy() {
-        return new HundredYearStrategy();
+        return new AlgoAgingStrategy();
     }
 
     @Override
     public WinnerStrategy createWinnerStrategy() {
-        return new Alternating20RoundWinnerStrategy();
+        return new ConquerAllWinnerStrategy();
     }
 
     @Override
     public AttackStrategy createAttackStrategy() {
-        return new AlgoAttackStrategy(new SixSidedDieStrategy());
+        return new AttackerWinsStrategy();
     }
 
     @Override
     public WorldLayoutStrategy createWorldLayoutStrategy() {
-        return new AlphaCivLayoutStrategy();
+        return new ThetaCivLayoutStrategy();
     }
 
     @Override
     public ProductionStrategy createMovingStrategy() {
-        return new NormalUnitAndTileStrategy();
+        return new ThetaProductionStrategy();
     }
 
     @Override
     public UnitPropertiesStrategy createUnitPropertiesStrategy() {
-        return new DefaultUnitProperties();
+        return new ThetaUnitProperties();
     }
 }

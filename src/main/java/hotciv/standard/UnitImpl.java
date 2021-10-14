@@ -1,33 +1,31 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.variants.unitProperties.UnitProperties;
+
+import java.util.ArrayList;
 
 public class UnitImpl implements Unit {
     private String typeString;
     private Player owner;
     private int moveCount;
+    private final int maxMoveCount;
     private int defense;
     private int attack;
+    private int cost;
     private boolean isStationary = false;
+    private ArrayList<TileImpl> validTiles;
 
-    public UnitImpl(String unit, Player owner) {
+    public UnitImpl(String unit, Player owner, UnitProperties unitProperties) {
         this.isStationary = false;
         this.typeString = unit;
         this.owner = owner;
-        this.moveCount = 1;
-        switch (typeString) {
-            case GameConstants.ARCHER:
-                this.defense = GameConstants.archerDefense;
-                this.attack = GameConstants.archerAttack;
-            case GameConstants.SETTLER:
-                this.defense = GameConstants.settlerDefense;
-                this.attack = GameConstants.settlerAttack;
-                break;
-            case GameConstants.LEGION:
-                this.defense = GameConstants.legionDefense;
-                this.attack = GameConstants.legionAttack;
-                break;
-        }
+        this.moveCount= unitProperties.getMoveCount();
+        this.maxMoveCount= unitProperties.getMoveCount();
+        this.attack = unitProperties.getAttack();
+        this.defense = unitProperties.getDefense();
+        this.validTiles = unitProperties.getValidTiles();
+        this.cost = unitProperties.getCost();
     }
 
     @Override
@@ -60,7 +58,7 @@ public class UnitImpl implements Unit {
     }
 
     public void resetMoveCount(){
-        moveCount = 1;
+        this.moveCount = this.maxMoveCount;
     }
 
     public void setDefense(int defense) {
@@ -73,5 +71,13 @@ public class UnitImpl implements Unit {
 
     public void setStationary(boolean stationary) {
         isStationary = stationary;
+    }
+
+    public ArrayList<TileImpl> getValidTiles() {
+        return this.validTiles;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

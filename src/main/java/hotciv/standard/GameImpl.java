@@ -6,6 +6,8 @@ import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
+import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
@@ -42,7 +44,7 @@ import java.util.Map;
 public class GameImpl implements Game, ExtendedGame {
     private Player playerInTurn = Player.RED;
     private int year = -4000;
-    private Map<Position, Tile> map = new HashMap<Position, Tile>();
+    private Map<Position, TileImpl> map = new HashMap<Position, TileImpl>();
     private Map<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
     private Map<Position, CityImpl> cities = new HashMap<Position, CityImpl>();
     private WinnerStrategy winnerStrategy;
@@ -50,6 +52,8 @@ public class GameImpl implements Game, ExtendedGame {
     private UnitActionStrategy unitActionStrategy;
     private WorldLayoutStrategy worldLayoutStrategy;
     private AttackStrategy attackStrategy;
+    private ProductionStrategy unitAndTileStrategy;
+    private UnitPropertiesStrategy unitPropertiesStrategy;
     private int round;
 
     public GameImpl(HotCivFactory hotCivFactory) {
@@ -58,13 +62,15 @@ public class GameImpl implements Game, ExtendedGame {
         this.attackStrategy = hotCivFactory.createAttackStrategy();
         this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
         this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
+        this.unitAndTileStrategy = hotCivFactory.createMovingStrategy();
+        this.unitPropertiesStrategy = hotCivFactory.createUnitPropertiesStrategy();
         this.round = 1;
         defineWorld();
         setupUnits();
         setupCities();
     }
 
-    public Tile getTileAt(Position p) {
+    public TileImpl getTileAt(Position p) {
         return this.map.get(p);
     }
 
@@ -113,7 +119,7 @@ public class GameImpl implements Game, ExtendedGame {
 
     private boolean isMoveValid(Position from, Position to) {
         UnitImpl fromUnit = getUnitAt(from);
-        Tile toTile = getTileAt(to);
+        TileImpl toTile = getTileAt(to);
 
         boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1
                 && Math.abs(to.getColumn() - from.getColumn()) <= 1;
@@ -128,16 +134,18 @@ public class GameImpl implements Game, ExtendedGame {
         boolean isPlayerInTurn = fromUnit.getOwner() == playerInTurn;
         if (! isPlayerInTurn) return false;
 
-        if (! isPassableTerrain(toTile)) return false;
+        if (! isPassableTerrain(getUnitAt(from), toTile)) return false;
 
         return true;
     }
 
-    private boolean isPassableTerrain(Tile toTile) {
-        boolean isPassableTerrain = ! (toTile.getTypeString().equals(GameConstants.OCEANS)
-                || toTile.getTypeString().equals(GameConstants.MOUNTAINS));
-        if (! isPassableTerrain) return false;
-        return true;
+    private boolean isPassableTerrain(UnitImpl u, TileImpl toTile) {
+        for(TileImpl t :u.getValidTiles() ) {
+            if (t.getTypeString().equals(toTile.getTypeString())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void handleCityConquering(Position to) {
@@ -165,7 +173,7 @@ public class GameImpl implements Game, ExtendedGame {
 
     public void changeProductionInCityAt(Position p, String unitType) {
         if(getCityAt(p).getOwner() == playerInTurn) {
-            getCityAt(p).setProduction(unitType);
+            unitAndTileStrategy.setProduction(this, p, unitType);
         }
     }
 
@@ -179,7 +187,7 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void setupUnits() {
-        this.units = (HashMap<Position, UnitImpl>) worldLayoutStrategy.setupUnitLayout();
+        this.units = (HashMap<Position, UnitImpl>) worldLayoutStrategy.setupUnitLayout(unitPropertiesStrategy);
     }
 
     private void setupCities() {
@@ -203,25 +211,26 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void produceUnits() {
-        for (Position cityP : getCities().keySet()) {
-            boolean canCityProduce = getCityAt(cityP).canProduce();
+        for (Position cityPosition : getCities().keySet()) {
+            CityImpl city = getCities().get(cityPosition);
+            String unitType = city.getProduction();
+            if(unitType.equals("")) {
+                continue;
+            }
+            Player owner = city.getOwner();
+            UnitImpl tempUnit = new UnitImpl(unitType, owner, unitPropertiesStrategy.getProperties(unitType));
+            int costOfUnit = tempUnit.getCost();
+            boolean canCityProduce = city.getTreasury() >= costOfUnit;
             if(! canCityProduce) continue;
-            for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
+            for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityPosition)) {
                 boolean isUnitOnTile = getUnitAt(p) != null;
                 if ( isUnitOnTile ) continue;
-                if(! isPassableTerrain(getTileAt(p))) continue;
-                createNewUnit(cityP, p);
+                if(! isPassableTerrain(tempUnit, getTileAt(p))) continue;
+                this.units.put(p, tempUnit);
+                city.decreaseTreasury(costOfUnit);
                 break;
             }
         }
-    }
-
-
-    private void createNewUnit(Position cityP, Position p) {
-        String unitType = getCities().get(cityP).getProduction();
-        Player owner = getCities().get(cityP).getOwner();
-        UnitImpl newUnit = new UnitImpl(unitType, owner);
-        this.units.put(p, newUnit);
     }
 
     private void incrementProduction() {

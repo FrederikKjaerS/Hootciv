@@ -7,6 +7,7 @@ import hotciv.framework.Tile;
 import hotciv.standard.CityImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,11 +35,14 @@ public class AlphaCivLayoutStrategy implements WorldLayoutStrategy {
 
 
     @Override
-    public Map<Position, UnitImpl> setupUnitLayout() {
+    public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy) {
         HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-        units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-        units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED));
+        units.put(new Position(2, 0), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(3, 2), new UnitImpl(GameConstants.LEGION, Player.BLUE,
+                strategy.getProperties(GameConstants.LEGION)));
+        units.put(new Position(4, 3), new UnitImpl(GameConstants.SETTLER, Player.RED,
+                strategy.getProperties(GameConstants.SETTLER)));
         return units;
     }
 

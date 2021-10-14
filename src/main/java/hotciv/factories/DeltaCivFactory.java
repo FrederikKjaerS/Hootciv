@@ -6,6 +6,10 @@ import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.HundredYearStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
+import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
+import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
+import hotciv.variants.unitProperties.DefaultUnitProperties;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.RedWinnerStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.DeltaCivLayoutStrategy;
@@ -35,5 +39,15 @@ public class DeltaCivFactory implements HotCivFactory {
     @Override
     public WorldLayoutStrategy createWorldLayoutStrategy() {
         return new DeltaCivLayoutStrategy();
+    }
+
+    @Override
+    public ProductionStrategy createMovingStrategy() {
+        return new NormalUnitAndTileStrategy();
+    }
+
+    @Override
+    public UnitPropertiesStrategy createUnitPropertiesStrategy() {
+        return new DefaultUnitProperties();
     }
 }
