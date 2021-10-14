@@ -12,6 +12,7 @@ public class UnitImpl implements Unit {
     private final int maxMoveCount;
     private int defense;
     private int attack;
+    private int cost;
     private boolean isStationary = false;
     private ArrayList<TileImpl> validTiles;
 
@@ -24,6 +25,7 @@ public class UnitImpl implements Unit {
         this.attack = unitProperties.getAttack();
         this.defense = unitProperties.getDefense();
         this.validTiles = unitProperties.getValidTiles();
+        this.cost = unitProperties.getCost();
     }
 
     @Override
@@ -73,5 +75,9 @@ public class UnitImpl implements Unit {
 
     public ArrayList<TileImpl> getValidTiles() {
         return this.validTiles;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

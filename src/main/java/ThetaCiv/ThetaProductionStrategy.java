@@ -5,10 +5,10 @@ import hotciv.utility.NeighborTiles;
 import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
 import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
 
-public class ThetaUnitAndTileStrategy implements ProductionStrategy {
+public class ThetaProductionStrategy implements ProductionStrategy {
     private ProductionStrategy normalUnitAndTileStrategy;
 
-    public ThetaUnitAndTileStrategy() {
+    public ThetaProductionStrategy() {
         this.normalUnitAndTileStrategy = new NormalUnitAndTileStrategy();
     }
 

@@ -96,7 +96,11 @@ public class TestThetaCiv {
     @Test
     public void shouldProduceSandwormIn5RoundForRedCityAt8_12() {
         game.changeProductionInCityAt(redCity, ThetaCivGameConstants.SANDWORM);
-        endRound(5);
+        endRound(1);
+        endRound(1);
+        endRound(1);
+        endRound(1);
+        endRound(1);
         assertThat(game.getUnitAt(redCity).getTypeString(), is(ThetaCivGameConstants.SANDWORM));
     }
 

@@ -212,28 +212,25 @@ public class GameImpl implements Game, ExtendedGame {
 
     private void produceUnits() {
         for (Position cityP : getCities().keySet()) {
-            boolean canCityProduce = getCityAt(cityP).canProduce();
+            String unitType = getCities().get(cityP).getProduction();
+            if(unitType.equals("")) {
+                continue;
+            }
+            Player owner = getCities().get(cityP).getOwner();
+            UnitImpl tempUnit = new UnitImpl(unitType, owner, unitPropertiesStrategy.getProperties(unitType));
+            boolean canCityProduce = getCities().get(cityP).getTreasury() >= tempUnit.getCost();
             if(! canCityProduce) continue;
             for(Position p : NeighborTiles.getCenterAnd8neighborhoodOf(cityP)) {
                 boolean isUnitOnTile = getUnitAt(p) != null;
                 if ( isUnitOnTile ) continue;
-                String unitType = getCities().get(cityP).getProduction();
-                Player owner = getCities().get(cityP).getOwner();
-                UnitImpl tempUnit = new UnitImpl(unitType, owner, unitPropertiesStrategy.getProperties(unitType));
                 if(! isPassableTerrain(tempUnit, getTileAt(p))) continue;
-                createNewUnit(cityP, p);
+                this.units.put(p, tempUnit);
+                getCities().get(cityP).decreaseTreasury(tempUnit.getCost());
                 break;
             }
         }
     }
 
-
-    private void createNewUnit(Position cityP, Position p) {
-        String unitType = getCities().get(cityP).getProduction();
-        Player owner = getCities().get(cityP).getOwner();
-        UnitImpl newUnit = new UnitImpl(unitType, owner, unitPropertiesStrategy.getProperties(unitType));
-        this.units.put(p, newUnit);
-    }
 
     private void incrementProduction() {
         for (Position cityP : getCities().keySet()) {

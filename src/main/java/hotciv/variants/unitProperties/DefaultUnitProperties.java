@@ -20,11 +20,11 @@ public class DefaultUnitProperties implements UnitPropertiesStrategy {
     public DefaultUnitProperties(ArrayList<TileImpl> standardTiles) {
         unitProperties = new HashMap<>();
         this.unitProperties.put(GameConstants.ARCHER,
-                new UnitProperties(3,2,1, standardTiles));
+                new UnitProperties(10,3,2,1, standardTiles));
         this.unitProperties.put(GameConstants.SETTLER,
-                new UnitProperties(3,0,1, standardTiles));
+                new UnitProperties(30,3,0,1, standardTiles));
         this.unitProperties.put(GameConstants.LEGION,
-                new UnitProperties(2,4,1 , standardTiles));
+                new UnitProperties(15,2,4,1 , standardTiles));
     }
 
 

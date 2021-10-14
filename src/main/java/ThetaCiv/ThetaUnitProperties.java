@@ -30,7 +30,7 @@ public class ThetaUnitProperties implements UnitPropertiesStrategy {
         if(unitType.equals(ThetaCivGameConstants.SANDWORM)){
             ArrayList<TileImpl> sandWormTiles = new ArrayList<>();
             sandWormTiles.add(new TileImpl(ThetaCivGameConstants.DESERT));
-            return new UnitProperties(10,0,2, sandWormTiles);
+            return new UnitProperties(30,10,0,2, sandWormTiles);
         }
        return defaultUnitProperties.getProperties(unitType);
     }

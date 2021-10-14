@@ -12,13 +12,17 @@ public class UnitProperties {
     private int attack;
     private int moveCount;
     private ArrayList<TileImpl> validTiles;
+    private int cost;
 
 
-    public UnitProperties(int defense, int attack, int moveCount, ArrayList<TileImpl> validTiles) {
+
+
+    public UnitProperties(int cost, int defense, int attack, int moveCount, ArrayList<TileImpl> validTiles) {
      this.defense = defense;
      this.attack = attack;
      this.moveCount = moveCount;
      this.validTiles = validTiles;
+     this.cost = cost;
     }
 
     public int getDefense() {
@@ -31,6 +35,10 @@ public class UnitProperties {
 
     public int getMoveCount() {
         return moveCount;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     public ArrayList<TileImpl> getValidTiles() {

@@ -1,7 +1,7 @@
 package ThetaCiv;
 
 import hotciv.factories.HotCivFactory;
-import hotciv.variants.actionStrategy.GammaActionStrategy;
+import hotciv.variants.actionStrategy.ThetaActionStrategy;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
@@ -16,7 +16,7 @@ import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 public class ThetaCivFactory implements HotCivFactory {
     @Override
     public UnitActionStrategy createUnitActionStrategy() {
-        return new GammaActionStrategy();
+        return new ThetaActionStrategy();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class ThetaCivFactory implements HotCivFactory {
 
     @Override
     public ProductionStrategy createMovingStrategy() {
-        return new ThetaUnitAndTileStrategy();
+        return new ThetaProductionStrategy();
     }
 
     @Override
