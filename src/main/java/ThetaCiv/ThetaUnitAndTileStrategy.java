@@ -1,7 +1,9 @@
-package hotciv.variants.UnitAndTileStrategy;
+package ThetaCiv;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
+import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
+import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
 
 public class ThetaUnitAndTileStrategy implements UnitAndTileStrategy {
     private UnitAndTileStrategy normalUnitAndTileStrategy;
@@ -13,7 +15,7 @@ public class ThetaUnitAndTileStrategy implements UnitAndTileStrategy {
     @Override
     public boolean canMoveToTile(Unit unit, String tile) {
         if (unit != null && unit.getTypeString().equals(GameConstants.SANDWORM)
-                && !tile.equals(GameConstants.DESERT)) {
+                && !tile.equals(ThetaCivGameConstants.DESERT)) {
             return false;
         }
         return normalUnitAndTileStrategy.canMoveToTile(unit, tile);
@@ -23,7 +25,7 @@ public class ThetaUnitAndTileStrategy implements UnitAndTileStrategy {
     public void setProduction(ExtendedGame game, Position position, String unitType) {
         if (unitType.equals(GameConstants.SANDWORM)) {
             for (Position p : NeighborTiles.getCenterAnd8neighborhoodOf(position)) {
-                if (game.getTileAt(p).getTypeString().equals(GameConstants.DESERT)) {
+                if (game.getTileAt(p).getTypeString().equals(ThetaCivGameConstants.DESERT)) {
                     normalUnitAndTileStrategy.setProduction(game, position, unitType);
                     break;
                 }

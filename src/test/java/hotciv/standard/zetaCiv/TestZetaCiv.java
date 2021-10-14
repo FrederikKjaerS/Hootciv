@@ -8,7 +8,9 @@ import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
-import hotciv.variants.winnerStrategy.Alternating20RoundWinnerStrategy;
+import hotciv.variants.unitProperties.DefaultUnitProperties;
+import hotciv.variants.unitProperties.UnitProperties;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,6 +89,7 @@ public class TestZetaCiv {
 }
 
 class StubLayoutForZeta implements WorldLayoutStrategy{
+
     @Override
     public Map<Position,Tile> setupTileLayout() {
         Map<Position, Tile> theWorld = new HashMap<>();
@@ -99,12 +102,16 @@ class StubLayoutForZeta implements WorldLayoutStrategy{
     }
 
     @Override
-    public Map<Position, UnitImpl> setupUnitLayout() {
+    public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy) {
         HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-        units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE));
-        units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
         return units;
     }
 

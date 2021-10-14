@@ -6,7 +6,8 @@ import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
-import hotciv.variants.UnitAndTileStrategy.UnitAndTileStrategy;
+import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
@@ -52,6 +53,7 @@ public class GameImpl implements Game, ExtendedGame {
     private WorldLayoutStrategy worldLayoutStrategy;
     private AttackStrategy attackStrategy;
     private UnitAndTileStrategy unitAndTileStrategy;
+    private UnitPropertiesStrategy unitPropertiesStrategy;
     private int round;
 
     public GameImpl(HotCivFactory hotCivFactory) {
@@ -61,6 +63,7 @@ public class GameImpl implements Game, ExtendedGame {
         this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
         this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
         this.unitAndTileStrategy = hotCivFactory.createMovingStrategy();
+        this.unitPropertiesStrategy = hotCivFactory.createUnitPropertiesStrategy();
         this.round = 1;
         defineWorld();
         setupUnits();
@@ -179,7 +182,7 @@ public class GameImpl implements Game, ExtendedGame {
     }
 
     private void setupUnits() {
-        this.units = (HashMap<Position, UnitImpl>) worldLayoutStrategy.setupUnitLayout();
+        this.units = (HashMap<Position, UnitImpl>) worldLayoutStrategy.setupUnitLayout(unitPropertiesStrategy);
     }
 
     private void setupCities() {
@@ -220,7 +223,7 @@ public class GameImpl implements Game, ExtendedGame {
     private void createNewUnit(Position cityP, Position p) {
         String unitType = getCities().get(cityP).getProduction();
         Player owner = getCities().get(cityP).getOwner();
-        UnitImpl newUnit = new UnitImpl(unitType, owner);
+        UnitImpl newUnit = new UnitImpl(unitType, owner, unitPropertiesStrategy.getProperties(unitType));
         this.units.put(p, newUnit);
     }
 

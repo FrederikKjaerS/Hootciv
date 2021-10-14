@@ -29,6 +29,6 @@ public class ThreeWinStrategy implements WinnerStrategy {
 
     @Override
     public void incrementWin(ExtendedGame game, Player p) {
-        wins.put(p, wins.get(p) + 1);
+        wins.put(p, wins.getOrDefault(p, 0) + 1);
     }
 }

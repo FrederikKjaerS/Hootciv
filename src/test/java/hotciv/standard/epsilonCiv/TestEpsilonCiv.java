@@ -10,6 +10,9 @@ import hotciv.variants.attackStrategy.AlgoAttackStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.FixedDieStrategy;
+import hotciv.variants.unitAndTileStrategy.UnitAndTileStrategy;
+import hotciv.variants.unitProperties.DefaultUnitProperties;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.ThreeWinStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +29,11 @@ public class TestEpsilonCiv {
     private GameStubForAttackTesting gameStub;
     private ThreeWinStrategy winnerStrategy;
 
+
     @BeforeEach
     public void setUp() {
         winnerStrategy = new ThreeWinStrategy();
+
         gameStub = new GameStubForAttackTesting();
         game = new GameImpl(new EpsilonCivFactory() {
             @Override
@@ -132,6 +137,7 @@ class StubUnit implements Unit {
 }
 
 class StubLayout implements WorldLayoutStrategy{
+
     @Override
     public Map<Position,Tile> setupTileLayout() {
         Map<Position, Tile> theWorld = new HashMap<Position,Tile>();
@@ -144,12 +150,16 @@ class StubLayout implements WorldLayoutStrategy{
     }
 
     @Override
-    public Map<Position, UnitImpl> setupUnitLayout() {
+    public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy) {
         HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-        units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE));
-        units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(4, 4), new UnitImpl(GameConstants.ARCHER, Player.BLUE,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(3, 2), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(2, 3), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(3, 3), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
         return units;
     }
 

@@ -1,4 +1,4 @@
-package hotciv.variants.worldStrategy;
+package ThetaCiv;
 
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
@@ -7,11 +7,15 @@ import hotciv.framework.Tile;
 import hotciv.standard.CityImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
+import hotciv.variants.unitProperties.DefaultUnitProperties;
+import hotciv.variants.unitProperties.UnitPropertiesStrategy;
+import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ThetaCivLayoutStrategy implements WorldLayoutStrategy {
+
     @Override
     public Map<Position, Tile> setupTileLayout() {
         String[] layout = new String[]{
@@ -55,7 +59,7 @@ public class ThetaCivLayoutStrategy implements WorldLayoutStrategy {
                     type = GameConstants.HILLS;
                 }
                 if (tileChar == 'd') {
-                    type = GameConstants.DESERT;
+                    type = ThetaCivGameConstants.DESERT;
                 }
                 Position p = new Position(r, c);
                 theWorld.put(p, new TileImpl(type));
@@ -65,12 +69,16 @@ public class ThetaCivLayoutStrategy implements WorldLayoutStrategy {
     }
 
     @Override
-    public Map<Position, UnitImpl> setupUnitLayout() {
+    public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy) {
         HashMap<Position, UnitImpl> units = new HashMap<>();
-        units.put(new Position(3, 8), new UnitImpl(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(4, 4), new UnitImpl(GameConstants.LEGION, Player.BLUE));
-        units.put(new Position(5, 5), new UnitImpl(GameConstants.SETTLER, Player.RED));
-        units.put(new Position(9, 6), new UnitImpl(GameConstants.SANDWORM, Player.BLUE));
+        units.put(new Position(3, 8), new UnitImpl(GameConstants.ARCHER, Player.RED,
+                strategy.getProperties(GameConstants.ARCHER)));
+        units.put(new Position(4, 4), new UnitImpl(GameConstants.LEGION, Player.BLUE,
+                strategy.getProperties(GameConstants.LEGION)));
+        units.put(new Position(5, 5), new UnitImpl(GameConstants.SETTLER, Player.RED,
+                strategy.getProperties(GameConstants.SETTLER)));
+        units.put(new Position(9, 6), new UnitImpl(ThetaCivGameConstants.SANDWORM, Player.BLUE,
+                strategy.getProperties(GameConstants.SANDWORM)));
         return units;
     }
 

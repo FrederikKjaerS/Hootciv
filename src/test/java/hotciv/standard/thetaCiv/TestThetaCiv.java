@@ -1,8 +1,7 @@
 package hotciv.standard.thetaCiv;
 
-import hotciv.factories.GammaCivFactory;
-import hotciv.factories.ThetaCivFactory;
-import hotciv.framework.Game;
+import ThetaCiv.ThetaCivGameConstants;
+import ThetaCiv.ThetaCivFactory;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
@@ -33,12 +32,12 @@ public class TestThetaCiv {
 
     @Test
     public void shouldBeDesertAtPosition2_3() {
-        assertThat(game.getTileAt(new Position(2,3)).getTypeString(), is(GameConstants.DESERT));
+        assertThat(game.getTileAt(new Position(2,3)).getTypeString(), is(ThetaCivGameConstants.DESERT));
     }
 
     @Test
     public void shouldBeDesertAtPosition0_5() {
-        assertThat(game.getTileAt(new Position(0,5)).getTypeString(), is(GameConstants.DESERT));
+        assertThat(game.getTileAt(new Position(0,5)).getTypeString(), is(ThetaCivGameConstants.DESERT));
     }
 
     @Test
@@ -143,7 +142,7 @@ public class TestThetaCiv {
     public void shouldMoveSandworm2TimesInSameRound() {
         game.endOfTurn();
         game.moveUnit(sandworm, new Position(8,6));
-        game.moveUnit(new Position(8,6), new Position(7,6));
+        assertThat(game.moveUnit(new Position(8,6), new Position(7,6)), is(true));
         assertThat(game.getUnitAt(new Position(7,6)).getTypeString(), is(GameConstants.SANDWORM));
 
     }

@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import ThetaCiv.ThetaCivGameConstants;
 import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
@@ -69,8 +70,8 @@ public class CityImpl implements City {
             treasury -= GameConstants.settlerCost;
             return true;
         }
-        if (production.equals(GameConstants.SANDWORM) && treasury >= GameConstants.sandwormCost) {
-            treasury -= GameConstants.sandwormCost;
+        if (production.equals(GameConstants.SANDWORM) && treasury >= ThetaCivGameConstants.sandwormCost) {
+            treasury -= ThetaCivGameConstants.sandwormCost;
             return true;
         }
         return false;

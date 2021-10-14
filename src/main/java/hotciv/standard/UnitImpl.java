@@ -1,41 +1,29 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.variants.unitProperties.UnitProperties;
+
+import java.util.ArrayList;
 
 public class UnitImpl implements Unit {
     private String typeString;
     private Player owner;
     private int moveCount;
+    private final int maxMoveCount;
     private int defense;
     private int attack;
     private boolean isStationary = false;
+    private ArrayList<TileImpl> validTiles;
 
-    public UnitImpl(String unit, Player owner) {
+    public UnitImpl(String unit, Player owner, UnitProperties unitProperties) {
         this.isStationary = false;
         this.typeString = unit;
         this.owner = owner;
-        if(unit.equals(GameConstants.ARCHER)||
-                unit.equals(GameConstants.LEGION)||
-                unit.equals(GameConstants.SETTLER)){
-            moveCount = 1;
-        }
-        if(unit.equals(GameConstants.SANDWORM)){
-            moveCount = 2;
-        }
-        switch (typeString) {
-            case GameConstants.ARCHER:
-                this.defense = GameConstants.archerDefense;
-                this.attack = GameConstants.archerAttack;
-                break;
-            case GameConstants.SETTLER:
-                this.defense = GameConstants.settlerDefense;
-                this.attack = GameConstants.settlerAttack;
-                break;
-            case GameConstants.LEGION:
-                this.defense = GameConstants.legionDefense;
-                this.attack = GameConstants.legionAttack;
-                break;
-        }
+        this.moveCount= unitProperties.getMoveCount();
+        this.maxMoveCount= unitProperties.getMoveCount();
+        this.attack = unitProperties.getAttack();
+        this.defense = unitProperties.getDefense();
+        this.validTiles = unitProperties.getValidTiles();
     }
 
     @Override
@@ -68,14 +56,7 @@ public class UnitImpl implements Unit {
     }
 
     public void resetMoveCount(){
-        if(typeString.equals(GameConstants.ARCHER)||
-                typeString.equals(GameConstants.LEGION)||
-                typeString.equals(GameConstants.SETTLER)){
-            moveCount = GameConstants.archerMaxMove;
-        }
-        if(typeString.equals(GameConstants.SANDWORM)){
-            moveCount = GameConstants.sandwormMaxMove;
-        }
+        this.moveCount = this.maxMoveCount;
     }
 
     public void setDefense(int defense) {

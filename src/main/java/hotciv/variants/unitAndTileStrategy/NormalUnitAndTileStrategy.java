@@ -1,4 +1,4 @@
-package hotciv.variants.UnitAndTileStrategy;
+package hotciv.variants.unitAndTileStrategy;
 
 import hotciv.framework.ExtendedGame;
 import hotciv.framework.GameConstants;
