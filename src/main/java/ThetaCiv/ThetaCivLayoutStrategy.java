@@ -7,7 +7,6 @@ import hotciv.framework.Tile;
 import hotciv.standard.CityImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
-import hotciv.variants.unitProperties.DefaultUnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 

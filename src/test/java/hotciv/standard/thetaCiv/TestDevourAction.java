@@ -21,7 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestDevourAction {
     private Game game;
 
-
     @BeforeEach
     public void setUp() {
         this.game = new GameImpl(new ThetaCivFactory(){
