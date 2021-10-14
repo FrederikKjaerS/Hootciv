@@ -1,7 +1,6 @@
 package ThetaCiv;
 
 import hotciv.factories.HotCivFactory;
-import hotciv.variants.actionStrategy.ThetaActionStrategy;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;

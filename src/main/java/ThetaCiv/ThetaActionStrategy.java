@@ -1,11 +1,12 @@
-package hotciv.variants.actionStrategy;
+package ThetaCiv;
 
-import ThetaCiv.ThetaCivGameConstants;
 import hotciv.framework.ExtendedGame;
 import hotciv.framework.Position;
 import hotciv.utility.NeighborTiles;
+import hotciv.variants.actionStrategy.GammaActionStrategy;
+import hotciv.variants.actionStrategy.UnitActionStrategy;
 
-public class ThetaActionStrategy implements UnitActionStrategy{
+public class ThetaActionStrategy implements UnitActionStrategy {
     private GammaActionStrategy gammaActionStrategy;
 
     public ThetaActionStrategy() {
