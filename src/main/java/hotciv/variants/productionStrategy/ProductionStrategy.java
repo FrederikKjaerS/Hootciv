@@ -1,8 +1,7 @@
-package hotciv.variants.unitAndTileStrategy;
+package hotciv.variants.productionStrategy;
 
 import hotciv.framework.ExtendedGame;
 import hotciv.framework.Position;
-import hotciv.framework.Unit;
 
 public interface ProductionStrategy {
 

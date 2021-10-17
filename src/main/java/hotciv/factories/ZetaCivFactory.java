@@ -7,8 +7,8 @@ import hotciv.variants.agingStrategy.HundredYearStrategy;
 import hotciv.variants.attackStrategy.AlgoAttackStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.dieDecisionStrategy.SixSidedDieStrategy;
-import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
-import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
+import hotciv.variants.productionStrategy.ProductionStrategy;
+import hotciv.variants.productionStrategy.NormalProductionStrategy;
 import hotciv.variants.unitProperties.DefaultUnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.Alternating20RoundWinnerStrategy;
@@ -44,7 +44,7 @@ public class ZetaCivFactory implements HotCivFactory{
 
     @Override
     public ProductionStrategy createMovingStrategy() {
-        return new NormalUnitAndTileStrategy();
+        return new NormalProductionStrategy();
     }
 
     @Override

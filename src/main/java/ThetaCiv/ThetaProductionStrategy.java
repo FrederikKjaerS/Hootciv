@@ -2,14 +2,14 @@ package ThetaCiv;
 
 import hotciv.framework.*;
 import hotciv.utility.NeighborTiles;
-import hotciv.variants.unitAndTileStrategy.NormalUnitAndTileStrategy;
-import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
+import hotciv.variants.productionStrategy.NormalProductionStrategy;
+import hotciv.variants.productionStrategy.ProductionStrategy;
 
 public class ThetaProductionStrategy implements ProductionStrategy {
     private ProductionStrategy normalUnitAndTileStrategy;
 
     public ThetaProductionStrategy() {
-        this.normalUnitAndTileStrategy = new NormalUnitAndTileStrategy();
+        this.normalUnitAndTileStrategy = new NormalProductionStrategy();
     }
 
     @Override

@@ -6,7 +6,7 @@ import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
-import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
+import hotciv.variants.productionStrategy.ProductionStrategy;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;

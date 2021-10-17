@@ -6,7 +6,7 @@ import hotciv.variants.agingStrategy.AgingStrategy;
 import hotciv.variants.agingStrategy.AlgoAgingStrategy;
 import hotciv.variants.attackStrategy.AttackStrategy;
 import hotciv.variants.attackStrategy.AttackerWinsStrategy;
-import hotciv.variants.unitAndTileStrategy.ProductionStrategy;
+import hotciv.variants.productionStrategy.ProductionStrategy;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.ConquerAllWinnerStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
