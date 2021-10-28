@@ -62,7 +62,7 @@ public class GameImpl implements Game, ExtendedGame {
         this.attackStrategy = hotCivFactory.createAttackStrategy();
         this.unitActionStrategy = hotCivFactory.createUnitActionStrategy();
         this.worldLayoutStrategy = hotCivFactory.createWorldLayoutStrategy();
-        this.unitAndTileStrategy = hotCivFactory.createMovingStrategy();
+        this.unitAndTileStrategy = hotCivFactory.createProductionStrategy();
         this.unitPropertiesStrategy = hotCivFactory.createUnitPropertiesStrategy();
         this.round = 1;
         defineWorld();

@@ -14,6 +14,6 @@ public interface HotCivFactory {
     public WinnerStrategy createWinnerStrategy();
     public AttackStrategy createAttackStrategy();
     public WorldLayoutStrategy createWorldLayoutStrategy();
-    public ProductionStrategy createMovingStrategy();
+    public ProductionStrategy createProductionStrategy();
     public UnitPropertiesStrategy createUnitPropertiesStrategy();
 }
