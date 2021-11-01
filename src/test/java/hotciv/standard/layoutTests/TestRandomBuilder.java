@@ -62,7 +62,7 @@ public class TestRandomBuilder {
     public void shouldBeRedAsStartingPlayer() {
         //Red is the starting player
         for(int i = 0; i < 15; i++){
-            System.out.println(game.getTileAt(new Position(2,i)).getTypeString());
+            System.out.println(game.getTileAt(new Position(5,i)).getTypeString());
         }
         assertThat(game.getUnitAt(new Position(5,0)), is(notNullValue()));
         assertThat(game.getUnitAt(new Position(5,1)), is(notNullValue()));

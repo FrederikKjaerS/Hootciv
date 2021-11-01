@@ -26,13 +26,6 @@ public class TestTranscripting {
         game = new TranscriptGame(actualgame, new PrintStream(out));
     }
 
-    private void endRound(int n) {
-        for (int i = 0; i < n; i++) {
-            game.endOfTurn();
-            game.endOfTurn();
-        }
-    }
-
     // FRS p. 455 states that 'Red is the first player to take a turn'.
     @Test
     public void shouldPrintForRedWhenEndsTurn() {
@@ -109,5 +102,4 @@ public class TestTranscripting {
         assertThat(out.toString(),
                 containsString(""));
     }
-
 }
