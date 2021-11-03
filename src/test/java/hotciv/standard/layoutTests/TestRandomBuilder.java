@@ -27,34 +27,6 @@ public class TestRandomBuilder {
             @Override
             public WorldLayoutStrategy createWorldLayoutStrategy() {
                 return new RandomWorldStrategy() {
-                    @Override
-                    public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy){
-                        HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-                        UnitImpl redUnit = new UnitImpl(GameConstants.SETTLER, Player.BLUE,
-                                strategy.getProperties(GameConstants.SETTLER));
-                        UnitImpl blueUnit = new UnitImpl(GameConstants.SETTLER, Player.BLUE,
-                                strategy.getProperties(GameConstants.SETTLER));
-
-                        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-                            for (TileImpl tile: redUnit.getValidTiles()){
-                                if (tile.getTypeString().equals(this.getTileLayout().get(new Position(0, i))
-                                        .getTypeString())) {
-                                    units.put(new Position(0, i), redUnit);
-                                    break;
-                                }
-                            }
-                        }
-                        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
-                            for (TileImpl tile: blueUnit.getValidTiles()){
-                                if (tile.getTypeString().equals(this.getTileLayout().get(new Position(15, i))
-                                        .getTypeString())) {
-                                    units.put(new Position(15, i), blueUnit);
-                                    break;
-                                }
-                            }
-                        }
-                        return units;
-                    }
                 };
             }
         });
@@ -78,4 +50,27 @@ public class TestRandomBuilder {
         }
         assertThat(tiles.stream().distinct().allMatch(tiles.get(0)::equals), is(false));
     }
+
+    @Test
+    public void shouldExistOnly1RedSettlerInRow0() {
+        ArrayList<Unit> units = new ArrayList<>();
+        for(int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            if(game.getUnitAt(new Position(0,i)) != null){
+                units.add(game.getUnitAt(new Position(0,i)));
+            }
+        }
+        assertThat(units.size(), is(1));
+    }
+
+    @Test
+    public void shouldExistOnly1BlueSettlerInRow15() {
+        ArrayList<Unit> units = new ArrayList<>();
+        for(int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            if(game.getUnitAt(new Position(15,i)) != null){
+                units.add(game.getUnitAt(new Position(15,i)));
+            }
+        }
+        assertThat(units.size(), is(1));
+    }
+
 }

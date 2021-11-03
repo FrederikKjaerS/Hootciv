@@ -1,9 +1,6 @@
 package hotciv.variants.worldStrategy;
 
-import hotciv.framework.Game;
-import hotciv.framework.GameConstants;
-import hotciv.framework.Position;
-import hotciv.framework.Tile;
+import hotciv.framework.*;
 import hotciv.standard.CityImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
@@ -42,7 +39,34 @@ public class RandomWorldStrategy implements WorldLayoutStrategy{
 
     @Override
     public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy) {
-        return null;
+        HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
+        UnitImpl redUnit = new UnitImpl(GameConstants.SETTLER, Player.RED,
+                strategy.getProperties(GameConstants.SETTLER));
+        UnitImpl blueUnit = new UnitImpl(GameConstants.SETTLER, Player.BLUE,
+                strategy.getProperties(GameConstants.SETTLER));
+
+        outerLoop:
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (TileImpl tile: redUnit.getValidTiles()){
+                if (tile.getTypeString().equals(this.getTileLayout().get(new Position(0, i))
+                        .getTypeString())) {
+                    units.put(new Position(0, i), redUnit);
+                    break outerLoop;
+                }
+            }
+        }
+
+        outerLoop:
+        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+            for (TileImpl tile: blueUnit.getValidTiles()){
+                if (tile.getTypeString().equals(this.getTileLayout().get(new Position(15, i))
+                        .getTypeString())) {
+                    units.put(new Position(15, i), blueUnit);
+                    break outerLoop;
+                }
+            }
+        }
+        return units;
     }
 
     @Override
