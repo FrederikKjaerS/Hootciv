@@ -11,6 +11,7 @@ import hotciv.variants.worldStrategy.RandomWorldStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,14 +33,6 @@ public class TestRandomBuilder {
         });
     }
 
-    private void endRound(int n) {
-        for (int i = 0; i < n; i++) {
-            game.endOfTurn();
-            game.endOfTurn();
-        }
-    }
-
-    // FRS p. 455 states that 'Red is the first player to take a turn'.
     @Test
     public void shouldNotBeSameTileAt0_0For25DifferentGames() {
         ArrayList<String> tiles = new ArrayList<>();

@@ -79,10 +79,9 @@ public class RandomWorldStrategy implements WorldLayoutStrategy{
                 new ThirdPartyFractalGenerator();
         String[] layout = new String[GameConstants.WORLDSIZE];
         String line;
-        System.out.println("Demonstration of the fractal landscape generator");
-        for ( int r = 0; r < 16; r++ ) {
+        for (int r = 0; r < GameConstants.WORLDSIZE; r++ ) {
             line = "";
-            for ( int c = 0; c < 16; c++ ) {
+            for ( int c = 0; c < GameConstants.WORLDSIZE; c++ ) {
                 line = line + generator.getLandscapeAt(r,c);
             }
             layout[r] = line;
@@ -95,6 +94,5 @@ public class RandomWorldStrategy implements WorldLayoutStrategy{
     }
     public static void main(String[] args) {
         RandomWorldStrategy r = new RandomWorldStrategy();
-        System.out.println(r.getRandomSetup());
     }
 }
