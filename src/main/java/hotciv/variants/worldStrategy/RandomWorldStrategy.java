@@ -1,5 +1,6 @@
 package hotciv.variants.worldStrategy;
 
+import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
 import hotciv.framework.Tile;
@@ -9,11 +10,12 @@ import hotciv.standard.UnitImpl;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import thirdparty.ThirdPartyFractalGenerator;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RandomBuilder implements WorldLayoutStrategy{
+public class RandomWorldStrategy implements WorldLayoutStrategy{
+
+    private  Map<Position, Tile> tileLayout;
 
     @Override
     public Map<Position, Tile> setupTileLayout() {
@@ -34,6 +36,7 @@ public class RandomBuilder implements WorldLayoutStrategy{
                 theWorld.put( p, new TileImpl(type));
             }
         }
+        this.tileLayout = theWorld;
         return theWorld;
     }
 
@@ -47,10 +50,10 @@ public class RandomBuilder implements WorldLayoutStrategy{
         return null;
     }
 
-    public String[] getRandomSetup(){
+    private String[] getRandomSetup(){
         ThirdPartyFractalGenerator generator =
                 new ThirdPartyFractalGenerator();
-        String[] layout = new String[16];
+        String[] layout = new String[GameConstants.WORLDSIZE];
         String line;
         System.out.println("Demonstration of the fractal landscape generator");
         for ( int r = 0; r < 16; r++ ) {
@@ -61,11 +64,13 @@ public class RandomBuilder implements WorldLayoutStrategy{
             layout[r] = line;
         }
         return layout;
-
     }
 
+    public Map<Position, Tile> getTileLayout() {
+        return tileLayout;
+    }
     public static void main(String[] args) {
-        RandomBuilder r = new RandomBuilder();
+        RandomWorldStrategy r = new RandomWorldStrategy();
         System.out.println(r.getRandomSetup());
     }
 }

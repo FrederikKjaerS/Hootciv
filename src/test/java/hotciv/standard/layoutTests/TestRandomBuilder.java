@@ -3,12 +3,11 @@ package hotciv.standard.layoutTests;
 import hotciv.factories.AlphaCivFactory;
 import hotciv.framework.*;
 
-import hotciv.standard.CityImpl;
 import hotciv.standard.GameImpl;
 import hotciv.standard.TileImpl;
 import hotciv.standard.UnitImpl;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
-import hotciv.variants.worldStrategy.RandomBuilder;
+import hotciv.variants.worldStrategy.RandomWorldStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 import org.junit.jupiter.api.*;
 
@@ -27,27 +26,38 @@ public class TestRandomBuilder {
         game = new GameImpl(new AlphaCivFactory(){
             @Override
             public WorldLayoutStrategy createWorldLayoutStrategy() {
-                return new RandomBuilder(){
+                return new RandomWorldStrategy() {
                     @Override
                     public Map<Position, UnitImpl> setupUnitLayout(UnitPropertiesStrategy strategy){
                         HashMap<Position, UnitImpl> units = new HashMap<Position, UnitImpl>();
-                        for(int i = 0; i < 15; i++){
-                            units.put(new Position(5, i), new UnitImpl(GameConstants.SETTLER, Player.BLUE,
-                                    strategy.getProperties(GameConstants.SETTLER)));
-                        }
-/*
-                        units.put(new Position(4, 4), new UnitImpl(GameConstants.SETTLER, Player.BLUE,
-                                strategy.getProperties(GameConstants.SETTLER)));
-                        units.put(new Position(3, 2), new UnitImpl(GameConstants.SETTLER, Player.RED,
-                                strategy.getProperties(GameConstants.SETTLER)));
-*/
+                        UnitImpl redUnit = new UnitImpl(GameConstants.SETTLER, Player.BLUE,
+                                strategy.getProperties(GameConstants.SETTLER));
+                        UnitImpl blueUnit = new UnitImpl(GameConstants.SETTLER, Player.BLUE,
+                                strategy.getProperties(GameConstants.SETTLER));
 
+                        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+                            for (TileImpl tile: redUnit.getValidTiles()){
+                                if (tile.getTypeString().equals(this.getTileLayout().get(new Position(0, i))
+                                        .getTypeString())) {
+                                    units.put(new Position(0, i), redUnit);
+                                    break;
+                                }
+                            }
+                        }
+                        for (int i = 0; i < GameConstants.WORLDSIZE; i++) {
+                            for (TileImpl tile: blueUnit.getValidTiles()){
+                                if (tile.getTypeString().equals(this.getTileLayout().get(new Position(15, i))
+                                        .getTypeString())) {
+                                    units.put(new Position(15, i), blueUnit);
+                                    break;
+                                }
+                            }
+                        }
                         return units;
-                        }
-                    };
+                    }
                 };
-
-        } );
+            }
+        });
     }
 
     private void endRound(int n) {
@@ -59,32 +69,13 @@ public class TestRandomBuilder {
 
     // FRS p. 455 states that 'Red is the first player to take a turn'.
     @Test
-    public void shouldBeRedAsStartingPlayer() {
-        //Red is the starting player
-        for(int i = 0; i < 15; i++){
-            System.out.println(game.getTileAt(new Position(5,i)).getTypeString());
+    public void shouldNotBeSameTileAt0_0For25DifferentGames() {
+        ArrayList<String> tiles = new ArrayList<>();
+        for (int i = 0; i < 25; i++) {
+            setUp();
+            String tileString = game.getTileAt(new Position(0,0)).getTypeString();
+            tiles.add(tileString);
         }
-        assertThat(game.getUnitAt(new Position(5,0)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,1)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,2)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,3)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,4)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,5)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,6)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,7)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,8)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,9)), is(notNullValue()));
-        assertThat(game.getUnitAt(new Position(5,10)), is(notNullValue()));
-
-
+        assertThat(tiles.stream().distinct().allMatch(tiles.get(0)::equals), is(false));
     }
-
-    @Test
-    public void tile() {
-        //Red is the starting player
-        for(int i = 0; i < 15; i++){
-            System.out.println(game.getTileAt(new Position(5,i)).getTypeString());
-        }
-    }
-
 }
