@@ -230,6 +230,16 @@ class GameStubForAttackTesting implements Game, ExtendedGame {
     public void performUnitActionAt( Position p ) {}
 
     @Override
+    public void addObserver(GameObserver observer) {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position) {
+
+    }
+
+    @Override
     public void removeUnit(Position p) {
 
     }

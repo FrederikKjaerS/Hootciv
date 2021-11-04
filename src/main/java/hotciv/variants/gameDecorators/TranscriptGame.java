@@ -80,4 +80,14 @@ public class TranscriptGame implements Game {
         ps.println(player + " performs " + unit + "'s action at " + p);
         game.performUnitActionAt(p);
     }
+
+    @Override
+    public void addObserver(GameObserver observer) {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position) {
+
+    }
 }
