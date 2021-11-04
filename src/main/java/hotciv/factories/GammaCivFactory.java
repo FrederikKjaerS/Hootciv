@@ -42,7 +42,7 @@ public class GammaCivFactory implements HotCivFactory {
     }
 
     @Override
-    public ProductionStrategy createMovingStrategy() {
+    public ProductionStrategy createProductionStrategy() {
         return new NormalProductionStrategy();
     }
 

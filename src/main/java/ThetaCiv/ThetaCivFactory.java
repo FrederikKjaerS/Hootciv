@@ -39,7 +39,7 @@ public class ThetaCivFactory implements HotCivFactory {
     }
 
     @Override
-    public ProductionStrategy createMovingStrategy() {
+    public ProductionStrategy createProductionStrategy() {
         return new ThetaProductionStrategy();
     }
 

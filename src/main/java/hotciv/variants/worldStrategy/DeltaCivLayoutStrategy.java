@@ -10,11 +10,18 @@ import hotciv.standard.UnitImpl;
 import hotciv.variants.unitProperties.DefaultUnitProperties;
 import hotciv.variants.unitProperties.UnitProperties;
 import hotciv.variants.unitProperties.UnitPropertiesStrategy;
+import thirdparty.ThirdPartyFractalGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DeltaCivLayoutStrategy implements WorldLayoutStrategy{
+
+    ThirdPartyFractalGenerator generator;
+
+    public DeltaCivLayoutStrategy() {
+        this.generator = new ThirdPartyFractalGenerator();
+    }
 
     @Override
     public Map<Position, Tile> setupTileLayout() {

@@ -43,7 +43,7 @@ public class SemiCivFactory implements HotCivFactory{
     }
 
     @Override
-    public ProductionStrategy createMovingStrategy() {
+    public ProductionStrategy createProductionStrategy() {
         return new NormalProductionStrategy();
     }
 

@@ -42,7 +42,7 @@ public class BetaCivFactory implements HotCivFactory{
     }
 
     @Override
-    public ProductionStrategy createMovingStrategy() {
+    public ProductionStrategy createProductionStrategy() {
         return new NormalProductionStrategy();
     }
 

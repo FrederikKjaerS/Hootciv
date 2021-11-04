@@ -4,12 +4,7 @@ import hotciv.factories.AlphaCivFactory;
 import hotciv.framework.*;
 
 import hotciv.standard.GameImpl;
-import hotciv.variants.actionStrategy.AlphaActionStrategy;
-import hotciv.variants.agingStrategy.HundredYearStrategy;
-import hotciv.variants.attackStrategy.AttackStrategy;
-import hotciv.variants.attackStrategy.AttackerWinsStrategy;
-import hotciv.variants.winnerStrategy.RedWinnerStrategy;
-import hotciv.variants.worldStrategy.AlphaCivLayoutStrategy;
+import hotciv.variants.gameDecorators.TranscriptGame;
 import org.junit.jupiter.api.*;
 
 import static org.hamcrest.CoreMatchers.*;
