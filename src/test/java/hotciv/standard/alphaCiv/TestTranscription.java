@@ -14,16 +14,16 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class TestTranscripting {
+public class TestTranscription {
     private ByteArrayOutputStream out;
-    private Game actualgame;
+    private Game actualGame;
     private Game game;
 
     @BeforeEach
     public void setUp() {
-        actualgame = new GameImpl(new AlphaCivFactory());
+        actualGame = new GameImpl(new AlphaCivFactory());
         out = new ByteArrayOutputStream();
-        game = new TranscriptGame(actualgame, new PrintStream(out));
+        game = new TranscriptGame(actualGame, new PrintStream(out));
     }
 
     // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -96,7 +96,7 @@ public class TestTranscripting {
 
     @Test
     public void shouldNotPrintForPerformingUnitActionForSettlerAt4_3WhenDecoratorIsOff() {
-        this.game = this.actualgame;
+        this.game = this.actualGame;
         Position settler = new Position(4,3);
         game.performUnitActionAt(settler);
         assertThat(out.toString(),
