@@ -211,7 +211,20 @@ public class CivDrawing implements Drawing, GameObserver {
   }
 
   public void tileFocusChangedAt(Position position) {
-    // TODO: Implementation pending
+    if(game.getUnitAt(position) != null){
+      System.out.println("Unit here");
+      return;
+    }
+
+    if(game.getCityAt(position) != null){
+      System.out.println("City here");
+      return;
+    }
+
+    if(game.getTileAt(position) != null){
+      System.out.println("Tile here");
+      return;
+    }
     System.out.println( "Fake it: tileFocusChangedAt "+position );
   }
 
