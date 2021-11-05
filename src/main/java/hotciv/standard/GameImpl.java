@@ -173,6 +173,9 @@ public class GameImpl implements Game, ExtendedGame {
                 endOfRound();
                 break;
         }
+        if(gameObserver != null){
+            gameObserver.turnEnds(playerInTurn, getAge());
+        }
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class SpyGameObserver implements GameObserver {
 
     public ArrayList<Position> positions;
+    public Player nextPlayerInTurn;
+    public int age;
 
     public SpyGameObserver() {
         this.positions = new ArrayList<>();
@@ -21,7 +23,8 @@ public class SpyGameObserver implements GameObserver {
 
     @Override
     public void turnEnds(Player nextPlayer, int age) {
-
+        this.nextPlayerInTurn = nextPlayer;
+        this.age = age;
     }
 
     @Override

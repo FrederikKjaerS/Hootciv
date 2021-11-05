@@ -1,10 +1,7 @@
 package hotciv.standard.guiTests;
 
 import hotciv.factories.AlphaCivFactory;
-import hotciv.framework.Game;
-import hotciv.framework.GameObserver;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.standard.GameImpl;
 import hotciv.stub.SpyGameObserver;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,4 +40,22 @@ public class TestObserver {
         assertThat(spy.positions.contains(new Position(2,1)), is(true));
         assertThat(spy.positions.size(), is(2));
     }
+
+    @Test
+    public void shouldCallTurnEndsOnceWhenEndOfTurnIsCalled() {
+        game.endOfTurn();
+        assertThat(spy.nextPlayerInTurn, is(Player.BLUE));
+        assertThat(spy.age, is(-4000));
+    }
+
+    @Test
+    public void shouldCallTurnEndsTwiceWhenEndOfTurnIsCalledTwice() {
+        game.endOfTurn();
+        game.endOfTurn();
+        assertThat(spy.nextPlayerInTurn, is(Player.RED));
+        assertThat(spy.age, is(-3900));
+    }
+
+
+
 }
