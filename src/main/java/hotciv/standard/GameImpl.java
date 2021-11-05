@@ -180,16 +180,25 @@ public class GameImpl implements Game, ExtendedGame {
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
         getCityAt(p).setWorkForceFocus(balance);
+        if(gameObserver != null) {
+            gameObserver.worldChangedAt(p);
+        }
     }
 
     public void changeProductionInCityAt(Position p, String unitType) {
         if(getCityAt(p).getOwner() == playerInTurn) {
             unitAndTileStrategy.setProduction(this, p, unitType);
+            if(gameObserver != null) {
+                gameObserver.worldChangedAt(p);
+            }
         }
     }
 
     public void performUnitActionAt(Position p) {
         unitActionStrategy.performAction(this, p);
+        if(gameObserver != null) {
+            gameObserver.worldChangedAt(p);
+        }
     }
 
 
@@ -285,5 +294,8 @@ public class GameImpl implements Game, ExtendedGame {
 
     @Override
     public void setTileFocus(Position position) {
+        if (gameObserver != null) {
+            gameObserver.tileFocusChangedAt(position);
+        }
     }
 }

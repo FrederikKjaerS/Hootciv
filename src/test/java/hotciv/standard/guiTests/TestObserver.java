@@ -32,7 +32,6 @@ public class TestObserver {
         }
     }
 
-    // FRS p. 455 states that 'Red is the first player to take a turn'.
     @Test
     public void shouldCallWorldChangedAtTwiceWhenMovingUnit() {
         game.moveUnit(new Position(2,0), new Position(2,1));
@@ -56,6 +55,33 @@ public class TestObserver {
         assertThat(spy.age, is(-3900));
     }
 
+    @Test
+    public void shouldCallWorldChangedAtOnceWhenChangedProductionInCityIsCalled() {
+        game.changeProductionInCityAt(new Position(1,1), GameConstants.ARCHER);
+        assertThat(spy.positions.contains(new Position(1, 1)), is(true));
+        assertThat(spy.positions.size(), is(1));
+    }
+
+    @Test
+    public void shouldCallWorldChangedAtOnceWhenChangedWorkForceFocusInCityAtIsInvoked() {
+        game.changeWorkForceFocusInCityAt(new Position(4,1), GameConstants.productionFocus);
+        assertThat(spy.positions.contains(new Position(4,1)), is(true));
+        assertThat(spy.positions.size(), is(1));
+
+    }
+
+    @Test
+    public void shouldCallTileFocusChangedAtWhenSetTileFocusIsInvoked() {
+        game.setTileFocus(new Position(1,1));
+        assertThat(spy.focusedTile, is(new Position(1,1)));
+    }
+
+    @Test
+    public void shouldCallTileFocusChangedAtWhenPerformUnitActionAtIsInvoked() {
+        game.performUnitActionAt(new Position(4,3));
+        assertThat(spy.positions.contains(new Position(4,3)), is(true));
+        assertThat(spy.positions.size(), is(1));
+    }
 
 
 }

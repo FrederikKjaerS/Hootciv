@@ -11,6 +11,7 @@ public class SpyGameObserver implements GameObserver {
     public ArrayList<Position> positions;
     public Player nextPlayerInTurn;
     public int age;
+    public Position focusedTile;
 
     public SpyGameObserver() {
         this.positions = new ArrayList<>();
@@ -29,7 +30,7 @@ public class SpyGameObserver implements GameObserver {
 
     @Override
     public void tileFocusChangedAt(Position position) {
-
+        this.focusedTile = position;
     }
 
 
