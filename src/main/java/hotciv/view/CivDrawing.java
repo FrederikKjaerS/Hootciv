@@ -299,17 +299,31 @@ public class CivDrawing implements Drawing, GameObserver {
   public void worldChangedAt(Position pos) {
     // TODO: Remove system.out debugging output, included here for learning purposes
     System.out.println( "CivDrawing: world changes at "+pos);
+    City c = game.getCityAt(pos);
     Unit u = game.getUnitAt(pos);
     if (u == null) {
       // Unit has been removed
       UnitFigure uf = positionToUnitFigureMap.remove(pos);
       figureCollection.remove(uf);
+      if (c != null){
+        CityFigure newCity = createCityFigureFor(pos, new CityImpl(game.getPlayerInTurn()));
+        positionToCityFigureMap.put(pos, newCity);
+        figureCollection.add(newCity);
+      }
     } else {
       // Unit has appeared
+      UnitFigure ufFrom = positionToUnitFigureMap.remove(pos);
+      figureCollection.remove(ufFrom);
       UnitFigure uf = createUnitFigureFor(pos, u);
       positionToUnitFigureMap.put(pos, uf);
       figureCollection.add(uf);
     }
+    if(game.getCityAt(pos) != null){
+      City city = game.getCityAt(pos);
+      updateProductionIcon(city);
+      updateBalanceIcon(city);
+    }
+
     // TODO: Cities may change on position as well
   }
 
@@ -356,7 +370,6 @@ public class CivDrawing implements Drawing, GameObserver {
 
   private void updateProductionIcon(City city) {
     if (!city.getProduction().equals("")) {
-      System.out.println("HELLO MOTHERFUCKERS");
       String production = city.getProduction();
       productionIcon.set(production,
               new Point(GfxConstants.CITY_PRODUCTION_X,
