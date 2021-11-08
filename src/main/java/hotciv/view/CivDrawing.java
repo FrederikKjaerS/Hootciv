@@ -212,6 +212,7 @@ public class CivDrawing implements Drawing, GameObserver {
   protected TextFigure movesLeftIcon;
   protected ImageFigure balanceIcon;
   protected ImageFigure productionIcon;
+  protected TextFigure ageIcon;
 
   protected void synchronizeIconsWithGameState() {
     // Note - we have to guard creating figures and adding
@@ -281,6 +282,15 @@ public class CivDrawing implements Drawing, GameObserver {
       figureCollection.add(productionIcon);
     }
 
+    //Age text figure
+    if (ageIcon == null) {
+      ageIcon =
+              new TextFigure("-4000", new Point(GfxConstants.AGE_TEXT_X, GfxConstants.AGE_TEXT_Y));
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      figureCollection.add(ageIcon);
+    }
+
     // TODO: Further development to include rest of figures needed
     // for other status panel info, like age, etc.
   }
@@ -308,6 +318,7 @@ public class CivDrawing implements Drawing, GameObserver {
     System.out.println( "CivDrawing: turnEnds for "+
                         nextPlayer+" at "+age );
     updateTurnShield(nextPlayer);
+    updateAgeIcon("" + age);
     // TODO: Age output pending
   }
 
@@ -337,6 +348,10 @@ public class CivDrawing implements Drawing, GameObserver {
 
   private void updateMovesLeftIcon(String count) {
     movesLeftIcon.setText(count);
+  }
+
+  private void updateAgeIcon(String age) {
+    ageIcon.setText(age);
   }
 
   private void updateProductionIcon(City city) {

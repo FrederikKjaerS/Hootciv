@@ -41,6 +41,7 @@ public class FakeObjectGame implements Game {
 
   private Map<Position, Unit> unitMap;
   private Map<Position, CityImpl> cityMap;
+  private int age = -4000;
   public Unit getUnitAt(Position p) {
     return unitMap.get(p);
   }
@@ -65,10 +66,13 @@ public class FakeObjectGame implements Game {
   public void endOfTurn() {
     System.out.println( "-- FakeObjectGame / endOfTurn called." );
     inTurn = (getPlayerInTurn() == Player.RED ?
-              Player.BLUE : 
+              Player.BLUE :
               Player.RED );
     // no age increments implemented...
-    gameObserver.turnEnds(inTurn, -4000);
+    if(inTurn == Player.RED){
+      age += 100;
+    }
+    gameObserver.turnEnds(inTurn, this.age);
   }
   public Player getPlayerInTurn() { return inTurn; }
 

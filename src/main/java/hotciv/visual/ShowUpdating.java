@@ -70,11 +70,11 @@ class UpdateTool extends NullTool {
       game.moveUnit( new Position(1,1), new Position(2,2) );
       break;
     }
-      case 2: {
-        editor.showStatus( "State change: Moving theta unit to (6,4)" );
-        game.moveUnit( new Position(6,3), new Position(6,4) );
-        break;
-      }
+    case 2: {
+      editor.showStatus( "State change: Moving theta unit to (6,4)" );
+      game.moveUnit( new Position(6,3), new Position(6,4) );
+      break;
+    }
     case 3: {
       editor.showStatus( "State change: End of Turn (over to blue)" );
       game.endOfTurn();
