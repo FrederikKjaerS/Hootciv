@@ -86,8 +86,10 @@ class UpdateTool extends NullTool {
       break;
     }
     case 5: {
-      editor.showStatus( "State change: Inspect Unit at (3,2)" );
-      game.setTileFocus(new Position(2,2));
+      editor.showStatus( "State change: Inspect city at (0,1)" );
+      game.changeWorkForceFocusInCityAt(new Position(0,1), GameConstants.productionFocus);
+      game.changeProductionInCityAt(new Position(0,1), GameConstants.SETTLER);
+      game.setTileFocus(new Position(0,1));
       break;
     }
     case 6: {
@@ -97,16 +99,26 @@ class UpdateTool extends NullTool {
     }
 
     case 7: {
-      editor.showStatus( "State change: Inspect City at (0,1)" );
-      game.setTileFocus(new Position(0,1));
+      editor.showStatus( "State change: Inspect unit at (3,2)" );
+      game.setTileFocus(new Position(3,2));
       break;
     }
 
     case 8: {
+      editor.showStatus( "State change: Inspect Unit and city at (2,2)" );
+      game.changeWorkForceFocusInCityAt(new Position(2,2), GameConstants.foodFocus);
+      game.changeProductionInCityAt(new Position(2,2), GameConstants.ARCHER);
+      game.setTileFocus(new Position(2,2));
+      break;
+    }
+
+    case 9: {
       editor.showStatus( "State change: change production to archer" );
       game.changeProductionInCityAt(new Position(0,1), GameConstants.ARCHER);
       break;
     }
+
+
 
 
       // TODO: Add more state changes for other things to test

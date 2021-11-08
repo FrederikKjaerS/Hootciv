@@ -210,6 +210,9 @@ public class CivDrawing implements Drawing, GameObserver {
   protected ImageFigure unitShieldIcon;
   protected ImageFigure cityShieldIcon;
   protected TextFigure movesLeftIcon;
+  protected ImageFigure balanceIcon;
+  protected ImageFigure productionIcon;
+
   protected void synchronizeIconsWithGameState() {
     // Note - we have to guard creating figures and adding
     // them to the collection, so we do not create multiple
@@ -236,10 +239,46 @@ public class CivDrawing implements Drawing, GameObserver {
       // rendering.
       figureCollection.add(unitShieldIcon);
     }
+
+    if (cityShieldIcon == null) {
+      cityShieldIcon =
+              new HotCivFigure(GfxConstants.NOTHING,
+                      new Point(GfxConstants.CITY_SHIELD_X,
+                              GfxConstants.CITY_SHIELD_Y),
+                      GfxConstants.CITY_TYPE_STRING);
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      figureCollection.add(cityShieldIcon);
+    }
+
     if (movesLeftIcon == null) {
       movesLeftIcon =
               new TextFigure("", new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
       figureCollection.add(movesLeftIcon);
+    }
+
+    //Balance icon
+    if (balanceIcon == null) {
+      balanceIcon =
+              new HotCivFigure(GfxConstants.NOTHING,
+                      new Point(GfxConstants.WORKFORCEFOCUS_X,
+                              GfxConstants.WORKFORCEFOCUS_Y),
+                      GfxConstants.NOTHING);
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      figureCollection.add(balanceIcon);
+    }
+
+    //Production icon
+    if (productionIcon == null) {
+      productionIcon =
+              new HotCivFigure(GfxConstants.NOTHING,
+                      new Point(GfxConstants.CITY_PRODUCTION_X,
+                              GfxConstants.CITY_PRODUCTION_Y),
+                      GfxConstants.NOTHING);
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      figureCollection.add(productionIcon);
     }
 
     // TODO: Further development to include rest of figures needed
@@ -288,31 +327,73 @@ public class CivDrawing implements Drawing, GameObserver {
                     GfxConstants.UNIT_SHIELD_Y ) );
   }
 
+  private void updateCityShield(Player nextPlayer) {
+    String playername = "red";
+    if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
+    cityShieldIcon.set( playername+"shield",
+            new Point( GfxConstants.CITY_SHIELD_X,
+                    GfxConstants.CITY_SHIELD_Y ) );
+  }
+
   private void updateMovesLeftIcon(String count) {
     movesLeftIcon.setText(count);
   }
 
+  private void updateProductionIcon(City city) {
+    if (!city.getProduction().equals("")) {
+      System.out.println("HELLO MOTHERFUCKERS");
+      String production = city.getProduction();
+      productionIcon.set(production,
+              new Point(GfxConstants.CITY_PRODUCTION_X,
+                      GfxConstants.CITY_PRODUCTION_Y));
+    }
+  }
+
+  private void updateBalanceIcon(City city) {
+    if (city.getWorkforceFocus() != null) {
+      String workForceFocus = city.getWorkforceFocus();
+      balanceIcon.set(workForceFocus,
+              new Point(GfxConstants.WORKFORCEFOCUS_X,
+                      GfxConstants.WORKFORCEFOCUS_Y));
+    }
+  }
+
+  private void clearPanel() {
+    unitShieldIcon.set( GfxConstants.NOTHING,
+            new Point( GfxConstants.UNIT_SHIELD_X,
+                    GfxConstants.UNIT_SHIELD_Y ) );
+    cityShieldIcon.set( GfxConstants.NOTHING,
+            new Point( GfxConstants.CITY_SHIELD_X,
+                    GfxConstants.CITY_SHIELD_Y ) );
+    productionIcon.set( GfxConstants.NOTHING,
+            new Point( GfxConstants.CITY_PRODUCTION_X,
+                    GfxConstants.CITY_PRODUCTION_Y ) );
+    balanceIcon.set( GfxConstants.NOTHING,
+            new Point( GfxConstants.WORKFORCEFOCUS_X,
+                    GfxConstants.WORKFORCEFOCUS_Y ) );
+    movesLeftIcon.setText("");
+
+  }
 
   public void tileFocusChangedAt(Position position) {
+    clearPanel();
 
     if(game.getUnitAt(position) != null){
-      System.out.println("Unit here");
       updateUnitShield(game.getUnitAt(position).getOwner());
       updateMovesLeftIcon("" + game.getUnitAt(position).getMoveCount());
-      return;
     }
 
     if(game.getCityAt(position) != null){
       System.out.println("City here");
-      updateTurnShield(game.getCityAt(position).getOwner());
-      return;
+      City city = game.getCityAt(position);
+      updateCityShield(city.getOwner());
+      updateBalanceIcon(city);
+      updateProductionIcon(city);
     }
 
     if(game.getTileAt(position) != null){
       System.out.println("Tile here");
-      return;
     }
-    System.out.println( "Fake it: tileFocusChangedAt "+position );
   }
 
   @Override

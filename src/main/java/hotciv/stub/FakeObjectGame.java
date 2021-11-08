@@ -40,7 +40,7 @@ import java.util.Map;
 public class FakeObjectGame implements Game {
 
   private Map<Position, Unit> unitMap;
-  private Map<Position, City> cityMap;
+  private Map<Position, CityImpl> cityMap;
   public Unit getUnitAt(Position p) {
     return unitMap.get(p);
   }
@@ -89,6 +89,7 @@ public class FakeObjectGame implements Game {
     unitMap.put(new Position(3,2), new StubUnit( GameConstants.LEGION, Player.BLUE ));
     unitMap.put(new Position(4,2), new StubUnit( GameConstants.SETTLER, Player.RED ));
     unitMap.put(new Position(6,3), new StubUnit( ThetaConstants.SANDWORM, Player.RED ));
+    cityMap.put(new Position(2,2), new CityImpl(Player.RED));
     cityMap.put(new Position(0,1), new CityImpl(Player.RED));
     inTurn = Player.RED;
   }
@@ -119,11 +120,21 @@ public class FakeObjectGame implements Game {
   }
 
   // TODO: Add more fake object behaviour to test MiniDraw updating
-  public City getCityAt( Position p ) { return cityMap.get(p); }
+  public CityImpl getCityAt( Position p ) { return cityMap.get(p); }
   public Player getWinner() { return null; }
   public int getAge() { return 0; }  
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {
+    getCityAt(p).setWorkForceFocus(balance);
+    if(gameObserver != null) {
+      gameObserver.worldChangedAt(p);
+    }
+  }
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    getCityAt(p).setProduction(unitType);
+    if(gameObserver != null) {
+      gameObserver.worldChangedAt(p);
+    }
+  }
   public void performUnitActionAt( Position p ) {}  
 
   public void setTileFocus(Position position) {
