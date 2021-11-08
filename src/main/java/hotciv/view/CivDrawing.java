@@ -2,6 +2,7 @@ package hotciv.view;
 
 import hotciv.framework.*;
 import hotciv.view.figure.HotCivFigure;
+import hotciv.view.figure.TextFigure;
 import hotciv.view.figure.UnitFigure;
 import minidraw.framework.*;
 import minidraw.standard.ImageFigure;
@@ -156,13 +157,16 @@ public class CivDrawing implements Drawing, GameObserver {
 
   // Figures representing icons (showing status in status panel)
   protected ImageFigure turnShieldIcon;
+  protected ImageFigure unitShieldIcon;
+  protected ImageFigure cityShieldIcon;
+  protected TextFigure movesLeftIcon;
   protected void synchronizeIconsWithGameState() {
     // Note - we have to guard creating figures and adding
     // them to the collection, so we do not create multiple
     // instances; this method is called on every 'requestRedraw'
     if (turnShieldIcon == null) {
       turnShieldIcon =
-              new HotCivFigure("redshield",
+              new HotCivFigure(GfxConstants.RED_SHIELD,
                       new Point(GfxConstants.TURN_SHIELD_X,
                               GfxConstants.TURN_SHIELD_Y),
                       GfxConstants.TURN_SHIELD_TYPE_STRING);
@@ -171,6 +175,22 @@ public class CivDrawing implements Drawing, GameObserver {
       figureCollection.add(turnShieldIcon);
     }
     updateTurnShield(game.getPlayerInTurn());
+
+    if (unitShieldIcon == null) {
+      unitShieldIcon =
+              new HotCivFigure(GfxConstants.NOTHING,
+                      new Point(GfxConstants.UNIT_SHIELD_X,
+                              GfxConstants.UNIT_SHIELD_Y),
+                      GfxConstants.UNIT_SHIELD_TYPE_STRING);
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      figureCollection.add(unitShieldIcon);
+    }
+    if (movesLeftIcon == null) {
+      movesLeftIcon =
+              new TextFigure("", new Point(GfxConstants.UNIT_COUNT_X, GfxConstants.UNIT_COUNT_Y));
+      figureCollection.add(movesLeftIcon);
+    }
 
     // TODO: Further development to include rest of figures needed
     // for other status panel info, like age, etc.
@@ -210,14 +230,31 @@ public class CivDrawing implements Drawing, GameObserver {
                                    GfxConstants.TURN_SHIELD_Y ) );
   }
 
+  private void updateUnitShield(Player nextPlayer) {
+    String playername = "red";
+    if ( nextPlayer == Player.BLUE ) { playername = "blue"; }
+    unitShieldIcon.set( playername+"shield",
+            new Point( GfxConstants.UNIT_SHIELD_X,
+                    GfxConstants.UNIT_SHIELD_Y ) );
+  }
+
+  private void updateMovesLeftIcon(String count) {
+    movesLeftIcon.setText(count);
+  }
+
+
   public void tileFocusChangedAt(Position position) {
+
     if(game.getUnitAt(position) != null){
       System.out.println("Unit here");
+      updateUnitShield(game.getUnitAt(position).getOwner());
+      updateMovesLeftIcon("" + game.getUnitAt(position).getMoveCount());
       return;
     }
 
     if(game.getCityAt(position) != null){
       System.out.println("City here");
+      updateTurnShield(game.getCityAt(position).getOwner());
       return;
     }
 

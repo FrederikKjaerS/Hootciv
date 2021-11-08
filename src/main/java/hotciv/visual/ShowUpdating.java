@@ -1,6 +1,7 @@
 package hotciv.visual;
 
 import hotciv.framework.Game;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
 import hotciv.stub.FakeObjectGame;
 import minidraw.framework.*;
@@ -85,7 +86,7 @@ class UpdateTool extends NullTool {
       break;
     }
     case 5: {
-      editor.showStatus( "State change: Inspect Unit at (2,2)" );
+      editor.showStatus( "State change: Inspect Unit at (3,2)" );
       game.setTileFocus(new Position(2,2));
       break;
     }
@@ -100,6 +101,14 @@ class UpdateTool extends NullTool {
       game.setTileFocus(new Position(0,1));
       break;
     }
+
+    case 8: {
+      editor.showStatus( "State change: change production to archer" );
+      game.changeProductionInCityAt(new Position(0,1), GameConstants.ARCHER);
+      break;
+    }
+
+
       // TODO: Add more state changes for other things to test
     default: {
       editor.showStatus("No more changes in my list...");
