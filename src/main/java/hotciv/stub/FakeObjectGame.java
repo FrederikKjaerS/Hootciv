@@ -123,7 +123,6 @@ public class FakeObjectGame implements Game {
     world.put(new Position(7,5), new StubTile(ThetaConstants.DESERT));
   }
 
-  // TODO: Add more fake object behaviour to test MiniDraw updating
   public CityImpl getCityAt( Position p ) { return cityMap.get(p); }
   public Player getWinner() { return null; }
   public int getAge() { return 0; }  
@@ -160,6 +159,7 @@ class StubUnit implements  Unit {
     this.type = type;
     this.owner = owner;
   }
+
   public String getTypeString() { return type; }
   public Player getOwner() { return owner; }
   public int getMoveCount() { return 1; }

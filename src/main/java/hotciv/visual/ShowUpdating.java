@@ -58,6 +58,13 @@ class UpdateTool extends NullTool {
   }
   private int count = 0;
 
+  private void endRound(int n) {
+    for (int i = 0; i < n; i++) {
+      game.endOfTurn();
+      game.endOfTurn();
+    }
+  }
+
   public void mouseDown(MouseEvent e, int x, int y) {
     switch(count) {
     case 0: {
@@ -134,13 +141,15 @@ class UpdateTool extends NullTool {
     }
     case 13: {
       editor.showStatus( "State change: Archer performs action" );
+      game.performUnitActionAt(new Position(3,2));
       break;
     }
     case 14: {
       editor.showStatus( "State change: City produces unit" );
+      game.changeProductionInCityAt(new Position(0,1), GameConstants.ARCHER);
+      endRound(2);
       break;
     }
-
 
 
 

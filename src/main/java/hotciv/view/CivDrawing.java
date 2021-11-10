@@ -291,14 +291,11 @@ public class CivDrawing implements Drawing, GameObserver {
       figureCollection.add(ageIcon);
     }
 
-    // TODO: Further development to include rest of figures needed
     // for other status panel info, like age, etc.
   }
  
   // === Observer Methods ===
   public void worldChangedAt(Position pos) {
-    // TODO: Remove system.out debugging output, included here for learning purposes
-    System.out.println( "CivDrawing: world changes at "+pos);
     City c = game.getCityAt(pos);
     Unit u = game.getUnitAt(pos);
     if (u == null) {
@@ -324,16 +321,12 @@ public class CivDrawing implements Drawing, GameObserver {
       updateBalanceIcon(city);
     }
 
-    // TODO: Cities may change on position as well
+    // TODO: Cities may change on position as well?????
   }
 
   public void turnEnds(Player nextPlayer, int age) {
-    // TODO: Remove system.out debugging output
-    System.out.println( "CivDrawing: turnEnds for "+
-                        nextPlayer+" at "+age );
     updateTurnShield(nextPlayer);
     updateAgeIcon("" + age);
-    // TODO: Age output pending
   }
 
   private void updateTurnShield(Player nextPlayer) {
@@ -431,7 +424,6 @@ public class CivDrawing implements Drawing, GameObserver {
     synchronizeUnitFigureCollectionWithGameUnits();
     synchronizeCityFigureCollectionWithGameCities();
     synchronizeIconsWithGameState();
-    // TODO: Cities pending
   }
 
   @Override
