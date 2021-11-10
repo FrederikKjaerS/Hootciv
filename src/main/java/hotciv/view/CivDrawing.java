@@ -306,7 +306,7 @@ public class CivDrawing implements Drawing, GameObserver {
       UnitFigure uf = positionToUnitFigureMap.remove(pos);
       figureCollection.remove(uf);
       if (c != null){
-        CityFigure newCity = createCityFigureFor(pos, new CityImpl(game.getPlayerInTurn()));
+        CityFigure newCity = createCityFigureFor(pos, new CityImpl(c.getOwner()));
         positionToCityFigureMap.put(pos, newCity);
         figureCollection.add(newCity);
       }
