@@ -125,28 +125,33 @@ public class CivDrawing implements Drawing, GameObserver {
     Position p;
     for (int r = 0; r < GameConstants.WORLDSIZE; r++) {
       for (int c = 0; c < GameConstants.WORLDSIZE; c++) {
-        p = new Position(r, c);
-        Unit unit = game.getUnitAt(p);
-        UnitFigure unitFigure = positionToUnitFigureMap.get(p);
-        // Synchronize each tile position with figure collection
-        if (unit != null) {
-          // if a unit is present in game, then
-          if (unitFigure == null) {
-            // if the associated unit figure has not been created, make it
-            unitFigure = createUnitFigureFor(p, unit);
-            // We add the figure both to our internal data structure
-            positionToUnitFigureMap.put(p, unitFigure);
-            // and of course to MiniDraw's figure collection for
-            // visual rendering
-            figureCollection.add(unitFigure);
-          }
-        } else {
-          // no unit at tile, maybe there is a unitFigure wrongly here
-          if (unitFigure != null) {
-            positionToUnitFigureMap.remove(p);
-            figureCollection.remove(unitFigure);
-          }
-        }
+        syncUnit(r, c);
+      }
+    }
+  }
+
+  private void syncUnit(int r, int c) {
+    Position p;
+    p = new Position(r, c);
+    Unit unit = game.getUnitAt(p);
+    UnitFigure unitFigure = positionToUnitFigureMap.get(p);
+    // Synchronize each tile position with figure collection
+    if (unit != null) {
+      // if a unit is present in game, then
+      if (unitFigure == null) {
+        // if the associated unit figure has not been created, make it
+        unitFigure = createUnitFigureFor(p, unit);
+        // We add the figure both to our internal data structure
+        positionToUnitFigureMap.put(p, unitFigure);
+        // and of course to MiniDraw's figure collection for
+        // visual rendering
+        figureCollection.add(unitFigure);
+      }
+    } else {
+      // no unit at tile, maybe there is a unitFigure wrongly here
+      if (unitFigure != null) {
+        positionToUnitFigureMap.remove(p);
+        figureCollection.remove(unitFigure);
       }
     }
   }
@@ -158,28 +163,33 @@ public class CivDrawing implements Drawing, GameObserver {
     Position p;
     for (int r = 0; r < GameConstants.WORLDSIZE; r++) {
       for (int c = 0; c < GameConstants.WORLDSIZE; c++) {
-        p = new Position(r, c);
-        City city = game.getCityAt(p);
-        CityFigure cityFigure = positionToCityFigureMap.get(p);
-        // Synchronize each tile position with figure collection
-        if (city != null) {
-          // if a city is present in game, then
-          if (cityFigure == null) {
-            // if the associated city figure has not been created, make it
-            cityFigure = createCityFigureFor(p, city);
-            // We add the figure both to our internal data structure
-            positionToCityFigureMap.put(p, cityFigure);
-            // and of course to MiniDraw's figure collection for
-            // visual rendering
-            figureCollection.add(cityFigure);
-          }
-        } else {
-          // no city at tile, maybe there is a cityFigure wrongly here
-          if (cityFigure != null) {
-            positionToCityFigureMap.remove(p);
-            figureCollection.remove(cityFigure);
-          }
-        }
+        syncCity(r, c);
+      }
+    }
+  }
+
+  private void syncCity(int r, int c) {
+    Position p;
+    p = new Position(r, c);
+    City city = game.getCityAt(p);
+    CityFigure cityFigure = positionToCityFigureMap.get(p);
+    // Synchronize each tile position with figure collection
+    if (city != null) {
+      // if a city is present in game, then
+      if (cityFigure == null) {
+        // if the associated city figure has not been created, make it
+        cityFigure = createCityFigureFor(p, city);
+        // We add the figure both to our internal data structure
+        positionToCityFigureMap.put(p, cityFigure);
+        // and of course to MiniDraw's figure collection for
+        // visual rendering
+        figureCollection.add(cityFigure);
+      }
+    } else {
+      // no city at tile, maybe there is a cityFigure wrongly here
+      if (cityFigure != null) {
+        positionToCityFigureMap.remove(p);
+        figureCollection.remove(cityFigure);
       }
     }
   }
@@ -308,17 +318,13 @@ public class CivDrawing implements Drawing, GameObserver {
         figureCollection.add(newCity);
       }
     } else {
-      // Unit has appeared
-      UnitFigure ufFrom = positionToUnitFigureMap.remove(pos);
-      figureCollection.remove(ufFrom);
-      UnitFigure uf = createUnitFigureFor(pos, u);
-      positionToUnitFigureMap.put(pos, uf);
-      figureCollection.add(uf);
-    }
-    if(game.getCityAt(pos) != null){
+    syncUnit(pos.getRow(), pos.getColumn());
+    syncCity(pos.getRow(), pos.getColumn());
+    /*if(game.getCityAt(pos) != null){
       City city = game.getCityAt(pos);
       updateProductionIcon(city);
       updateBalanceIcon(city);
+      }*/
     }
 
     // TODO: Cities may change on position as well?????

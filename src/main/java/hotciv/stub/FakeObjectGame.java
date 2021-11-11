@@ -48,16 +48,20 @@ public class FakeObjectGame implements Game {
 
   public boolean moveUnit(Position from, Position to) {
     // Using print statements to aid in debugging and development
-    System.out.println("-- FakeObjectGame / moveUnit called: " + from + "->" + to);
+
     Unit unit = getUnitAt(from);
     if (unit == null) return false;
-
+    boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1
+            && Math.abs(to.getColumn() - from.getColumn()) <= 1;
+    if (! isMoveInValidRange) return false;
     System.out.println("-- moveUnit found unit at: " + from);
     // Remember to inform game observer on any change on the tiles
     unitMap.put(from, null);
     gameObserver.worldChangedAt(from);
     unitMap.put(to, unit);
+
     gameObserver.worldChangedAt(to);
+
     return true;
   }
 
