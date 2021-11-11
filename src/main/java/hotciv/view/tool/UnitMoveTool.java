@@ -12,15 +12,16 @@ import minidraw.standard.SelectionTool;
 
 import java.awt.event.MouseEvent;
 
-public class UnitMoveTool extends SelectionTool {
+public class UnitMoveTool extends NullTool {
     private final DrawingEditor editor;
     private final Game game;
     private int fromX;
     private int fromY;
+    private int initialX;
+    private int initialY;
     private HotCivFigure figureBelowClickPoint;
 
     public UnitMoveTool(DrawingEditor editor, Game game) {
-        super(editor);
         this.editor = editor;
         this.game = game;
 
@@ -28,7 +29,8 @@ public class UnitMoveTool extends SelectionTool {
 
     @Override
     public void mouseDown(MouseEvent e, int x, int y) {
-        super.mouseDown(e, x, y);
+        this.initialX = x;
+        this.initialY = y;
         this.fromX = x;
         this.fromY = y;
         figureBelowClickPoint = (HotCivFigure) editor.drawing().findFigure(x, y);
@@ -36,20 +38,24 @@ public class UnitMoveTool extends SelectionTool {
 
     @Override
     public void mouseDrag(MouseEvent e, int x, int y) {
-        if(figureBelowClickPoint != null) {
+        if (figureBelowClickPoint != null) {
             if (figureBelowClickPoint.getTypeString().equals(GfxConstants.UNIT_TYPE_STRING)) {
-                super.mouseDrag(e, x, y);
+                figureBelowClickPoint.moveBy(x - fromX, y - fromY);
+                fromX = x;
+                fromY = y;
             }
         }
     }
 
     @Override
     public void mouseUp(MouseEvent e, int x, int y) {
-        super.mouseUp(e, x, y);
         if (figureBelowClickPoint != null) {
-            if(!game.moveUnit(GfxConstants.getPositionFromXY(fromX, fromY), GfxConstants.getPositionFromXY(x,y))){
-                figureBelowClickPoint.moveBy(fromX - x, fromY - y);
+            if (figureBelowClickPoint.getTypeString().equals(GfxConstants.UNIT_TYPE_STRING)) {
+                if (!game.moveUnit(GfxConstants.getPositionFromXY(initialX, initialY), GfxConstants.getPositionFromXY(x, y))) {
+                    figureBelowClickPoint.moveBy(initialX - x, initialY - y);
+                }
             }
+            figureBelowClickPoint = null;
         }
     }
 }

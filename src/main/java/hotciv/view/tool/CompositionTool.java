@@ -1,6 +1,7 @@
 package hotciv.view.tool;
 
 import hotciv.framework.Game;
+import hotciv.framework.Position;
 import hotciv.view.GfxConstants;
 import hotciv.view.figure.HotCivFigure;
 import minidraw.framework.DrawingEditor;
@@ -40,20 +41,42 @@ public class CompositionTool extends NullTool {
     figureBelowClickPoint = (HotCivFigure) editor.drawing().findFigure(x, y);
     // Next determine the state of tool to use
     if (figureBelowClickPoint == null) {
-      // TODO: no figure below - set state correctly (set focus tool or null tool)
-      System.out.println("TODO: No figure below click point - PENDING IMPLEMENTATION");
       state = new NullTool();
     } else {
-      if (figureBelowClickPoint.getTypeString().equals(GfxConstants.TURN_SHIELD_TYPE_STRING)) {
-        state = new EndOfTurnTool(editor, game);
-      } else {
-        // TODO: handle all the cases - action tool, unit move tool, etc
-        System.out.println("TODO: PENDING IMPLEMENTATION based upon hitting a figure with type: "
-                + figureBelowClickPoint.getTypeString());
-        state = new NullTool();
+      switch (figureBelowClickPoint.getTypeString()) {
+        case GfxConstants.TURN_SHIELD_TYPE_STRING: {
+          state = new EndOfTurnTool(editor, game);
+          break;
+        }
+
+        case GfxConstants.UNIT_TYPE_STRING: {
+          if(e.isShiftDown()){
+            state = new ActionTool(editor, game);
+          } else {
+            state = new SetFocusTool(editor, game);
+          }
+          state.mouseDown(e, x, y);
+          state = new UnitMoveTool(editor, game);
+          break;
+        }
+
+        case GfxConstants.CITY_TYPE_STRING: {
+          state = new SetFocusTool(editor, game);
+          break;
+        }
       }
     }
     // Finally, delegate to the selected state
     state.mouseDown(e, x, y);
+  }
+
+  @Override
+  public void mouseDrag(MouseEvent e, int x, int y) {
+    state.mouseDrag(e, x, y);
+  }
+
+  @Override
+  public void mouseUp(MouseEvent e, int x, int y) {
+    state.mouseUp(e, x, y);
   }
 }

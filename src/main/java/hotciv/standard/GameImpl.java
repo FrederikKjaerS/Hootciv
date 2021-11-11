@@ -295,7 +295,9 @@ public class GameImpl implements Game, ExtendedGame {
     @Override
     public void setTileFocus(Position position) {
         if (gameObserver != null) {
-            gameObserver.tileFocusChangedAt(position);
+            if(position.getRow() < GameConstants.WORLDSIZE && position.getColumn() < GameConstants.WORLDSIZE){
+                gameObserver.tileFocusChangedAt(position);
+            }
         }
     }
 }

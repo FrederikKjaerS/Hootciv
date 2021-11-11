@@ -143,7 +143,7 @@ public class FakeObjectGame implements Game {
     }
   }
   public void performUnitActionAt( Position p ) {
-    if (getUnitAt(p).getTypeString() == GameConstants.SETTLER) {
+    if (getUnitAt(p).getTypeString().equals(GameConstants.SETTLER)) {
       cityMap.put(p, new CityImpl(getUnitAt(p).getOwner()));
       unitMap.remove(p);
       gameObserver.worldChangedAt(p);
@@ -151,8 +151,9 @@ public class FakeObjectGame implements Game {
   }
 
   public void setTileFocus(Position position) {
-    gameObserver.tileFocusChangedAt(position);
-    System.out.println("-- FakeObjectGame / setTileFocus called.");
+    if(position.getRow() < GameConstants.WORLDSIZE && position.getColumn() < GameConstants.WORLDSIZE){
+      gameObserver.tileFocusChangedAt(position);
+    }
   }
 }
 
