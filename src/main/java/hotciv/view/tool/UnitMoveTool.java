@@ -31,12 +31,11 @@ public class UnitMoveTool extends SelectionTool {
         super.mouseDown(e, x, y);
         this.fromX = x;
         this.fromY = y;
+        figureBelowClickPoint = (HotCivFigure) editor.drawing().findFigure(x, y);
     }
 
     @Override
     public void mouseDrag(MouseEvent e, int x, int y) {
-
-        figureBelowClickPoint = (HotCivFigure) editor.drawing().findFigure(x, y);
         if(figureBelowClickPoint != null) {
             if (figureBelowClickPoint.getTypeString().equals(GfxConstants.UNIT_TYPE_STRING)) {
                 super.mouseDrag(e, x, y);
