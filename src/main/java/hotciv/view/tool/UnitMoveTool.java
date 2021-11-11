@@ -54,6 +54,7 @@ public class UnitMoveTool extends NullTool {
                 if (!game.moveUnit(GfxConstants.getPositionFromXY(initialX, initialY), GfxConstants.getPositionFromXY(x, y))) {
                     figureBelowClickPoint.moveBy(initialX - x, initialY - y);
                 }
+                game.setTileFocus(GfxConstants.getPositionFromXY(x,y));
             }
             figureBelowClickPoint = null;
         }
