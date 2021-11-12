@@ -19,7 +19,6 @@ public class ShowSemiCiv {
         editor.open();
         editor.showStatus("Play the semiCiv variant");
 
-        // TODO: Replace the setting of the tool with your UnitMoveTool implementation.
         editor.setTool(new CompositionTool(editor, game));
     }
 }

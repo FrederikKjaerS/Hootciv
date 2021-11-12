@@ -6,6 +6,7 @@ import hotciv.view.GfxConstants;
 import hotciv.view.figure.HotCivFigure;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Figure;
+import minidraw.framework.ZOrder;
 import minidraw.standard.ImageFigure;
 import minidraw.standard.NullTool;
 import minidraw.standard.SelectionTool;
@@ -34,6 +35,7 @@ public class UnitMoveTool extends NullTool {
         this.fromX = x;
         this.fromY = y;
         figureBelowClickPoint = (HotCivFigure) editor.drawing().findFigure(x, y);
+        editor.drawing().zOrder(figureBelowClickPoint, ZOrder.TO_TOP);
     }
 
     @Override
@@ -53,8 +55,9 @@ public class UnitMoveTool extends NullTool {
             if (figureBelowClickPoint.getTypeString().equals(GfxConstants.UNIT_TYPE_STRING)) {
                 if (!game.moveUnit(GfxConstants.getPositionFromXY(initialX, initialY), GfxConstants.getPositionFromXY(x, y))) {
                     figureBelowClickPoint.moveBy(initialX - x, initialY - y);
+                }else{
+                    game.setTileFocus(GfxConstants.getPositionFromXY(x,y));
                 }
-                game.setTileFocus(GfxConstants.getPositionFromXY(x,y));
             }
             figureBelowClickPoint = null;
         }

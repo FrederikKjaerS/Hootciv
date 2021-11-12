@@ -104,6 +104,8 @@ public class GameImpl implements Game, ExtendedGame {
             boolean attackerWinsBattle = attackStrategy.attackerWins(this, from, to);
 
             if(! attackerWinsBattle) {
+                units.remove(from);
+                gameObserver.worldChangedAt(from);
                 return false;
             } else {
                 winnerStrategy.incrementWin(this, getUnitAt(from).getOwner());
@@ -111,17 +113,19 @@ public class GameImpl implements Game, ExtendedGame {
         }
         makeActualMoveForUnit(from, to);
         handleCityConquering(to);
-        if(gameObserver != null){
-            gameObserver.worldChangedAt(from);
-            gameObserver.worldChangedAt(to);
-        }
         return true;
     }
 
     private void makeActualMoveForUnit(Position from, Position to) {
         UnitImpl fromUnit = getUnitAt(from);
-        units.put(to, fromUnit);
         units.remove(from);
+        if(gameObserver != null) {
+            gameObserver.worldChangedAt(from);
+        }
+        units.put(to, fromUnit);
+        if(gameObserver != null){
+            gameObserver.worldChangedAt(to);
+        }
         getUnitAt(to).decreaseMoveCount();
     }
 

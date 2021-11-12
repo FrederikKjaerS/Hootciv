@@ -24,7 +24,6 @@ import java.util.Map;
  * to render the Unit and other information objects that are visible
  * in the Game instance.
  *
- * TODO: This is a TEMPLATE for the SWEA Exercise! This means
  * that it is INCOMPLETE and that there are several options
  * for CLEANING UP THE CODE when you add features to it!
 
@@ -146,6 +145,11 @@ public class CivDrawing implements Drawing, GameObserver {
         // and of course to MiniDraw's figure collection for
         // visual rendering
         figureCollection.add(unitFigure);
+      } else{
+        UnitFigure u = createUnitFigureFor(p, unit);
+        positionToUnitFigureMap.put(p, u);
+        figureCollection.add(u);
+        figureCollection.remove(unitFigure);
       }
     } else {
       // no unit at tile, maybe there is a unitFigure wrongly here
@@ -320,14 +324,7 @@ public class CivDrawing implements Drawing, GameObserver {
     } else {
     syncUnit(pos.getRow(), pos.getColumn());
     syncCity(pos.getRow(), pos.getColumn());
-    /*if(game.getCityAt(pos) != null){
-      City city = game.getCityAt(pos);
-      updateProductionIcon(city);
-      updateBalanceIcon(city);
-      }*/
     }
-
-    // TODO: Cities may change on position as well?????
   }
 
   public void turnEnds(Player nextPlayer, int age) {
@@ -411,15 +408,10 @@ public class CivDrawing implements Drawing, GameObserver {
     }
 
     if(game.getCityAt(position) != null){
-      System.out.println("City here");
       City city = game.getCityAt(position);
       updateCityShield(city.getOwner());
       updateBalanceIcon(city);
       updateProductionIcon(city);
-    }
-
-    if(game.getTileAt(position) != null){
-      System.out.println("Tile here");
     }
   }
 
