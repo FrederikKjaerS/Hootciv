@@ -1,6 +1,7 @@
 package hotciv.visual;
 
 import hotciv.framework.Game;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
 import hotciv.stub.FakeObjectGame;
 import minidraw.framework.*;
@@ -57,6 +58,13 @@ class UpdateTool extends NullTool {
   }
   private int count = 0;
 
+  private void endRound(int n) {
+    for (int i = 0; i < n; i++) {
+      game.endOfTurn();
+      game.endOfTurn();
+    }
+  }
+
   public void mouseDown(MouseEvent e, int x, int y) {
     switch(count) {
     case 0: {
@@ -69,11 +77,11 @@ class UpdateTool extends NullTool {
       game.moveUnit( new Position(1,1), new Position(2,2) );
       break;
     }
-      case 2: {
-        editor.showStatus( "State change: Moving theta unit to (6,4)" );
-        game.moveUnit( new Position(6,3), new Position(6,4) );
-        break;
-      }
+    case 2: {
+      editor.showStatus( "State change: Moving theta unit to (6,4)" );
+      game.moveUnit( new Position(6,3), new Position(6,4) );
+      break;
+    }
     case 3: {
       editor.showStatus( "State change: End of Turn (over to blue)" );
       game.endOfTurn();
@@ -85,10 +93,66 @@ class UpdateTool extends NullTool {
       break;
     }
     case 5: {
-      editor.showStatus( "State change: Inspect Unit at (4,3)" );
-      game.setTileFocus(new Position(4,3));
+      editor.showStatus( "State change: Inspect city at (0,1)" );
+      game.changeWorkForceFocusInCityAt(new Position(0,1), GameConstants.productionFocus);
+      game.changeProductionInCityAt(new Position(0,1), GameConstants.SETTLER);
+      game.setTileFocus(new Position(0,1));
       break;
     }
+    case 6: {
+      editor.showStatus( "State change: Inspect Tile at (0,0)" );
+      game.setTileFocus(new Position(0,0));
+      break;
+    }
+
+    case 7: {
+      editor.showStatus( "State change: Inspect unit at (3,2)" );
+      game.setTileFocus(new Position(3,2));
+      break;
+    }
+
+    case 8: {
+      editor.showStatus( "State change: Inspect Unit and city at (2,2)" );
+      game.changeWorkForceFocusInCityAt(new Position(2,2), GameConstants.foodFocus);
+      game.changeProductionInCityAt(new Position(2,2), GameConstants.ARCHER);
+      game.setTileFocus(new Position(2,2));
+      break;
+    }
+
+    case 9: {
+      editor.showStatus( "State change: change production to archer" );
+      game.changeProductionInCityAt(new Position(0,1), GameConstants.ARCHER);
+      break;
+    }
+    case 10: {
+      editor.showStatus( "State change: change workForceFocus" );
+      game.changeWorkForceFocusInCityAt(new Position(0,1), GameConstants.foodFocus);
+      break;
+    }
+    case 11: {
+      editor.showStatus( "State change: red archer attacks blue legion" );
+      game.moveUnit(new Position(2,2), new Position(3,2));
+      break;
+    }
+    case 12: {
+      editor.showStatus( "State change: Settler performs action" );
+      game.performUnitActionAt(new Position(4,2));
+      break;
+    }
+    case 13: {
+      editor.showStatus( "State change: Archer performs action" );
+      game.performUnitActionAt(new Position(3,2));
+      break;
+    }
+    case 14: {
+      editor.showStatus( "State change: City produces unit" );
+      game.changeProductionInCityAt(new Position(0,1), GameConstants.ARCHER);
+      endRound(2);
+      break;
+    }
+
+
+
       // TODO: Add more state changes for other things to test
     default: {
       editor.showStatus("No more changes in my list...");

@@ -1,6 +1,7 @@
 package hotciv.stub;
 
 import hotciv.framework.*;
+import hotciv.standard.CityImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,22 +40,28 @@ import java.util.Map;
 public class FakeObjectGame implements Game {
 
   private Map<Position, Unit> unitMap;
+  private Map<Position, CityImpl> cityMap;
+  private int age = -4000;
   public Unit getUnitAt(Position p) {
     return unitMap.get(p);
   }
 
   public boolean moveUnit(Position from, Position to) {
     // Using print statements to aid in debugging and development
-    System.out.println("-- FakeObjectGame / moveUnit called: " + from + "->" + to);
+
     Unit unit = getUnitAt(from);
     if (unit == null) return false;
-
+    boolean isMoveInValidRange = Math.abs(to.getRow() - from.getRow()) <= 1
+            && Math.abs(to.getColumn() - from.getColumn()) <= 1;
+    if (! isMoveInValidRange) return false;
     System.out.println("-- moveUnit found unit at: " + from);
     // Remember to inform game observer on any change on the tiles
     unitMap.put(from, null);
     gameObserver.worldChangedAt(from);
     unitMap.put(to, unit);
+
     gameObserver.worldChangedAt(to);
+
     return true;
   }
 
@@ -63,10 +70,13 @@ public class FakeObjectGame implements Game {
   public void endOfTurn() {
     System.out.println( "-- FakeObjectGame / endOfTurn called." );
     inTurn = (getPlayerInTurn() == Player.RED ?
-              Player.BLUE : 
+              Player.BLUE :
               Player.RED );
     // no age increments implemented...
-    gameObserver.turnEnds(inTurn, -4000);
+    if(inTurn == Player.RED){
+      age += 100;
+    }
+    gameObserver.turnEnds(inTurn, this.age);
   }
   public Player getPlayerInTurn() { return inTurn; }
 
@@ -82,10 +92,13 @@ public class FakeObjectGame implements Game {
     defineWorld();
     // Put some units into play
     unitMap = new HashMap<>();
+    cityMap = new HashMap<>();
     unitMap.put(new Position(2,0), new StubUnit( GameConstants.ARCHER, Player.RED ));
     unitMap.put(new Position(3,2), new StubUnit( GameConstants.LEGION, Player.BLUE ));
     unitMap.put(new Position(4,2), new StubUnit( GameConstants.SETTLER, Player.RED ));
     unitMap.put(new Position(6,3), new StubUnit( ThetaConstants.SANDWORM, Player.RED ));
+    cityMap.put(new Position(2,2), new CityImpl(Player.RED));
+    cityMap.put(new Position(0,1), new CityImpl(Player.RED));
     inTurn = Player.RED;
   }
 
@@ -114,18 +127,33 @@ public class FakeObjectGame implements Game {
     world.put(new Position(7,5), new StubTile(ThetaConstants.DESERT));
   }
 
-  // TODO: Add more fake object behaviour to test MiniDraw updating
-  public City getCityAt( Position p ) { return null; }
+  public CityImpl getCityAt( Position p ) { return cityMap.get(p); }
   public Player getWinner() { return null; }
   public int getAge() { return 0; }  
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}  
+  public void changeWorkForceFocusInCityAt( Position p, String balance ) {
+    getCityAt(p).setWorkForceFocus(balance);
+    if(gameObserver != null) {
+      gameObserver.worldChangedAt(p);
+    }
+  }
+  public void changeProductionInCityAt( Position p, String unitType ) {
+    getCityAt(p).setProduction(unitType);
+    if(gameObserver != null) {
+      gameObserver.worldChangedAt(p);
+    }
+  }
+  public void performUnitActionAt( Position p ) {
+    if (getUnitAt(p).getTypeString().equals(GameConstants.SETTLER)) {
+      cityMap.put(p, new CityImpl(getUnitAt(p).getOwner()));
+      unitMap.remove(p);
+      gameObserver.worldChangedAt(p);
+    }
+  }
 
   public void setTileFocus(Position position) {
-    // TODO: setTileFocus implementation pending.
-    System.out.println("-- FakeObjectGame / setTileFocus called.");
-    System.out.println(" *** IMPLEMENTATION PENDING ***");
+    if(position.getRow() < GameConstants.WORLDSIZE && position.getColumn() < GameConstants.WORLDSIZE){
+      gameObserver.tileFocusChangedAt(position);
+    }
   }
 }
 
@@ -136,6 +164,7 @@ class StubUnit implements  Unit {
     this.type = type;
     this.owner = owner;
   }
+
   public String getTypeString() { return type; }
   public Player getOwner() { return owner; }
   public int getMoveCount() { return 1; }

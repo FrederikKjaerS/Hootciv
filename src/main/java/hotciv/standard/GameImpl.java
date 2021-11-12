@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.factories.HotCivFactory;
 import hotciv.framework.*;
+import hotciv.stub.SpyGameObserver;
 import hotciv.utility.NeighborTiles;
 import hotciv.variants.actionStrategy.UnitActionStrategy;
 import hotciv.variants.agingStrategy.AgingStrategy;
@@ -54,6 +55,8 @@ public class GameImpl implements Game, ExtendedGame {
     private AttackStrategy attackStrategy;
     private ProductionStrategy unitAndTileStrategy;
     private UnitPropertiesStrategy unitPropertiesStrategy;
+
+    private GameObserver gameObserver;
     private int round;
 
     public GameImpl(HotCivFactory hotCivFactory) {
@@ -94,12 +97,15 @@ public class GameImpl implements Game, ExtendedGame {
         return year;
     }
 
+    @Override
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
         if ( getUnitAt(to) != null ){
             boolean attackerWinsBattle = attackStrategy.attackerWins(this, from, to);
 
             if(! attackerWinsBattle) {
+                units.remove(from);
+                gameObserver.worldChangedAt(from);
                 return false;
             } else {
                 winnerStrategy.incrementWin(this, getUnitAt(from).getOwner());
@@ -112,8 +118,14 @@ public class GameImpl implements Game, ExtendedGame {
 
     private void makeActualMoveForUnit(Position from, Position to) {
         UnitImpl fromUnit = getUnitAt(from);
-        units.put(to, fromUnit);
         units.remove(from);
+        if(gameObserver != null) {
+            gameObserver.worldChangedAt(from);
+        }
+        units.put(to, fromUnit);
+        if(gameObserver != null){
+            gameObserver.worldChangedAt(to);
+        }
         getUnitAt(to).decreaseMoveCount();
     }
 
@@ -165,31 +177,35 @@ public class GameImpl implements Game, ExtendedGame {
                 endOfRound();
                 break;
         }
+        if(gameObserver != null){
+            gameObserver.turnEnds(playerInTurn, getAge());
+        }
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
         getCityAt(p).setWorkForceFocus(balance);
+        if(gameObserver != null) {
+            gameObserver.worldChangedAt(p);
+        }
     }
 
     public void changeProductionInCityAt(Position p, String unitType) {
         if(getCityAt(p).getOwner() == playerInTurn) {
             unitAndTileStrategy.setProduction(this, p, unitType);
+            if(gameObserver != null) {
+                gameObserver.worldChangedAt(p);
+            }
         }
     }
 
     public void performUnitActionAt(Position p) {
         unitActionStrategy.performAction(this, p);
+        if(gameObserver != null) {
+            gameObserver.worldChangedAt(p);
+        }
     }
 
-    @Override
-    public void addObserver(GameObserver observer) {
 
-    }
-
-    @Override
-    public void setTileFocus(Position position) {
-
-    }
 
 
     private void defineWorld() {
@@ -273,5 +289,19 @@ public class GameImpl implements Game, ExtendedGame {
     @Override
     public int getRounds() {
         return round;
+    }
+
+    @Override
+    public void addObserver(GameObserver observer) {
+        this.gameObserver = observer;
+    }
+
+    @Override
+    public void setTileFocus(Position position) {
+        if (gameObserver != null) {
+            if(position.getRow() < GameConstants.WORLDSIZE && position.getColumn() < GameConstants.WORLDSIZE){
+                gameObserver.tileFocusChangedAt(position);
+            }
+        }
     }
 }
