@@ -26,7 +26,7 @@ public class StubGameBroker implements Game, Servant {
 
     @Override
     public Player getPlayerInTurn() {
-        return null;
+        return Player.GREEN;
     }
 
     @Override

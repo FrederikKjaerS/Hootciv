@@ -4,10 +4,7 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
-import hotciv.framework.Game;
-import hotciv.framework.GameObserver;
-import hotciv.framework.Player;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.stub.StubGameBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +35,18 @@ public class TestBroker {
     public void shouldHaveWinner(){
         Player winner = game.getWinner();
         assertThat(winner, is(Player.YELLOW));
+    }
+
+    @Test
+    public void shouldBeInYear42(){
+        int age = game.getAge();
+        assertThat(age, is(42));
+    }
+
+    @Test
+    public void shouldBeGreenPlayerInTurn(){
+        Player player = game.getPlayerInTurn();
+        assertThat(player, is(Player.GREEN));
     }
 
 

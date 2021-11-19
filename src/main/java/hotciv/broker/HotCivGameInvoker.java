@@ -36,6 +36,12 @@ public class HotCivGameInvoker implements Invoker {
                 case MethodConstants.GET_WINNER:
                     reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.getWinner()));
                     break;
+                case MethodConstants.GET_AGE:
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.getAge()));
+                    break;
+                case MethodConstants.GET_PLAYERINTURN:
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.getPlayerInTurn()));
+                    break;
                 default:
                     reply = new ReplyObject(HttpServletResponse.SC_NOT_IMPLEMENTED,
                             "The method requestObject.getOperationName() is not implemented");
