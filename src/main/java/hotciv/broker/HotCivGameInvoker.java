@@ -6,9 +6,8 @@ import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
-import frds.broker.Servant;
 import hotciv.framework.Game;
-import hotciv.stub.StubGame1;
+import hotciv.stub.StubGameBroker;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +17,7 @@ public class HotCivGameInvoker implements Invoker {
     private final Gson gson;
 
     public HotCivGameInvoker(Game game) {
-        this.gameServant = new StubGame1();
+        this.gameServant = new StubGameBroker();
         this.gson = new Gson();
     }
 

@@ -8,7 +8,7 @@ import hotciv.framework.Game;
 import hotciv.framework.GameObserver;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.stub.StubGame1;
+import hotciv.stub.StubGameBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +20,7 @@ public class TestBroker {
 
     @BeforeEach
     public void setup(){
-        Game servant = new StubGame1();
+        Game servant = new StubGameBroker();
         GameObserver nullObserver = new NullObserver();
         servant.addObserver(nullObserver);
 
@@ -39,6 +39,7 @@ public class TestBroker {
         Player winner = game.getWinner();
         assertThat(winner, is(Player.YELLOW));
     }
+
 
 
 

@@ -4,12 +4,19 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 
 public class LocalMethodClientRequestHandler implements ClientRequestHandler {
+    private final Invoker invoker;
+
     public LocalMethodClientRequestHandler(Invoker invoker) {
+        this.invoker = invoker;
     }
 
     @Override
     public String sendToServerAndAwaitReply(String request) {
-        return null;
+
+        System.out.println("--->" + request);
+        String reply = invoker.handleRequest(request);
+        System.out.println("---<" + reply);
+        return reply;
     }
 
     @Override

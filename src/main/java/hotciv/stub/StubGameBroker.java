@@ -4,7 +4,7 @@ import frds.broker.Servant;
 import hotciv.framework.*;
 import hotciv.standard.CityImpl;
 
-public class StubGame3 implements Game, Servant {
+public class StubGameBroker implements Game, Servant {
     @Override
     public Tile getTileAt(Position p) {
         return null;
