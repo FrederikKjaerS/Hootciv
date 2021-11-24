@@ -7,6 +7,7 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 import hotciv.framework.Game;
+import hotciv.framework.Position;
 import hotciv.stub.StubGameBroker;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +42,32 @@ public class HotCivGameInvoker implements Invoker {
                     break;
                 case MethodConstants.GET_PLAYERINTURN:
                     reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.getPlayerInTurn()));
+                    break;
+                case MethodConstants.END_OF_TURN:
+                    gameServant.endOfTurn();
+                    reply = new ReplyObject(HttpServletResponse.SC_OK,null);
+                    break;
+                case MethodConstants.CHANGE_WORKFORCE_FOCUS:
+                    Position p = gson.fromJson(array.get(0), Position.class);
+                    String balance = gson.fromJson(array.get(1), String.class);
+                    gameServant.changeWorkForceFocusInCityAt(p,balance);
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, null);
+                    break;
+                case MethodConstants.CHANGE_PRODUCTION:
+                    Position pos = gson.fromJson(array.get(0), Position.class);
+                    String unitType = gson.fromJson(array.get(1), String.class);
+                    gameServant.changeProductionInCityAt(pos,unitType);
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, null);
+                    break;
+                case MethodConstants.PERFORM_UNIT_ACTION:
+                    Position position = gson.fromJson(array.get(0), Position.class);
+                    gameServant.performUnitActionAt(position);
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, null);
+                    break;
+                case MethodConstants.MOVE_UNIT:
+                    Position pFrom = gson.fromJson(array.get(0), Position.class);
+                    Position pTo = gson.fromJson(array.get(0), Position.class);
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.moveUnit(pFrom,pTo)));
                     break;
                 default:
                     reply = new ReplyObject(HttpServletResponse.SC_NOT_IMPLEMENTED,

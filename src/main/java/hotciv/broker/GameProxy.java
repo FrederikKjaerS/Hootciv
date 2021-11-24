@@ -46,27 +46,27 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public boolean moveUnit(Position from, Position to) {
-        return false;
+        return requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.MOVE_UNIT, boolean.class, from, to);
     }
 
     @Override
     public void endOfTurn() {
-
+        requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.END_OF_TURN, void.class);
     }
 
     @Override
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
-
+        requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.CHANGE_WORKFORCE_FOCUS, void.class, p, balance);
     }
 
     @Override
     public void changeProductionInCityAt(Position p, String unitType) {
-
+        requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.CHANGE_PRODUCTION, void.class, p, unitType);
     }
 
     @Override
     public void performUnitActionAt(Position p) {
-
+        requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.PERFORM_UNIT_ACTION, void.class, p);
     }
 
     @Override

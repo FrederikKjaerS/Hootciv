@@ -1,10 +1,21 @@
 package hotciv.stub;
 
 import frds.broker.Servant;
+import hotciv.broker.MethodConstants;
 import hotciv.framework.*;
 import hotciv.standard.CityImpl;
 
+import java.util.List;
+
 public class StubGameBroker implements Game, Servant {
+
+    private String lastMethodCalled;
+
+
+    public String getLastMethodCalled() {
+        return this.lastMethodCalled;
+    }
+
     @Override
     public Tile getTileAt(Position p) {
         return null;
@@ -46,22 +57,22 @@ public class StubGameBroker implements Game, Servant {
 
     @Override
     public void endOfTurn() {
-
+        lastMethodCalled = MethodConstants.END_OF_TURN;
     }
 
     @Override
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
-
+        this.lastMethodCalled = MethodConstants.CHANGE_WORKFORCE_FOCUS;
     }
 
     @Override
     public void changeProductionInCityAt(Position p, String unitType) {
-
+        lastMethodCalled = MethodConstants.CHANGE_PRODUCTION;
     }
 
     @Override
     public void performUnitActionAt(Position p) {
-
+        lastMethodCalled = MethodConstants.PERFORM_UNIT_ACTION;
     }
 
     @Override
