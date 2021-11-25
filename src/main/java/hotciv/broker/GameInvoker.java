@@ -18,7 +18,7 @@ public class GameInvoker implements Invoker {
     private final Gson gson;
 
     public GameInvoker(Game game) {
-        this.gameServant = new StubGameBroker();
+        this.gameServant = game;
         this.gson = new Gson();
     }
 

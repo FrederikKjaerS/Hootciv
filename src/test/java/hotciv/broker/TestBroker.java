@@ -58,7 +58,9 @@ public class TestBroker {
     @Test
     public void shouldCallChangeWorkForceFocus(){
         game.changeWorkForceFocusInCityAt(new Position(0,0),GameConstants.foodFocus);
-        //assertThat(servant.getLastMethodCalled(), is(MethodConstants.CHANGE_WORKFORCE_FOCUS));
+        assertThat(servant.focusPosition, is(new Position(0,0)));
+        assertThat(servant.focusBalance, is(GameConstants.foodFocus));
+
     }
 
     @Test
