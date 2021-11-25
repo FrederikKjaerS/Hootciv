@@ -19,7 +19,11 @@ public class MethodConstants {
 
     public static final String GET_TYPE_STRING = "unit_get_type_string";
     public static final String UNIT_GET_OWNER = "unit_get_owner";
-    public static final String GET_MOVE_COUNT = "get_move_count";
+    public static final String GET_MOVE_COUNT = "unit_get_move_count";
+    public static final String GET_DEFENSIVE_STRENGTH = "unit_get_defensive_strength";
+    public static final String GET_ATTACKING_STRENGTH = "unit_get_attacking_strength";
+
+    public static final String TILE_GET_TYPESTRING = "tile_get_typestring";
 
 
 }

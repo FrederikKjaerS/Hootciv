@@ -6,53 +6,56 @@ import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
+import hotciv.framework.Unit;
 import hotciv.stub.StubCityBroker;
+import hotciv.stub.StubUnitBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class CityTestBroker {
-    private CityProxy cityProxy;
-    private StubCityBroker servant;
+public class UnitTestBroker {
+    private Unit unitProxy;
+    private StubUnitBroker servant;
 
 
     @BeforeEach
     public void setup() {
-        this.servant = new StubCityBroker();
+        this.servant = new StubUnitBroker();
 
-        Invoker invoker = new CityInvoker();
+        Invoker invoker = new UnitInvoker();
 
         ClientRequestHandler chr = new LocalMethodClientRequestHandler(invoker);
 
         Requestor requester = new StandardJSONRequestor(chr);
-        cityProxy = new CityProxy(requester);
+        unitProxy = new UnitProxy(requester);
     }
 
     @Test
     public void shouldBeGreenThatOwnsCity(){
-        assertThat(cityProxy.getOwner(), is(Player.GREEN));
+        Player owner = unitProxy.getOwner();
+        assertThat(owner, is(Player.GREEN));
     }
 
     @Test
     public void shouldBe3InCitySize(){
-        assertThat(cityProxy.getSize(), is(3));
+        assertThat(unitProxy.getTypeString(), is(GameConstants.ARCHER));
     }
 
     @Test
     public void shouldBe10InTreasury(){
-        assertThat(cityProxy.getTreasury(), is(10));
+        assertThat(unitProxy.getMoveCount(), is(10));
     }
 
     @Test
     public void shouldProduceArcherInCity(){
-        assertThat(cityProxy.getProduction(), is(GameConstants.ARCHER));
+        assertThat(unitProxy.getDefensiveStrength(), is(5));
     }
 
     @Test
     public void shouldFocusOnFood(){
-        assertThat(cityProxy.getWorkforceFocus(), is(GameConstants.foodFocus));
+        assertThat(unitProxy.getAttackingStrength(), is(8));
     }
 
 

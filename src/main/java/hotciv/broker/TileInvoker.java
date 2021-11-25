@@ -7,16 +7,20 @@ import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 
+import hotciv.framework.Game;
+import hotciv.framework.GameConstants;
+import hotciv.framework.Tile;
 import hotciv.framework.Unit;
+import hotciv.standard.TileImpl;
 import hotciv.stub.StubUnitBroker;
 
 import javax.servlet.http.HttpServletResponse;
 
-public class UnitInvoker implements Invoker {
+public class TileInvoker implements Invoker {
 
     private final Gson gson;
 
-    public UnitInvoker() {
+    public TileInvoker() {
         this.gson = new Gson();
 
     }
@@ -32,23 +36,11 @@ public class UnitInvoker implements Invoker {
 
         ReplyObject reply;
 
-        Unit unitBroker = lookupUnit(objectId);
+        Tile tileBroker = lookupTile(objectId);
         try {
             switch (requestObject.getOperationName()){
-                case MethodConstants.UNIT_GET_OWNER:
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unitBroker.getOwner()));
-                    break;
-                case MethodConstants.GET_TYPE_STRING:
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unitBroker.getTypeString()));
-                    break;
-                case MethodConstants.GET_MOVE_COUNT:
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unitBroker.getMoveCount()));
-                    break;
-                case MethodConstants.GET_DEFENSIVE_STRENGTH:
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unitBroker.getDefensiveStrength()));
-                    break;
-                case MethodConstants.GET_ATTACKING_STRENGTH:
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unitBroker.getAttackingStrength()));
+                case MethodConstants.TILE_GET_TYPESTRING:
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(tileBroker.getTypeString()));
                     break;
                 default:
                     reply = new ReplyObject(HttpServletResponse.SC_NOT_IMPLEMENTED,
@@ -65,9 +57,9 @@ public class UnitInvoker implements Invoker {
         return gson.toJson(reply);
     }
 
-    private Unit lookupUnit(String objectId) {
-        Unit unit = new StubUnitBroker();
-        return unit;
+    private Tile lookupTile(String objectId) {
+        Tile tile = new TileImpl(GameConstants.MOUNTAINS);
+        return tile;
     }
 
 }
