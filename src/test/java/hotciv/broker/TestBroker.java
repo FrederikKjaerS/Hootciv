@@ -5,6 +5,7 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
+import hotciv.stub.StubCityBroker;
 import hotciv.stub.StubGameBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,7 @@ public class TestBroker {
     @Test
     public void shouldCallEndOfTurn(){
         game.endOfTurn();
+        assertThat(servant.endOfTurnCalled, is(true));
     }
 
     @Test
@@ -66,13 +68,14 @@ public class TestBroker {
     @Test
     public void shouldCallChangeProductionInCity(){
         game.changeProductionInCityAt(new Position(0,0),GameConstants.ARCHER);
-        //assertThat(servant.getLastMethodCalled(), is(MethodConstants.CHANGE_WORKFORCE_FOCUS));
+        assertThat(servant.prodPosition, is(new Position(0,0)));
+        assertThat(servant.prodUnitType, is(GameConstants.ARCHER));
     }
 
     @Test
     public void shouldCallPerformUnitAction(){
         game.performUnitActionAt(new Position(0,0));
-        //assertThat(servant.getLastMethodCalled(), is(MethodConstants.CHANGE_WORKFORCE_FOCUS));
+        assertThat(servant.performPosition, is(new Position(0,0)));
     }
 
     @Test

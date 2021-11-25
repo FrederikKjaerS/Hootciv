@@ -7,8 +7,10 @@ public class StubGameBroker implements Game, Servant {
 
     public Position focusPosition;
     public String focusBalance;
-
-
+    public boolean endOfTurnCalled = false;
+    public Position prodPosition;
+    public String prodUnitType;
+    public Position performPosition;
 
     @Override
     public Tile getTileAt(Position p) {
@@ -51,6 +53,7 @@ public class StubGameBroker implements Game, Servant {
 
     @Override
     public void endOfTurn() {
+        this.endOfTurnCalled = true;
     }
 
     @Override
@@ -62,10 +65,13 @@ public class StubGameBroker implements Game, Servant {
 
     @Override
     public void changeProductionInCityAt(Position p, String unitType) {
+        this.prodPosition = p;
+        this.prodUnitType = unitType;
     }
 
     @Override
     public void performUnitActionAt(Position p) {
+        this.performPosition = p;
     }
 
     @Override
@@ -75,7 +81,6 @@ public class StubGameBroker implements Game, Servant {
 
     @Override
     public void setTileFocus(Position position) {
-
     }
 
     private class StubCity implements City {

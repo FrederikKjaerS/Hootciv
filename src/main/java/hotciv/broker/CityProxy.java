@@ -6,7 +6,7 @@ import hotciv.framework.*;
 
 public class CityProxy implements City, ClientProxy {
 
-    public static final String GAME_OBJECTID = "singleton";
+    public static final String CITY_OBJECTID = "singleton";
 
     private final Requestor requestor;
 
@@ -17,26 +17,26 @@ public class CityProxy implements City, ClientProxy {
 
     @Override
     public Player getOwner() {
-        return null;
+        return requestor.sendRequestAndAwaitReply(CITY_OBJECTID, MethodConstants.CITY_GET_OWNER, Player.class);
     }
 
     @Override
     public int getSize() {
-        return 0;
+        return requestor.sendRequestAndAwaitReply(CITY_OBJECTID, MethodConstants.GET_SIZE, int.class);
     }
 
     @Override
     public int getTreasury() {
-        return 0;
+        return requestor.sendRequestAndAwaitReply(CITY_OBJECTID, MethodConstants.GET_TREASURE, int.class);
     }
 
     @Override
     public String getProduction() {
-        return null;
+        return requestor.sendRequestAndAwaitReply(CITY_OBJECTID, MethodConstants.GET_PRODUCTION, String.class);
     }
 
     @Override
     public String getWorkforceFocus() {
-        return null;
+        return requestor.sendRequestAndAwaitReply(CITY_OBJECTID, MethodConstants.GET_WORKFORCE_FOCUS, String.class);
     }
 }
