@@ -12,12 +12,12 @@ import hotciv.stub.StubGameBroker;
 
 import javax.servlet.http.HttpServletResponse;
 
-public class HotCivGameInvoker implements Invoker {
+public class GameInvoker implements Invoker {
 
     private final Game gameServant;
     private final Gson gson;
 
-    public HotCivGameInvoker(Game game) {
+    public GameInvoker(Game game) {
         this.gameServant = new StubGameBroker();
         this.gson = new Gson();
     }

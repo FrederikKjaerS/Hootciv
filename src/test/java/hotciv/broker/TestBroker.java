@@ -22,7 +22,7 @@ public class TestBroker {
         GameObserver nullObserver = new NullObserver();
         servant.addObserver(nullObserver);
 
-        Invoker invoker = new HotCivGameInvoker(servant);
+        Invoker invoker = new GameInvoker(servant);
 
         ClientRequestHandler chr = new LocalMethodClientRequestHandler(invoker);
 
