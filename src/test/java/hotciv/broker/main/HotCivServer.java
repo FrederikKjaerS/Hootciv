@@ -16,7 +16,7 @@ public class HotCivServer {
 
 
     public HotCivServer(String type) throws Exception {
-        int port = 37321;
+        int port = 37123;
 
         Game gameServant = new StubGameBroker();
         Invoker invoker = new GameInvoker(gameServant);
