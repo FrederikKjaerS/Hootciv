@@ -7,6 +7,7 @@ import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.broker.GameInvoker;
 import hotciv.broker.GameProxy;
 import hotciv.framework.Game;
+import hotciv.framework.Position;
 
 public class HotCivManualClientTest {
 
@@ -27,6 +28,12 @@ public class HotCivManualClientTest {
     private void callSimpleMethods(Game game) {
         System.out.println("=== Testing simple methods ===");
         System.out.println("-> GAME age   " + game.getAge());
+        System.out.println("-> GAME winner   " + game.getWinner());
+        System.out.println("-> GAME player in turn   " + game.getPlayerInTurn());
+        System.out.println("-> GAME move   " + game.moveUnit(new Position(2,0), new Position(4,1)));
+
+        game.endOfTurn();
+        System.out.println("-> Player in turn after end of turn   " + game.getPlayerInTurn());
     }
 
 }

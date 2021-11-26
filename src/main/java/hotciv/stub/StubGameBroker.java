@@ -11,6 +11,7 @@ public class StubGameBroker implements Game, Servant {
     public Position prodPosition;
     public String prodUnitType;
     public Position performPosition;
+    public Player playerInTurn = Player.GREEN;
 
     @Override
     public Tile getTileAt(Position p) {
@@ -33,7 +34,7 @@ public class StubGameBroker implements Game, Servant {
 
     @Override
     public Player getPlayerInTurn() {
-        return Player.GREEN;
+        return playerInTurn;
     }
 
     @Override
@@ -54,6 +55,7 @@ public class StubGameBroker implements Game, Servant {
     @Override
     public void endOfTurn() {
         this.endOfTurnCalled = true;
+        playerInTurn = Player.YELLOW;
     }
 
     @Override
