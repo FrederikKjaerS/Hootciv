@@ -11,6 +11,7 @@ public class UnitProxy implements Unit, ClientProxy {
 
     private final Requestor requestor;
 
+    //objectid og requester med i konstruktør
     public UnitProxy(Requestor requestor) {
         this.requestor = requestor;
     }
@@ -38,5 +39,10 @@ public class UnitProxy implements Unit, ClientProxy {
     @Override
     public int getAttackingStrength() {
         return requestor.sendRequestAndAwaitReply(UNIT_OBJECTID, MethodConstants.GET_ATTACKING_STRENGTH, int.class);
+    }
+
+    @Override
+    public String getID() {
+        return null;
     }
 }

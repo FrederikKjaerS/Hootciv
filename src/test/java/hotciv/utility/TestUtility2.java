@@ -72,6 +72,11 @@ class StubUnit implements Unit {
     public int getMoveCount() { return 0; }
     public int getDefensiveStrength() { return 0; }
     public int getAttackingStrength() { return 0; }
+
+    @Override
+    public String getID() {
+        return null;
+    }
 }
 
 
@@ -117,6 +122,11 @@ class GameStubForBattleTesting implements Game {
                     return null;
                 }
                 public String getWorkforceFocus() {
+                    return null;
+                }
+
+                @Override
+                public String getID() {
                     return null;
                 }
             };

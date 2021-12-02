@@ -8,6 +8,7 @@ import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Tile;
+import hotciv.service.GameNameService;
 import hotciv.standard.TileImpl;
 import hotciv.stub.StubCityBroker;
 import hotciv.stub.StubUnitBroker;
@@ -20,13 +21,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TileTestBroker {
     private TileProxy tileProxy;
     private Tile servant;
+    private GameNameService gameNameService;
 
 
     @BeforeEach
     public void setup() {
         this.servant = new TileImpl(GameConstants.MOUNTAINS);
 
-        Invoker invoker = new TileInvoker();
+        this.gameNameService = new GameNameService();
+        Invoker invoker = new TileInvoker(gameNameService);
 
         ClientRequestHandler chr = new LocalMethodClientRequestHandler(invoker);
 

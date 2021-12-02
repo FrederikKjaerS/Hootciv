@@ -3,6 +3,7 @@ package hotciv.broker;
 import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotciv.framework.*;
+import hotciv.service.GameNameService;
 
 public class GameProxy implements Game, ClientProxy {
 
@@ -21,6 +22,13 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public Unit getUnitAt(Position p) {
+        /*
+        String objectID = requester.sendRequestAndAwaitReply(GAME_OBJECTID, OperationNames.GET_UNIT_AT (MethodConstants?), String.class, p)
+                if( objectID.isEmpty()) {
+                    return null;
+                }
+        return UnitProxy(objectId, requester);
+        */
         return null;
     }
 

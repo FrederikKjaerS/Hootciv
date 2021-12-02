@@ -9,6 +9,7 @@ import frds.broker.RequestObject;
 import hotciv.framework.City;
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.service.GameNameService;
 import hotciv.stub.StubCityBroker;
 import hotciv.stub.StubGameBroker;
 
@@ -17,8 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CityInvoker implements Invoker {
 
     private final Gson gson;
+    private GameNameService gameNameService;
 
-    public CityInvoker() {
+    public CityInvoker(GameNameService service) {
+        this.gameNameService = service;
         this.gson = new Gson();
 
     }

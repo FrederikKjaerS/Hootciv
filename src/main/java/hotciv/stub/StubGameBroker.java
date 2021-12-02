@@ -119,5 +119,10 @@ public class StubGameBroker implements Game, Servant {
         public String getWorkforceFocus() {
             return null;
         }
+
+        @Override
+        public String getID() {
+            return null;
+        }
     }
 }

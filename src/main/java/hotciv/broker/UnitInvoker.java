@@ -8,6 +8,7 @@ import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
 
 import hotciv.framework.Unit;
+import hotciv.service.GameNameService;
 import hotciv.stub.StubUnitBroker;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,8 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 public class UnitInvoker implements Invoker {
 
     private final Gson gson;
+    private final GameNameService gameNameService;
 
-    public UnitInvoker() {
+    //Tilføj nameservice
+    public UnitInvoker(GameNameService service) {
+        gameNameService = service;
         this.gson = new Gson();
 
     }
@@ -27,12 +31,10 @@ public class UnitInvoker implements Invoker {
         RequestObject requestObject =
                 gson.fromJson(request, RequestObject.class);
         String objectId = requestObject.getObjectId();
-        JsonArray array =
-                JsonParser.parseString(requestObject.getPayload()).getAsJsonArray();
 
         ReplyObject reply;
-
         Unit unitBroker = lookupUnit(objectId);
+
         try {
             switch (requestObject.getOperationName()){
                 case MethodConstants.UNIT_GET_OWNER:
@@ -66,6 +68,12 @@ public class UnitInvoker implements Invoker {
     }
 
     private Unit lookupUnit(String objectId) {
+        /* Unit unit = storage.getunit(objectid);
+        if (unit == null) {
+        throw new Unkonwservantexcepterion("unit with object id: " + objectid + ??
+        }
+        return unit;
+         */
         Unit unit = new StubUnitBroker();
         return unit;
     }

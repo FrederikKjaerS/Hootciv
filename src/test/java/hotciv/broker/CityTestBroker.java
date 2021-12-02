@@ -4,8 +4,10 @@ import frds.broker.ClientRequestHandler;
 import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
+import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
+import hotciv.service.GameNameService;
 import hotciv.stub.StubCityBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +18,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class CityTestBroker {
     private CityProxy cityProxy;
     private StubCityBroker servant;
+    private GameNameService gameNameService;
 
 
     @BeforeEach
     public void setup() {
         this.servant = new StubCityBroker();
 
-        Invoker invoker = new CityInvoker();
+        this.gameNameService = new GameNameService();
+        Invoker invoker = new CityInvoker(gameNameService);
 
         ClientRequestHandler chr = new LocalMethodClientRequestHandler(invoker);
 

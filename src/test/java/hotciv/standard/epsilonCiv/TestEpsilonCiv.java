@@ -132,6 +132,11 @@ class StubUnit implements Unit {
     public int getMoveCount() { return 0; }
     public int getDefensiveStrength() { return 3; }
     public int getAttackingStrength() { return 2; }
+
+    @Override
+    public String getID() {
+        return null;
+    }
 }
 
 class StubLayout implements WorldLayoutStrategy{
@@ -212,6 +217,11 @@ class GameStubForAttackTesting implements Game, ExtendedGame {
                     return null;
                 }
                 public String getWorkforceFocus() {
+                    return null;
+                }
+
+                @Override
+                public String getID() {
                     return null;
                 }
             };

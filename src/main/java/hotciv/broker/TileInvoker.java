@@ -11,6 +11,7 @@ import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Tile;
 import hotciv.framework.Unit;
+import hotciv.service.GameNameService;
 import hotciv.standard.TileImpl;
 import hotciv.stub.StubUnitBroker;
 
@@ -19,10 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 public class TileInvoker implements Invoker {
 
     private final Gson gson;
+    private GameNameService gameNameService;
 
-    public TileInvoker() {
+    public TileInvoker(GameNameService service) {
         this.gson = new Gson();
-
+        this.gameNameService = service;
     }
 
     @Override

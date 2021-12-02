@@ -25,5 +25,12 @@ public class MethodConstants {
 
     public static final String TILE_GET_TYPESTRING = "tile_get_typestring";
 
+    public static final String GAME_PREFIX = "game";
+    public static final String CITY_PREFIX = "city";
+    public static final String TILE_PREFIX = "tile";
+    public static final String UNIT_PREFIX = "unit";
+
+    public static final char SEPARATOR = '_';
+
 
 }
