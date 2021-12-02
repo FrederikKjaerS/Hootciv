@@ -21,7 +21,7 @@ public class TileProxy implements Tile, ClientProxy {
     }
 
     @Override
-    public String getId() {
+    public String getID() {
         return objectID;
     }
 }

@@ -33,6 +33,6 @@ public class StubUnitBroker implements Unit, Servant {
 
     @Override
     public String getID() {
-        return null;
+        return "test";
     }
 }

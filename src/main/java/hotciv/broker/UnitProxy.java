@@ -11,7 +11,6 @@ public class UnitProxy implements Unit, ClientProxy {
 
     private final Requestor requestor;
 
-    //objectid og requester med i konstruktør
     public UnitProxy(String objectId, Requestor requestor) {
         this.UNIT_OBJECTID = objectId;
         this.requestor = requestor;
@@ -44,6 +43,6 @@ public class UnitProxy implements Unit, ClientProxy {
 
     @Override
     public String getID() {
-        return null;
+        return this.UNIT_OBJECTID;
     }
 }

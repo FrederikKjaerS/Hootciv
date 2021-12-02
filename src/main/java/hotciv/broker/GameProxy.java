@@ -17,24 +17,29 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public Tile getTileAt(Position p) {
-        return null;
+        String id = requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.GET_TILE_AT, String.class, p);
+        if(id.isEmpty()){
+            return null;
+        }
+        return new TileProxy(id, requestor);
     }
 
     @Override
     public Unit getUnitAt(Position p) {
-        /*
-        String objectID = requester.sendRequestAndAwaitReply(GAME_OBJECTID, OperationNames.GET_UNIT_AT (MethodConstants?), String.class, p)
-                if( objectID.isEmpty()) {
-                    return null;
-                }
-        return UnitProxy(objectId, requester);
-        */
-        return null;
+        String id = requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.GET_UNIT_AT, String.class, p);
+        if(id.isEmpty()){
+            return null;
+        }
+        return new UnitProxy(id, requestor);
     }
 
     @Override
     public City getCityAt(Position p) {
-        return null;
+        String id = requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.GET_CITY_AT, String.class, p);
+        if(id.isEmpty()){
+            return null;
+        }
+        return new CityProxy(id, requestor);
     }
 
     @Override

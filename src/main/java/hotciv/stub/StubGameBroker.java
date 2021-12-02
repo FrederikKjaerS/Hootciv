@@ -2,6 +2,7 @@ package hotciv.stub;
 
 import frds.broker.Servant;
 import hotciv.framework.*;
+import hotciv.standard.TileImpl;
 
 public class StubGameBroker implements Game, Servant {
 
@@ -13,13 +14,21 @@ public class StubGameBroker implements Game, Servant {
     public Position performPosition;
     public Player playerInTurn = Player.GREEN;
 
+    Position position_of_mountain_tile = new Position(0,1);
     @Override
     public Tile getTileAt(Position p) {
+        if(p.equals(position_of_mountain_tile)){
+            return new TileImpl(GameConstants.MOUNTAINS);
+        }
         return null;
     }
 
+    Position position_of_unit = new Position(2,0);
     @Override
     public Unit getUnitAt(Position p) {
+        if(p.equals(position_of_unit)){
+            return new StubUnitBroker();
+        }
         return null;
     }
 
@@ -27,7 +36,7 @@ public class StubGameBroker implements Game, Servant {
     @Override
     public City getCityAt(Position p) {
         if(p.equals(position_of_green_city)){
-            return new StubCity(Player.GREEN, 4);
+            return new StubCityBroker();
         }
         return null;
     }
@@ -122,7 +131,7 @@ public class StubGameBroker implements Game, Servant {
 
         @Override
         public String getID() {
-            return null;
+            return "test";
         }
     }
 }

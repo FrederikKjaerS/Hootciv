@@ -3,6 +3,7 @@ package hotciv.broker.main;
 import frds.broker.Invoker;
 import frds.broker.ipc.socket.SocketServerRequestHandler;
 import hotciv.broker.GameInvoker;
+import hotciv.broker.HotCivRootInvoker;
 import hotciv.framework.Game;
 import hotciv.service.GameNameService;
 import hotciv.stub.StubGameBroker;
@@ -18,8 +19,7 @@ public class HotCivServer {
         int port = 37123;
 
         Game gameServant = new StubGameBroker();
-        GameNameService gameNameService = new GameNameService();
-        Invoker invoker = new GameInvoker(gameNameService, gameServant);
+        Invoker invoker = new HotCivRootInvoker(gameServant);
 
         // Configure a socket based server request handler
         SocketServerRequestHandler ssrh =

@@ -6,10 +6,8 @@ import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
-import hotciv.framework.Game;
-import hotciv.framework.Position;
+import hotciv.framework.*;
 import hotciv.service.NameService;
-import hotciv.stub.StubGameBroker;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -72,6 +70,31 @@ public class GameInvoker implements Invoker {
                     Position pTo = gson.fromJson(array.get(0), Position.class);
                     reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.moveUnit(pFrom,pTo)));
                     break;
+                case MethodConstants.GET_CITY_AT:
+                    Position cityPosition = gson.fromJson(array.get(0), Position.class);
+                    City city = gameServant.getCityAt(cityPosition);
+                    if(city != null){
+                        nameService.putCity(city.getID(), city);
+                    }
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(city.getID()));
+                    break;
+                case MethodConstants.GET_UNIT_AT:
+                    Position unitPosition = gson.fromJson(array.get(0), Position.class);
+                    Unit unit = gameServant.getUnitAt(unitPosition);
+                    if(unit != null){
+                        nameService.putUnit(unit.getID(), unit);
+                    }
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unit.getID()));
+                    break;
+                case MethodConstants.GET_TILE_AT:
+                    Position tilePosition = gson.fromJson(array.get(0), Position.class);
+                    Tile tile = gameServant.getTileAt(tilePosition);
+                    if(tile != null){
+                        nameService.putTile(tile.getID(), tile);
+                    }
+                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(tile.getID()));
+                    break;
+
                 default:
                     reply = new ReplyObject(HttpServletResponse.SC_NOT_IMPLEMENTED,
                             "The method requestObject.getOperationName() is not implemented");

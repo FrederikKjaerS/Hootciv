@@ -62,7 +62,7 @@ class StubTile implements Tile {
     public String getTypeString() { return type; }
 
     @Override
-    public String getId() {
+    public String getID() {
         return null;
     }
 }

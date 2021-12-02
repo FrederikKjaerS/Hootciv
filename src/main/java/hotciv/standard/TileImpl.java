@@ -20,7 +20,7 @@ public class TileImpl implements Tile {
     }
 
     @Override
-    public String getId() {
+    public String getID() {
         return this.ID;
     }
 }
