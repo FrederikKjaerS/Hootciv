@@ -4,6 +4,7 @@ import hotciv.framework.*;
 import hotciv.variants.unitProperties.UnitProperties;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class UnitImpl implements Unit {
     private String typeString;
@@ -15,6 +16,7 @@ public class UnitImpl implements Unit {
     private int cost;
     private boolean isStationary = false;
     private ArrayList<TileImpl> validTiles;
+    private String ID;
 
     public UnitImpl(String unit, Player owner, UnitProperties unitProperties) {
         this.isStationary = false;
@@ -26,6 +28,7 @@ public class UnitImpl implements Unit {
         this.defense = unitProperties.getDefense();
         this.validTiles = unitProperties.getValidTiles();
         this.cost = unitProperties.getCost();
+        this.ID = UUID.randomUUID().toString();
     }
 
     @Override
@@ -51,6 +54,11 @@ public class UnitImpl implements Unit {
     @Override
     public int getAttackingStrength() {
         return attack;
+    }
+
+    @Override
+    public String getID() {
+        return this.ID;
     }
 
     public void decreaseMoveCount(){
