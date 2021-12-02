@@ -7,12 +7,13 @@ import hotciv.framework.Unit;
 
 public class UnitProxy implements Unit, ClientProxy {
 
-    public static final String UNIT_OBJECTID = "singleton";
+    public final String UNIT_OBJECTID;
 
     private final Requestor requestor;
 
     //objectid og requester med i konstruktør
-    public UnitProxy(Requestor requestor) {
+    public UnitProxy(String objectId, Requestor requestor) {
+        this.UNIT_OBJECTID = objectId;
         this.requestor = requestor;
     }
 

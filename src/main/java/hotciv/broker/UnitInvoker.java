@@ -68,14 +68,10 @@ public class UnitInvoker implements Invoker {
     }
 
     private Unit lookupUnit(String objectId) {
-        /* Unit unit = storage.getunit(objectid);
+        Unit unit = gameNameService.getUnit(objectId);
         if (unit == null) {
-        throw new Unkonwservantexcepterion("unit with object id: " + objectid + ??
+            throw new UnknownServantException("unit with object id: " + objectId);
         }
         return unit;
-         */
-        Unit unit = new StubUnitBroker();
-        return unit;
     }
-
 }

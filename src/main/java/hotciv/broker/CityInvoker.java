@@ -71,7 +71,10 @@ public class CityInvoker implements Invoker {
     }
 
     private City lookupCity(String objectId) {
-        City city = new StubCityBroker();
+        City city = gameNameService.getCity(objectId);
+        if(city == null){
+            throw new UnknownServantException("unit with object id: " + objectId);
+        }
         return city;
     }
 

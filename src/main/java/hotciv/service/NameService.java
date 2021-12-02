@@ -1,6 +1,7 @@
 package hotciv.service;
 
 import hotciv.framework.City;
+import hotciv.framework.Tile;
 import hotciv.framework.Unit;
 
 public interface NameService {
@@ -30,5 +31,18 @@ public interface NameService {
      * @param objectId the id of the servant object to get
      * @return the servant object
      */
-    Unit getCity(String objectId);
+    City getCity(String objectId);
+    /** Put a Tile into the name service under given id
+     *
+     * @param objectId ID of the object
+     * @param tile the servant object
+     */
+    void putTile(String objectId, Tile tile);
+
+    /** Get a Tile.
+     *
+     * @param objectId the id of the servant object to get
+     * @return the servant object
+     */
+    Tile getTile(String objectId);
 }

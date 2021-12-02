@@ -16,7 +16,7 @@ package hotciv.service;/*
  */
 
 import hotciv.framework.City;
-import hotciv.framework.Game;
+import hotciv.framework.Tile;
 import hotciv.framework.Unit;
 
 import java.util.HashMap;
@@ -30,10 +30,12 @@ import java.util.Map;
 public class GameNameService implements NameService {
     private Map<String, City> cityMap;
     private Map<String, Unit> unitMap;
+    private Map<String, Tile> tileMap;
 
     public GameNameService() {
         this.cityMap = new HashMap<>();
         this.unitMap = new HashMap<>();
+        this.tileMap = new HashMap<>();
     }
 
     @Override
@@ -52,8 +54,18 @@ public class GameNameService implements NameService {
     }
 
     @Override
-    public Unit getCity(String objectId) {
-        return this.unitMap.get(objectId);
+    public City getCity(String objectId) {
+        return this.cityMap.get(objectId);
+    }
+
+    @Override
+    public void putTile(String objectId, Tile tile) {
+        this.tileMap.put(objectId, tile);
+    }
+
+    @Override
+    public Tile getTile(String objectId) {
+        return this.tileMap.get(objectId);
     }
 }
 

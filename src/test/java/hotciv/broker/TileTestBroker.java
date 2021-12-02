@@ -30,11 +30,14 @@ public class TileTestBroker {
 
         this.gameNameService = new GameNameService();
         Invoker invoker = new TileInvoker(gameNameService);
+        Tile tile = new TileImpl(GameConstants.MOUNTAINS);
+        gameNameService.putTile(tile.getId(), tile);
+
 
         ClientRequestHandler chr = new LocalMethodClientRequestHandler(invoker);
 
         Requestor requester = new StandardJSONRequestor(chr);
-        tileProxy = new TileProxy(requester);
+        tileProxy = new TileProxy(tile.getId(), requester);
     }
 
     @Test
