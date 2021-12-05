@@ -42,17 +42,14 @@ import java.io.IOException;
 public class HotCivClient {
     private String operation;
     private String name;
-    private String hostname;
-    private String objectId;
 
     public static void main(String[] args) throws IOException {
-        new HotCivClient();
+        new HotCivClient(args);
     }
 
-    public HotCivClient() {
+    public HotCivClient(String[] args) {
         int port = 37123;
 
-        System.out.println("HotCivClient: Asked to do operation "+operation+" for player "+name);
         UriTunnelClientRequestHandler crh =
                 new UriTunnelClientRequestHandler();
         crh.setServer("localhost", port);

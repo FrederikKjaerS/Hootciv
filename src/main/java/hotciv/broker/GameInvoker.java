@@ -75,24 +75,30 @@ public class GameInvoker implements Invoker {
                     City city = gameServant.getCityAt(cityPosition);
                     if(city != null){
                         nameService.putCity(city.getID(), city);
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(city.getID()));
+                    }else {
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
                     }
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(city.getID()));
                     break;
                 case MethodConstants.GET_UNIT_AT:
                     Position unitPosition = gson.fromJson(array.get(0), Position.class);
                     Unit unit = gameServant.getUnitAt(unitPosition);
-                    if(unit != null){
+                    if(unit != null) {
                         nameService.putUnit(unit.getID(), unit);
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unit.getID()));
+                    }else {
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
                     }
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unit.getID()));
                     break;
                 case MethodConstants.GET_TILE_AT:
                     Position tilePosition = gson.fromJson(array.get(0), Position.class);
                     Tile tile = gameServant.getTileAt(tilePosition);
                     if(tile != null){
                         nameService.putTile(tile.getID(), tile);
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(tile.getID()));
+                    }else {
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
                     }
-                    reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(tile.getID()));
                     break;
 
                 default:
