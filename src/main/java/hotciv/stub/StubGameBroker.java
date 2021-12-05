@@ -18,7 +18,7 @@ public class StubGameBroker implements Game, Servant {
     @Override
     public Tile getTileAt(Position p) {
         if(p.equals(position_of_mountain_tile)){
-            return new TileImpl(GameConstants.MOUNTAINS);
+            return new TileImpl(GameConstants.FOREST);
         }
         return null;
     }

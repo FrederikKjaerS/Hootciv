@@ -60,7 +60,7 @@ public class TileInvoker implements Invoker {
     }
 
     private Tile lookupTile(String objectId) {
-        Tile tile = new TileImpl(GameConstants.MOUNTAINS);
+        Tile tile = gameNameService.getTile(objectId);
         return tile;
     }
 
