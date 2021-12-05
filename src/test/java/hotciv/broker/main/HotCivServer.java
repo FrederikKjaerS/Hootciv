@@ -6,10 +6,14 @@ import frds.broker.ipc.socket.SocketServerRequestHandler;
 import hotciv.broker.GameInvoker;
 import hotciv.broker.HotCivRootInvoker;
 import hotciv.factories.SemiCivFactory;
+import hotciv.factories.SemiCivGUIFactory;
 import hotciv.framework.Game;
 import hotciv.service.GameNameService;
 import hotciv.standard.GameImpl;
 import hotciv.stub.StubGameBroker;
+import hotciv.view.tool.CompositionTool;
+import minidraw.framework.DrawingEditor;
+import minidraw.standard.MiniDrawApplication;
 
 public class HotCivServer {
 
@@ -28,6 +32,14 @@ public class HotCivServer {
         UriTunnelServerRequestHandler urtsrh =
                 new UriTunnelServerRequestHandler();
         urtsrh.setPortAndInvoker(port, invoker);
+
+        DrawingEditor editor =
+                new MiniDrawApplication( "play the game",
+                        new SemiCivGUIFactory(gameServant) );
+        editor.open();
+        editor.showStatus("Play the semiCiv variant - Server");
+
+        editor.setTool(new CompositionTool(editor, gameServant));
 
         System.out.println("=== HotCiv Socket based Server Request Handler (port:"
                 + port + ") ===");

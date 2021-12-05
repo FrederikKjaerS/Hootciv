@@ -53,16 +53,15 @@ public class HotCivClient {
         UriTunnelClientRequestHandler crh =
                 new UriTunnelClientRequestHandler();
         crh.setServer("localhost", port);
-
+        
         Requestor requestor = new StandardJSONRequestor(crh);
-
         Game game = new GameProxy(requestor);
 
         DrawingEditor editor =
                 new MiniDrawApplication( "play the game",
                         new SemiCivGUIFactory(game) );
         editor.open();
-        editor.showStatus("Play the semiCiv variant");
+        editor.showStatus("Play the semiCiv variant - Client");
 
         editor.setTool(new CompositionTool(editor, game));
 
