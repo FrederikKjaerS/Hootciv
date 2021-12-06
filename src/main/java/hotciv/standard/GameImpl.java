@@ -12,7 +12,9 @@ import hotciv.variants.unitProperties.UnitPropertiesStrategy;
 import hotciv.variants.winnerStrategy.WinnerStrategy;
 import hotciv.variants.worldStrategy.WorldLayoutStrategy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,10 +58,11 @@ public class GameImpl implements Game, ExtendedGame {
     private ProductionStrategy unitAndTileStrategy;
     private UnitPropertiesStrategy unitPropertiesStrategy;
 
-    private GameObserver gameObserver;
+    private List<GameObserver> gameObserverList;
     private int round;
 
     public GameImpl(HotCivFactory hotCivFactory) {
+        this.gameObserverList = new ArrayList<>();
         this.winnerStrategy = hotCivFactory.createWinnerStrategy();
         this.agingStrategy = hotCivFactory.createAgingStrategy();
         this.attackStrategy = hotCivFactory.createAttackStrategy();
@@ -105,7 +108,9 @@ public class GameImpl implements Game, ExtendedGame {
 
             if(! attackerWinsBattle) {
                 units.remove(from);
-                gameObserver.worldChangedAt(from);
+                for(GameObserver g : gameObserverList){
+                    g.worldChangedAt(from);
+                }
                 return false;
             } else {
                 winnerStrategy.incrementWin(this, getUnitAt(from).getOwner());
@@ -119,12 +124,16 @@ public class GameImpl implements Game, ExtendedGame {
     private void makeActualMoveForUnit(Position from, Position to) {
         UnitImpl fromUnit = getUnitAt(from);
         units.remove(from);
-        if(gameObserver != null) {
-            gameObserver.worldChangedAt(from);
+        if(!gameObserverList.isEmpty()) {
+            for(GameObserver g : gameObserverList){
+                g.worldChangedAt(from);
+            }
         }
         units.put(to, fromUnit);
-        if(gameObserver != null){
-            gameObserver.worldChangedAt(to);
+        if(!gameObserverList.isEmpty()){
+            for(GameObserver g : gameObserverList){
+                g.worldChangedAt(to);
+            }
         }
         getUnitAt(to).decreaseMoveCount();
     }
@@ -177,31 +186,39 @@ public class GameImpl implements Game, ExtendedGame {
                 endOfRound();
                 break;
         }
-        if(gameObserver != null){
-            gameObserver.turnEnds(playerInTurn, getAge());
+        if(!gameObserverList.isEmpty()){
+            for(GameObserver g : gameObserverList){
+                g.turnEnds(playerInTurn, getAge());
+            }
         }
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
         getCityAt(p).setWorkForceFocus(balance);
-        if(gameObserver != null) {
-            gameObserver.worldChangedAt(p);
+        if(!gameObserverList.isEmpty()) {
+            for(GameObserver g : gameObserverList){
+                g.worldChangedAt(p);
+            }
         }
     }
 
     public void changeProductionInCityAt(Position p, String unitType) {
         if(getCityAt(p).getOwner() == playerInTurn) {
             unitAndTileStrategy.setProduction(this, p, unitType);
-            if(gameObserver != null) {
-                gameObserver.worldChangedAt(p);
+            if(!gameObserverList.isEmpty()) {
+                for(GameObserver g : gameObserverList){
+                    g.worldChangedAt(p);
+                }
             }
         }
     }
 
     public void performUnitActionAt(Position p) {
         unitActionStrategy.performAction(this, p);
-        if(gameObserver != null) {
-            gameObserver.worldChangedAt(p);
+        if(!gameObserverList.isEmpty()) {
+            for(GameObserver g : gameObserverList){
+                g.worldChangedAt(p);
+            }
         }
     }
 
@@ -293,14 +310,16 @@ public class GameImpl implements Game, ExtendedGame {
 
     @Override
     public void addObserver(GameObserver observer) {
-        this.gameObserver = observer;
+        this.gameObserverList.add(observer);
     }
 
     @Override
     public void setTileFocus(Position position) {
-        if (gameObserver != null) {
+        if (!gameObserverList.isEmpty()) {
             if(position.getRow() < GameConstants.WORLDSIZE && position.getColumn() < GameConstants.WORLDSIZE){
-                gameObserver.tileFocusChangedAt(position);
+                for(GameObserver g : gameObserverList){
+                    g.tileFocusChangedAt(position);
+                }
             }
         }
     }

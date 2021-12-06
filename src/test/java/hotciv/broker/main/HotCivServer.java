@@ -18,11 +18,11 @@ import minidraw.standard.MiniDrawApplication;
 public class HotCivServer {
 
     public static void main(String[] args) throws Exception {
-        new HotCivServer(args[0]); // No error handling!
+        new HotCivServer(); // No error handling!
     }
 
 
-    public HotCivServer(String type) throws Exception {
+    public HotCivServer() throws Exception {
         int port = 37123;
 
         Game gameServant = new GameImpl(new SemiCivFactory());
@@ -32,14 +32,6 @@ public class HotCivServer {
         UriTunnelServerRequestHandler urtsrh =
                 new UriTunnelServerRequestHandler();
         urtsrh.setPortAndInvoker(port, invoker);
-
-        DrawingEditor editor =
-                new MiniDrawApplication( "play the game",
-                        new SemiCivGUIFactory(gameServant) );
-        editor.open();
-        editor.showStatus("Play the semiCiv variant - Server");
-
-        editor.setTool(new CompositionTool(editor, gameServant));
 
         System.out.println("=== HotCiv Socket based Server Request Handler (port:"
                 + port + ") ===");

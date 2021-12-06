@@ -4,15 +4,21 @@ import frds.broker.ClientProxy;
 import frds.broker.Requestor;
 import hotciv.framework.*;
 import hotciv.service.GameNameService;
+import hotciv.stub.SpyGameObserver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameProxy implements Game, ClientProxy {
 
     public static final String GAME_OBJECTID = "singleton";
 
     private final Requestor requestor;
+    private List<GameObserver> observerList;
 
     public GameProxy(Requestor requestor) {
         this.requestor = requestor;
+        this.observerList = new ArrayList<>();
     }
 
     @Override
@@ -59,36 +65,67 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public boolean moveUnit(Position from, Position to) {
-        return requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.MOVE_UNIT, boolean.class, from, to);
+        Boolean valid = requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.MOVE_UNIT, boolean.class, from, to);
+        if(valid){
+            for(GameObserver g : observerList){
+                g.worldChangedAt(from);
+                g.worldChangedAt(to);
+            }
+        }
+        return valid;
     }
 
     @Override
     public void endOfTurn() {
         requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.END_OF_TURN, void.class);
+        if(!observerList.isEmpty()) {
+            for (GameObserver g : observerList) {
+                g.turnEnds(getPlayerInTurn(), getAge());
+            }
+        }
     }
 
     @Override
     public void changeWorkForceFocusInCityAt(Position p, String balance) {
         requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.CHANGE_WORKFORCE_FOCUS, void.class, p, balance);
+        if(!observerList.isEmpty()) {
+            for(GameObserver g : observerList){
+                g.worldChangedAt(p);
+            }
+        }
     }
 
     @Override
     public void changeProductionInCityAt(Position p, String unitType) {
         requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.CHANGE_PRODUCTION, void.class, p, unitType);
+        if(!observerList.isEmpty()) {
+            for(GameObserver g : observerList){
+                g.worldChangedAt(p);
+            }
+        }
     }
 
     @Override
     public void performUnitActionAt(Position p) {
         requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.PERFORM_UNIT_ACTION, void.class, p);
+        if(!observerList.isEmpty()) {
+            for(GameObserver g : observerList){
+                g.worldChangedAt(p);
+            }
+        }
     }
 
     @Override
     public void addObserver(GameObserver observer) {
-
+        this.observerList.add(observer);
     }
 
     @Override
     public void setTileFocus(Position position) {
-
+        if (!observerList.isEmpty()) {
+            for(GameObserver g : observerList) {
+                g.tileFocusChangedAt(position);
+            }
+        }
     }
 }

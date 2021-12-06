@@ -305,6 +305,8 @@ public class CivDrawing implements Drawing, GameObserver {
       // rendering.
       figureCollection.add(ageIcon);
     }
+    String currentAge = "" + game.getAge();
+    updateAgeIcon(currentAge);
     if (refreshButton == null) {
       refreshButton =
               new HotCivFigure(GfxConstants.REFRESH_BUTTON,

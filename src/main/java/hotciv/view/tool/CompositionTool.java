@@ -65,6 +65,10 @@ public class CompositionTool extends NullTool {
           state = new SetFocusTool(editor, game);
           break;
         }
+        case GfxConstants.REFRESH_BUTTON: {
+          state = new RefreshTool(editor, game);
+          break;
+        }
       }
     }
     // Finally, delegate to the selected state
@@ -78,13 +82,6 @@ public class CompositionTool extends NullTool {
 
   @Override
   public void mouseUp(MouseEvent e, int x, int y) {
-    if (figureBelowClickPoint == null) {
-      state = new NullTool();
-    }else {
-      if (figureBelowClickPoint.getTypeString().equals(GfxConstants.REFRESH_BUTTON)) {
-        editor.drawing().requestUpdate();
-      }
-    }
     state.mouseUp(e, x, y);
   }
 }
