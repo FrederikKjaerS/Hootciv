@@ -103,6 +103,13 @@ public class GameImpl implements Game, ExtendedGame {
     @Override
     public boolean moveUnit(Position from, Position to) {
         if (! isMoveValid(from, to)) return false;
+        makeActualMoveForUnit(from, to);
+        handleCityConquering(to);
+        return true;
+    }
+
+    private void makeActualMoveForUnit(Position from, Position to) {
+        UnitImpl fromUnit = getUnitAt(from);
         if ( getUnitAt(to) != null ){
             boolean attackerWinsBattle = attackStrategy.attackerWins(this, from, to);
 
@@ -111,31 +118,26 @@ public class GameImpl implements Game, ExtendedGame {
                 for(GameObserver g : gameObserverList){
                     g.worldChangedAt(from);
                 }
-                return false;
             } else {
                 winnerStrategy.incrementWin(this, getUnitAt(from).getOwner());
+                units.remove(from);
+                units.put(to, fromUnit);
             }
-        }
-        makeActualMoveForUnit(from, to);
-        handleCityConquering(to);
-        return true;
-    }
-
-    private void makeActualMoveForUnit(Position from, Position to) {
-        UnitImpl fromUnit = getUnitAt(from);
-        units.remove(from);
-        if(!gameObserverList.isEmpty()) {
-            for(GameObserver g : gameObserverList){
-                g.worldChangedAt(from);
+        }else {
+            units.remove(from);
+            if (!gameObserverList.isEmpty()) {
+                for (GameObserver g : gameObserverList) {
+                    g.worldChangedAt(from);
+                }
             }
-        }
-        units.put(to, fromUnit);
-        if(!gameObserverList.isEmpty()){
-            for(GameObserver g : gameObserverList){
-                g.worldChangedAt(to);
+            units.put(to, fromUnit);
+            if (!gameObserverList.isEmpty()) {
+                for (GameObserver g : gameObserverList) {
+                    g.worldChangedAt(to);
+                }
             }
+            getUnitAt(to).decreaseMoveCount();
         }
-        getUnitAt(to).decreaseMoveCount();
     }
 
     private boolean isMoveValid(Position from, Position to) {

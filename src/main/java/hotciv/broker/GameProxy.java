@@ -65,7 +65,8 @@ public class GameProxy implements Game, ClientProxy {
 
     @Override
     public boolean moveUnit(Position from, Position to) {
-        Boolean valid = requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.MOVE_UNIT, boolean.class, from, to);
+        boolean valid = requestor.sendRequestAndAwaitReply(GAME_OBJECTID, MethodConstants.MOVE_UNIT, boolean.class, from, to);
+        System.out.println(valid);
         if(valid){
             for(GameObserver g : observerList){
                 g.worldChangedAt(from);

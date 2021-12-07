@@ -67,7 +67,7 @@ public class GameInvoker implements Invoker {
                     break;
                 case MethodConstants.MOVE_UNIT:
                     Position pFrom = gson.fromJson(array.get(0), Position.class);
-                    Position pTo = gson.fromJson(array.get(0), Position.class);
+                    Position pTo = gson.fromJson(array.get(1), Position.class);
                     reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.moveUnit(pFrom,pTo)));
                     break;
                 case MethodConstants.GET_CITY_AT:

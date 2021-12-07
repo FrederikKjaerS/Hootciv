@@ -94,44 +94,4 @@ public class StubGameBroker implements Game, Servant {
     public void setTileFocus(Position position) {
     }
 
-    private class StubCity implements City {
-
-        private final Player owner;
-        private int size;
-
-        public StubCity(Player player, int i) {
-            this.size = i;
-            this.owner = player;
-        }
-
-        @Override
-        public Player getOwner() {
-            return this.owner;
-        }
-
-        @Override
-        public int getSize() {
-            return this.size;
-        }
-
-        @Override
-        public int getTreasury() {
-            return 0;
-        }
-
-        @Override
-        public String getProduction() {
-            return null;
-        }
-
-        @Override
-        public String getWorkforceFocus() {
-            return null;
-        }
-
-        @Override
-        public String getID() {
-            return "test";
-        }
-    }
 }
