@@ -120,6 +120,11 @@ class StubTile implements Tile {
     private String type;
     public StubTile(String type, int r, int c) { this.type = type; }
     public String getTypeString() { return type; }
+
+    @Override
+    public String getID() {
+        return null;
+    }
 }
 
 class StubUnit implements Unit {
@@ -132,6 +137,11 @@ class StubUnit implements Unit {
     public int getMoveCount() { return 0; }
     public int getDefensiveStrength() { return 3; }
     public int getAttackingStrength() { return 2; }
+
+    @Override
+    public String getID() {
+        return null;
+    }
 }
 
 class StubLayout implements WorldLayoutStrategy{
@@ -212,6 +222,11 @@ class GameStubForAttackTesting implements Game, ExtendedGame {
                     return null;
                 }
                 public String getWorkforceFocus() {
+                    return null;
+                }
+
+                @Override
+                public String getID() {
                     return null;
                 }
             };

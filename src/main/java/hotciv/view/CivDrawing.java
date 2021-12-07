@@ -227,6 +227,7 @@ public class CivDrawing implements Drawing, GameObserver {
   protected ImageFigure balanceIcon;
   protected ImageFigure productionIcon;
   protected TextFigure ageIcon;
+  protected ImageFigure refreshButton;
 
   protected void synchronizeIconsWithGameState() {
     // Note - we have to guard creating figures and adding
@@ -304,6 +305,18 @@ public class CivDrawing implements Drawing, GameObserver {
       // rendering.
       figureCollection.add(ageIcon);
     }
+    String currentAge = "" + game.getAge();
+    updateAgeIcon(currentAge);
+    if (refreshButton == null) {
+      refreshButton =
+              new HotCivFigure(GfxConstants.REFRESH_BUTTON,
+                      new Point(GfxConstants.REFRESH_BUTTON_X,
+                              GfxConstants.REFRESH_BUTTON_Y),
+                      GfxConstants.REFRESH_BUTTON);
+      // insert in delegate figure list to ensure graphical
+      // rendering.
+      figureCollection.add(refreshButton);
+    }
 
     // for other status panel info, like age, etc.
   }
@@ -338,6 +351,7 @@ public class CivDrawing implements Drawing, GameObserver {
     turnShieldIcon.set( playername+"shield",
                         new Point( GfxConstants.TURN_SHIELD_X,
                                    GfxConstants.TURN_SHIELD_Y ) );
+    synchronizeUnitFigureCollectionWithGameUnits();
   }
 
   private void updateUnitShield(Player nextPlayer) {

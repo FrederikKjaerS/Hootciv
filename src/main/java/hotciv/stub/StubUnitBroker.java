@@ -30,4 +30,9 @@ public class StubUnitBroker implements Unit, Servant {
     public int getAttackingStrength() {
         return 8;
     }
+
+    @Override
+    public String getID() {
+        return "test";
+    }
 }

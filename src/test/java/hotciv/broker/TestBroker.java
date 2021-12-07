@@ -5,17 +5,20 @@ import frds.broker.Invoker;
 import frds.broker.Requestor;
 import frds.broker.marshall.json.StandardJSONRequestor;
 import hotciv.framework.*;
+import hotciv.service.GameNameService;
+import hotciv.service.NameService;
 import hotciv.stub.StubCityBroker;
 import hotciv.stub.StubGameBroker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestBroker {
     private Game game;
     private StubGameBroker servant;
+    private GameNameService nameService;
 
     @BeforeEach
     public void setup(){
@@ -23,7 +26,8 @@ public class TestBroker {
         GameObserver nullObserver = new NullObserver();
         servant.addObserver(nullObserver);
 
-        Invoker invoker = new GameInvoker(servant);
+        this.nameService = new GameNameService();
+        Invoker invoker = new GameInvoker(nameService, servant);
 
         ClientRequestHandler chr = new LocalMethodClientRequestHandler(invoker);
 
@@ -82,6 +86,32 @@ public class TestBroker {
     public void shouldReturnFalseWhenMoveUnit(){
         assertThat(game.moveUnit(new Position(0,0),new Position(0,1)), is(false));
     }
+
+
+    @Test
+    public void shouldBeADifferentUNitAt2_0(){
+        Unit unit = game.getUnitAt(new Position(2, 0));
+        assertThat(unit, is(notNullValue()));
+        assertThat(unit.getID(), is("test"));
+        assertThat(game.moveUnit(new Position(0,0),new Position(0,1)), is(false));
+    }
+
+    @Test
+    public void shouldBeADifferentCityAt1_1(){
+        City city = game.getCityAt(new Position(1, 1));
+        assertThat(city, is(notNullValue()));
+        assertThat(city.getID(), is("test"));
+    }
+
+    @Test
+    public void shouldBeADifferentTileAt0_1(){
+        Tile tile = game.getTileAt(new Position(0, 1));
+        assertThat(tile, is(notNullValue()));
+        assertThat(tile.getID(), is(not("")));
+    }
+
+
+
 
 
 

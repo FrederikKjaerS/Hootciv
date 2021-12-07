@@ -31,4 +31,9 @@ public class StubCityBroker implements City, Servant {
     public String getWorkforceFocus() {
         return GameConstants.foodFocus;
     }
+
+    @Override
+    public String getID() {
+        return "test";
+    }
 }

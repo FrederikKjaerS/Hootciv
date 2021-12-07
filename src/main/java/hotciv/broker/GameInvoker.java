@@ -6,9 +6,8 @@ import com.google.gson.JsonParser;
 import frds.broker.Invoker;
 import frds.broker.ReplyObject;
 import frds.broker.RequestObject;
-import hotciv.framework.Game;
-import hotciv.framework.Position;
-import hotciv.stub.StubGameBroker;
+import hotciv.framework.*;
+import hotciv.service.NameService;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,10 +15,12 @@ public class GameInvoker implements Invoker {
 
     private final Game gameServant;
     private final Gson gson;
+    private final NameService nameService;
 
-    public GameInvoker(Game game) {
+    public GameInvoker(NameService service, Game game) {
         this.gameServant = game;
         this.gson = new Gson();
+        this.nameService = service;
     }
 
     @Override
@@ -66,9 +67,40 @@ public class GameInvoker implements Invoker {
                     break;
                 case MethodConstants.MOVE_UNIT:
                     Position pFrom = gson.fromJson(array.get(0), Position.class);
-                    Position pTo = gson.fromJson(array.get(0), Position.class);
+                    Position pTo = gson.fromJson(array.get(1), Position.class);
                     reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(gameServant.moveUnit(pFrom,pTo)));
                     break;
+                case MethodConstants.GET_CITY_AT:
+                    Position cityPosition = gson.fromJson(array.get(0), Position.class);
+                    City city = gameServant.getCityAt(cityPosition);
+                    if(city != null){
+                        nameService.putCity(city.getID(), city);
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(city.getID()));
+                    }else {
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
+                    }
+                    break;
+                case MethodConstants.GET_UNIT_AT:
+                    Position unitPosition = gson.fromJson(array.get(0), Position.class);
+                    Unit unit = gameServant.getUnitAt(unitPosition);
+                    if(unit != null) {
+                        nameService.putUnit(unit.getID(), unit);
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(unit.getID()));
+                    }else {
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
+                    }
+                    break;
+                case MethodConstants.GET_TILE_AT:
+                    Position tilePosition = gson.fromJson(array.get(0), Position.class);
+                    Tile tile = gameServant.getTileAt(tilePosition);
+                    if(tile != null){
+                        nameService.putTile(tile.getID(), tile);
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(tile.getID()));
+                    }else {
+                        reply = new ReplyObject(HttpServletResponse.SC_OK, gson.toJson(""));
+                    }
+                    break;
+
                 default:
                     reply = new ReplyObject(HttpServletResponse.SC_NOT_IMPLEMENTED,
                             "The method requestObject.getOperationName() is not implemented");

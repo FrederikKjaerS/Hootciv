@@ -1,6 +1,7 @@
 package hotciv.view.tool;
 
 import hotciv.framework.Game;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
 import hotciv.view.GfxConstants;
 import hotciv.view.figure.HotCivFigure;
@@ -62,6 +63,10 @@ public class CompositionTool extends NullTool {
 
         case GfxConstants.CITY_TYPE_STRING: {
           state = new SetFocusTool(editor, game);
+          break;
+        }
+        case GfxConstants.REFRESH_BUTTON: {
+          state = new RefreshTool(editor, game);
           break;
         }
       }

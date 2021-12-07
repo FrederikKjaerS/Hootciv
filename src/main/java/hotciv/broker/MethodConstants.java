@@ -10,6 +10,9 @@ public class MethodConstants {
     public static final String CHANGE_PRODUCTION = "game_change_Production";
     public static final String PERFORM_UNIT_ACTION = "game_perform_unit_action";
     public static final String MOVE_UNIT = "game_move_unit";
+    public static final String GET_UNIT_AT = "game_get_unit_at";
+    public static final String GET_CITY_AT = "game_get_city_at";
+    public static final String GET_TILE_AT = "game_get_tile_at";
 
     public static final String CITY_GET_OWNER = "city_get_owner";
     public static final String GET_SIZE = "city_get_size";
@@ -24,6 +27,13 @@ public class MethodConstants {
     public static final String GET_ATTACKING_STRENGTH = "unit_get_attacking_strength";
 
     public static final String TILE_GET_TYPESTRING = "tile_get_typestring";
+
+    public static final String GAME_PREFIX = "game";
+    public static final String CITY_PREFIX = "city";
+    public static final String TILE_PREFIX = "tile";
+    public static final String UNIT_PREFIX = "unit";
+
+    public static final char SEPARATOR = '_';
 
 
 }

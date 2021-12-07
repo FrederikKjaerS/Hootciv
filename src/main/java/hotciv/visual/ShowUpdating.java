@@ -150,10 +150,6 @@ class UpdateTool extends NullTool {
       endRound(2);
       break;
     }
-
-
-
-      // TODO: Add more state changes for other things to test
     default: {
       editor.showStatus("No more changes in my list...");
     }
