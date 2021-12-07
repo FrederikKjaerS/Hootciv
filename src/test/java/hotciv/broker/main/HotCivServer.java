@@ -8,6 +8,8 @@ import hotciv.broker.HotCivRootInvoker;
 import hotciv.factories.SemiCivFactory;
 import hotciv.factories.SemiCivGUIFactory;
 import hotciv.framework.Game;
+import hotciv.framework.GameConstants;
+import hotciv.framework.Position;
 import hotciv.service.GameNameService;
 import hotciv.standard.GameImpl;
 import hotciv.stub.StubGameBroker;
@@ -32,6 +34,7 @@ public class HotCivServer {
         UriTunnelServerRequestHandler urtsrh =
                 new UriTunnelServerRequestHandler();
         urtsrh.setPortAndInvoker(port, invoker);
+        gameServant.changeProductionInCityAt(new Position(8,12), GameConstants.ARCHER);
 
         System.out.println("=== HotCiv Socket based Server Request Handler (port:"
                 + port + ") ===");

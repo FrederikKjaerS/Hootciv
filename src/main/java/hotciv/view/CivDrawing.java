@@ -351,6 +351,7 @@ public class CivDrawing implements Drawing, GameObserver {
     turnShieldIcon.set( playername+"shield",
                         new Point( GfxConstants.TURN_SHIELD_X,
                                    GfxConstants.TURN_SHIELD_Y ) );
+    synchronizeUnitFigureCollectionWithGameUnits();
   }
 
   private void updateUnitShield(Player nextPlayer) {
